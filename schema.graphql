@@ -1,0 +1,349 @@
+type AddAsset @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  assetConfig_asset: Bytes! # address
+  assetConfig_priceFeed: Bytes! # address
+  assetConfig_decimals: Int! # uint8
+  assetConfig_borrowCollateralFactor: BigInt! # uint64
+  assetConfig_liquidateCollateralFactor: BigInt! # uint64
+  assetConfig_liquidationFactor: BigInt! # uint64
+  assetConfig_supplyCap: BigInt! # uint128
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CometDeployed @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  newComet: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type GovernorTransferred @entity(immutable: true) {
+  id: Bytes!
+  oldGovernor: Bytes! # address
+  newGovernor: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetBaseBorrowMin @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldBaseBorrowMin: BigInt! # uint104
+  newBaseBorrowMin: BigInt! # uint104
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetBaseMinForRewards @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldBaseMinForRewards: BigInt! # uint104
+  newBaseMinForRewards: BigInt! # uint104
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetBaseTokenPriceFeed @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldBaseTokenPriceFeed: Bytes! # address
+  newBaseTokenPriceFeed: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetBaseTrackingBorrowSpeed @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldBaseTrackingBorrowSpeed: BigInt! # uint64
+  newBaseTrackingBorrowSpeed: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetBaseTrackingSupplySpeed @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldBaseTrackingSupplySpeed: BigInt! # uint64
+  newBaseTrackingSupplySpeed: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetBorrowKink @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldKink: BigInt! # uint64
+  newKink: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetBorrowPerYearInterestRateBase @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldIRBase: BigInt! # uint64
+  newIRBase: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetBorrowPerYearInterestRateSlopeHigh @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldIRSlopeHigh: BigInt! # uint64
+  newIRSlopeHigh: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetBorrowPerYearInterestRateSlopeLow @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldIRSlopeLow: BigInt! # uint64
+  newIRSlopeLow: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetConfiguration @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldConfiguration_governor: Bytes! # address
+  oldConfiguration_pauseGuardian: Bytes! # address
+  oldConfiguration_baseToken: Bytes! # address
+  oldConfiguration_baseTokenPriceFeed: Bytes! # address
+  oldConfiguration_extensionDelegate: Bytes! # address
+  oldConfiguration_supplyKink: BigInt! # uint64
+  oldConfiguration_supplyPerYearInterestRateSlopeLow: BigInt! # uint64
+  oldConfiguration_supplyPerYearInterestRateSlopeHigh: BigInt! # uint64
+  oldConfiguration_supplyPerYearInterestRateBase: BigInt! # uint64
+  oldConfiguration_borrowKink: BigInt! # uint64
+  oldConfiguration_borrowPerYearInterestRateSlopeLow: BigInt! # uint64
+  oldConfiguration_borrowPerYearInterestRateSlopeHigh: BigInt! # uint64
+  oldConfiguration_borrowPerYearInterestRateBase: BigInt! # uint64
+  oldConfiguration_storeFrontPriceFactor: BigInt! # uint64
+  oldConfiguration_trackingIndexScale: BigInt! # uint64
+  oldConfiguration_baseTrackingSupplySpeed: BigInt! # uint64
+  oldConfiguration_baseTrackingBorrowSpeed: BigInt! # uint64
+  oldConfiguration_baseMinForRewards: BigInt! # uint104
+  oldConfiguration_baseBorrowMin: BigInt! # uint104
+  oldConfiguration_targetReserves: BigInt! # uint104
+  oldConfiguration_assetConfigs: [Bytes!]! # tuple[]
+  newConfiguration_governor: Bytes! # address
+  newConfiguration_pauseGuardian: Bytes! # address
+  newConfiguration_baseToken: Bytes! # address
+  newConfiguration_baseTokenPriceFeed: Bytes! # address
+  newConfiguration_extensionDelegate: Bytes! # address
+  newConfiguration_supplyKink: BigInt! # uint64
+  newConfiguration_supplyPerYearInterestRateSlopeLow: BigInt! # uint64
+  newConfiguration_supplyPerYearInterestRateSlopeHigh: BigInt! # uint64
+  newConfiguration_supplyPerYearInterestRateBase: BigInt! # uint64
+  newConfiguration_borrowKink: BigInt! # uint64
+  newConfiguration_borrowPerYearInterestRateSlopeLow: BigInt! # uint64
+  newConfiguration_borrowPerYearInterestRateSlopeHigh: BigInt! # uint64
+  newConfiguration_borrowPerYearInterestRateBase: BigInt! # uint64
+  newConfiguration_storeFrontPriceFactor: BigInt! # uint64
+  newConfiguration_trackingIndexScale: BigInt! # uint64
+  newConfiguration_baseTrackingSupplySpeed: BigInt! # uint64
+  newConfiguration_baseTrackingBorrowSpeed: BigInt! # uint64
+  newConfiguration_baseMinForRewards: BigInt! # uint104
+  newConfiguration_baseBorrowMin: BigInt! # uint104
+  newConfiguration_targetReserves: BigInt! # uint104
+  newConfiguration_assetConfigs: [Bytes!]! # tuple[]
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetExtensionDelegate @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldExt: Bytes! # address
+  newExt: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetFactory @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldFactory: Bytes! # address
+  newFactory: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetGovernor @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldGovernor: Bytes! # address
+  newGovernor: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetPauseGuardian @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldPauseGuardian: Bytes! # address
+  newPauseGuardian: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetStoreFrontPriceFactor @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldStoreFrontPriceFactor: BigInt! # uint64
+  newStoreFrontPriceFactor: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetSupplyKink @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldKink: BigInt! # uint64
+  newKink: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetSupplyPerYearInterestRateBase @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldIRBase: BigInt! # uint64
+  newIRBase: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetSupplyPerYearInterestRateSlopeHigh @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldIRSlopeHigh: BigInt! # uint64
+  newIRSlopeHigh: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetSupplyPerYearInterestRateSlopeLow @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldIRSlopeLow: BigInt! # uint64
+  newIRSlopeLow: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SetTargetReserves @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldTargetReserves: BigInt! # uint104
+  newTargetReserves: BigInt! # uint104
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdateAsset @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  oldAssetConfig_asset: Bytes! # address
+  oldAssetConfig_priceFeed: Bytes! # address
+  oldAssetConfig_decimals: Int! # uint8
+  oldAssetConfig_borrowCollateralFactor: BigInt! # uint64
+  oldAssetConfig_liquidateCollateralFactor: BigInt! # uint64
+  oldAssetConfig_liquidationFactor: BigInt! # uint64
+  oldAssetConfig_supplyCap: BigInt! # uint128
+  newAssetConfig_asset: Bytes! # address
+  newAssetConfig_priceFeed: Bytes! # address
+  newAssetConfig_decimals: Int! # uint8
+  newAssetConfig_borrowCollateralFactor: BigInt! # uint64
+  newAssetConfig_liquidateCollateralFactor: BigInt! # uint64
+  newAssetConfig_liquidationFactor: BigInt! # uint64
+  newAssetConfig_supplyCap: BigInt! # uint128
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdateAssetBorrowCollateralFactor @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  asset: Bytes! # address
+  oldBorrowCF: BigInt! # uint64
+  newBorrowCF: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdateAssetLiquidateCollateralFactor @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  asset: Bytes! # address
+  oldLiquidateCF: BigInt! # uint64
+  newLiquidateCF: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdateAssetLiquidationFactor @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  asset: Bytes! # address
+  oldLiquidationFactor: BigInt! # uint64
+  newLiquidationFactor: BigInt! # uint64
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdateAssetPriceFeed @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  asset: Bytes! # address
+  oldPriceFeed: Bytes! # address
+  newPriceFeed: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type UpdateAssetSupplyCap @entity(immutable: true) {
+  id: Bytes!
+  cometProxy: Bytes! # address
+  asset: Bytes! # address
+  oldSupplyCap: BigInt! # uint128
+  newSupplyCap: BigInt! # uint128
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

@@ -1,0 +1,8 @@
+{
+  "mainnet": {
+    "Configurator": {
+      "address": "0xc28aD44975C614EaBe0Ed090207314549e1c6624",
+      "startBlock": 0
+    }
+  }
+}
