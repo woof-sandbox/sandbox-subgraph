@@ -1,9 +1,12 @@
 {
-  "name": "86c28nvyp-compound-v3",
+  "name": "86c28nvyp-sandbox-subgraph",
   "license": "UNLICENSED",
   "scripts": {
+    "clean": "rimraf build generated",
+    "rebuild": "rimraf build generated && graph codegen && graph build",
     "codegen": "graph codegen",
     "build": "graph build",
+    "format": "prettier --write \"src/**/*.ts\" ",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ 86c28nvyp-compound-v3",
     "create-local": "graph create --node http://localhost:8020/ 86c28nvyp-compound-v3",
     "remove-local": "graph remove --node http://localhost:8020/ 86c28nvyp-compound-v3",
@@ -14,5 +17,8 @@
     "@graphprotocol/graph-cli": "0.96.0",
     "@graphprotocol/graph-ts": "0.37.0"
   },
-  "devDependencies": { "matchstick-as": "0.6.0" }
+  "devDependencies": {
+    "matchstick-as": "0.6.0",
+    "prettier": "^3.5.2"
+  }
 }

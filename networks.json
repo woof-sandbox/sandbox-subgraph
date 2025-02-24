@@ -1,8 +1,8 @@
 {
-  "mainnet": {
+  "sepolia": {
     "Configurator": {
-      "address": "0xc28aD44975C614EaBe0Ed090207314549e1c6624",
-      "startBlock": 0
+      "address": "0x129C4c47Db4822A2e8fc1b843BfE2DA796746469",
+      "startBlock": 7735223
     }
   }
 }
