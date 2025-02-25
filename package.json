@@ -6,7 +6,7 @@
     "rebuild": "rimraf build generated && graph codegen && graph build",
     "codegen": "graph codegen",
     "build": "graph build",
-    "format": "prettier --write \"src/**/*.ts\" ",
+    "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ 86c28nvyp-compound-v3",
     "create-local": "graph create --node http://localhost:8020/ 86c28nvyp-compound-v3",
     "remove-local": "graph remove --node http://localhost:8020/ 86c28nvyp-compound-v3",
