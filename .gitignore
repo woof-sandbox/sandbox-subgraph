@@ -3,7 +3,7 @@ build/
 generated/
 .idea/
 
-# Dependency directories
+# Dependency directoriess
 node_modules/
 jspm_packages/
 
@@ -33,3 +33,6 @@ typechain-types
 
 # Hardhat files
 cache
+/tests/.bin/
+/tests/.docker/
+/tests/.latest.json
