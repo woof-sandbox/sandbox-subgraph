@@ -5,6 +5,7 @@ type Comet @entity(immutable: false) {
 
 type Borrower @entity(immutable: false) {
   id: Bytes! # address
+  principal: BigInt!
   userAddress: Bytes!
   proxyCometAddress: Bytes!
   createdAt: BigInt!
