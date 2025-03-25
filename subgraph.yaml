@@ -46,4 +46,10 @@ templates:
       eventHandlers:
         - event: Withdraw(indexed address,indexed address,uint256)
           handler: handleWithdraw
+        - event: AbsorbDebt(indexed address,indexed address,uint256,uint256)
+          handler: handleAbsorbDebt
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Supply(indexed address,indexed address,uint256)
+          handler: handleSupply
       file: ./src/comet.ts
