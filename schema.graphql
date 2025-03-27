@@ -3,7 +3,7 @@ type Comet @entity(immutable: false) {
   createdAt: BigInt!
 }
 
-type Borrower @entity(immutable: false) {
+type User @entity(immutable: false) {
   id: Bytes! # address
   principal: BigInt!
   userAddress: Bytes!

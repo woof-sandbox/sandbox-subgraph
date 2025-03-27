@@ -6,7 +6,7 @@ import {
   describe,
   beforeAll,
   afterAll,
-} from 'matchstick-as/assembly/index';
+} from 'matchstick-as/assembly';
 import { createComet } from '../src/helpers/create-comet';
 
 describe('createComet tests', () => {
