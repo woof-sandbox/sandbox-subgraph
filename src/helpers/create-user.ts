@@ -1,8 +1,8 @@
 import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
-import { Borrower } from '../../generated/schema';
+import { User } from '../../generated/schema';
 import { Comet } from '../../generated/templates/Comet/Comet';
 
-export function createBorrowerId(
+export function createUserId(
   proxyCometAddress: Address,
   userAddress: Address,
 ): Bytes {
@@ -11,7 +11,7 @@ export function createBorrowerId(
   );
 }
 
-function createBorrowerPrincipal(
+export function createUserPrincipal(
   proxyCometAddress: Address,
   userAddress: Address,
 ): BigInt {
@@ -25,24 +25,24 @@ function createBorrowerPrincipal(
   return userBasic.value.value0;
 }
 
-export function createBorrower(
+export function createUser(
   proxyCometAddress: Address,
   userAddress: Address,
   createdAt: BigInt,
 ): void {
-  let borrower = Borrower.load(
-    createBorrowerId(proxyCometAddress, userAddress),
+  let user = User.load(
+    createUserId(proxyCometAddress, userAddress),
   );
-  if (!borrower) {
-    borrower = new Borrower(createBorrowerId(proxyCometAddress, userAddress));
-    borrower.principal = createBorrowerPrincipal(
+  if (!user) {
+    user = new User(createUserId(proxyCometAddress, userAddress));
+    user.principal = createUserPrincipal(
       proxyCometAddress,
       userAddress,
     );
-    borrower.userAddress = userAddress;
-    borrower.proxyCometAddress = proxyCometAddress;
-    borrower.createdAt = createdAt;
+    user.userAddress = userAddress;
+    user.proxyCometAddress = proxyCometAddress;
+    user.createdAt = createdAt;
 
-    borrower.save();
+    user.save();
   }
 }

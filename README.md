@@ -5,7 +5,7 @@ all Comets:
 **proxyCometAddress (id)**  
 **createdAt**
 
-all Borrowers:  
+all Users:  
 **id (comet-user)**  
 **principal**  
 **userAddress**  
