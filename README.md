@@ -1,5 +1,6 @@
 # Compound v3 Subgraph
-# Subgraph for collecting Comet and Borrower
+# Subgraph for collecting Comet and User
+Tracking Both Borrowers and Suppliers  
 
 all Comets:  
 **proxyCometAddress (id)**  
