@@ -1,17 +1,10 @@
 import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { User } from '../../generated/schema';
 import { Comet } from '../../generated/templates/Comet/Comet';
+import { formUserId } from './form-user-id';
 
-export function createUserId(
-  proxyCometAddress: Address,
-  userAddress: Address,
-): Bytes {
-  return Bytes.fromHexString(
-    proxyCometAddress.toHexString() + userAddress.toHexString(),
-  );
-}
-
-export function createUserPrincipal(
+// Used locally
+function getUserPrincipal(
   proxyCometAddress: Address,
   userAddress: Address,
 ): BigInt {
@@ -29,20 +22,19 @@ export function createUser(
   proxyCometAddress: Address,
   userAddress: Address,
   createdAt: BigInt,
-): void {
-  let user = User.load(
-    createUserId(proxyCometAddress, userAddress),
-  );
+): User {
+  const id = formUserId(proxyCometAddress, userAddress);
+
+  let user = User.load(id);
   if (!user) {
-    user = new User(createUserId(proxyCometAddress, userAddress));
-    user.principal = createUserPrincipal(
-      proxyCometAddress,
-      userAddress,
-    );
+    user = new User(id);
+    user.principal = getUserPrincipal(proxyCometAddress, userAddress);
     user.userAddress = userAddress;
     user.proxyCometAddress = proxyCometAddress;
     user.createdAt = createdAt;
 
     user.save();
   }
+
+  return user;
 }

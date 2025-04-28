@@ -1,0 +1,1702 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_dao",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "_feeEnabled",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_protocolFactorBorrow",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_reserveFactorBorrow",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_protocolFactorLiquidation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_reserveFactorLiquidation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxCollateralAssets",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_targetReserves",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_storeFrontPriceFactor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minUpdateTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_suggestedAmountOfSeedReserves",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_suggestedLockTimeOfSeedReserves",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidCurveConfiguration",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidFactors",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidPriceFeed",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "NotAuthorized",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "NotDao",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "NotOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "PriceFeedAlreadyWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TokenAlreadyWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "TokenNotWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAddress",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct ISandboxController.BaseAssetCurve",
+        "name": "baseAssetCurve",
+        "type": "tuple"
+      }
+    ],
+    "name": "BaseAssetCurveAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct ISandboxController.BaseAssetCurve",
+        "name": "oldCurve",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct ISandboxController.BaseAssetCurve",
+        "name": "newCurve",
+        "type": "tuple"
+      }
+    ],
+    "name": "BaseAssetCurveChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "priceFeed",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint8",
+        "name": "decimals",
+        "type": "uint8"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct ISandboxController.BaseAssetCurve",
+        "name": "baseAssetCurve",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "minBorrow",
+        "type": "uint256"
+      }
+    ],
+    "name": "BaseAssetWhitelisted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "priceFeed",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "decimals",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "maxBorrowCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "minBorrowCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "minLiquidateCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "maxLiquidateCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "minLiquidationFactor",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "maxLiquidationFactor",
+        "type": "uint64"
+      }
+    ],
+    "name": "CollateralAssetWhitelisted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "storeFrontPriceFactor",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedAmountOfSeedReserves",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint256"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct ISandboxController.SandboxControllerConfiguration",
+        "name": "oldConfig",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "storeFrontPriceFactor",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedAmountOfSeedReserves",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint256"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct ISandboxController.SandboxControllerConfiguration",
+        "name": "newConfig",
+        "type": "tuple"
+      }
+    ],
+    "name": "ConfigurationChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldDao",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newDao",
+        "type": "address"
+      }
+    ],
+    "name": "DaoTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "feeEnabled",
+        "type": "bool"
+      }
+    ],
+    "name": "FeeEnabledSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldOwner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnerTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "enum ISandboxController.MarketState",
+        "name": "state",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oldValue",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "ProtocolCommissionChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "enum ISandboxController.MarketState",
+        "name": "state",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oldValue",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "ReserveCommissionChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oldTargetReserves",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newTargetReserves",
+        "type": "uint256"
+      }
+    ],
+    "name": "TargetReservesChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "enum ISandboxController.MarketState",
+        "name": "state",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "oldValue",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newValue",
+        "type": "uint256"
+      }
+    ],
+    "name": "ThresholdChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldTreasury",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newTreasury",
+        "type": "address"
+      }
+    ],
+    "name": "TreasuryChanged",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "_controllerConfiguration",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "storeFrontPriceFactor",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minUpdateTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "suggestedAmountOfSeedReserves",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "suggestedLockTimeOfSeedReserves",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ISandboxController.BaseAssetCurve",
+        "name": "baseAssetCurve",
+        "type": "tuple"
+      }
+    ],
+    "name": "addBaseAssetCurve",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseAssetCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "baseAssetTokens",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "baseAssets",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "priceFeed",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "decimals",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minBorrow",
+            "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint64",
+                "name": "supplyKink",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "supplyPerYearInterestRateBase",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "supplyPerYearInterestRateSlopeLow",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "supplyPerYearInterestRateSlopeHigh",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "borrowKink",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "borrowPerYearInterestRateBase",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "borrowPerYearInterestRateSlopeLow",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "borrowPerYearInterestRateSlopeHigh",
+                "type": "uint64"
+              }
+            ],
+            "internalType": "struct ISandboxController.BaseAssetCurve[]",
+            "name": "baseAssetCurves",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct ISandboxController.BaseAssetConfiguration",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "curveIndex",
+        "type": "uint256"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ISandboxController.BaseAssetCurve",
+        "name": "newCurve",
+        "type": "tuple"
+      }
+    ],
+    "name": "changeBaseAssetCurve",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "collateralAssetCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "collateralAssetTokens",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "collateralAssets",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "collateralToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "priceFeed",
+            "type": "address"
+          },
+          {
+            "internalType": "uint8",
+            "name": "decimals",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint64",
+            "name": "maxBorrowCollateralFactor",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "minBorrowCollateralFactor",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "minLiquidateCollateralFactor",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "maxLiquidateCollateralFactor",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "minLiquidationFactor",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "maxLiquidationFactor",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ISandboxController.CollateralAssetConfiguration",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "controllerConfiguration",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "storeFrontPriceFactor",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedAmountOfSeedReserves",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct ISandboxController.SandboxControllerConfiguration",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dao",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "feeEnabled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "getBaseAssetCurves",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ISandboxController.BaseAssetCurve[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "isBaseTokenWhitelisted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "isCollateralTokenWhitelisted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ISandboxController.BaseAssetCurve",
+        "name": "curve",
+        "type": "tuple"
+      }
+    ],
+    "name": "isCurveConfigurationValid",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isPriceFeedWhitelisted",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxCollateralAssets",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum ISandboxController.MarketState",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "name": "protocolCommission",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "protocolFactorBorrow",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "protocolFactorLiquidation",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum ISandboxController.MarketState",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "name": "reserveCommission",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "reserveFactorBorrow",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "reserveFactorLiquidation",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "storeFrontPriceFactor",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedAmountOfSeedReserves",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct ISandboxController.SandboxControllerConfiguration",
+        "name": "_config",
+        "type": "tuple"
+      }
+    ],
+    "name": "setConfiguration",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "_feeEnabled",
+        "type": "bool"
+      }
+    ],
+    "name": "setFeeEnabled",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[3]",
+        "name": "protocolCommissions",
+        "type": "uint256[3]"
+      }
+    ],
+    "name": "setProtocolCommissions",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[3]",
+        "name": "reserveCommissions",
+        "type": "uint256[3]"
+      }
+    ],
+    "name": "setReserveCommissions",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_targetReserves",
+        "type": "uint256"
+      }
+    ],
+    "name": "setTargetReserves",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[3]",
+        "name": "thresholds",
+        "type": "uint256[3]"
+      }
+    ],
+    "name": "setThresholds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_treasury",
+        "type": "address"
+      }
+    ],
+    "name": "setTreasury",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "targetReserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "enum ISandboxController.MarketState",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "name": "threshold",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newDao",
+        "type": "address"
+      }
+    ],
+    "name": "transferDao",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "treasury",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "priceFeed",
+        "type": "address"
+      },
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          }
+        ],
+        "internalType": "struct ISandboxController.BaseAssetCurve",
+        "name": "baseAssetCurve",
+        "type": "tuple"
+      },
+      {
+        "internalType": "uint256",
+        "name": "minBorrow",
+        "type": "uint256"
+      }
+    ],
+    "name": "whitelistBaseAsset",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "priceFeed",
+        "type": "address"
+      },
+      {
+        "internalType": "uint64",
+        "name": "minBorrowCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "maxBorrowCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "minLiquidateCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "maxLiquidateCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "minLiquidationFactor",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "maxLiquidationFactor",
+        "type": "uint64"
+      }
+    ],
+    "name": "whitelistCollateralAsset",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]

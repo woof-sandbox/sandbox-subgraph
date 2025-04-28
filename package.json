@@ -5,7 +5,7 @@
     "clean": "rimraf build generated",
     "codegen": "graph codegen",
     "build": "graph build",
-    "rebuild": "rimraf build generated && graph codegen && graph build",
+    "rebuild:sepolia": "rimraf build generated && graph codegen && graph build --network=sepolia",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ 86c28nvyp-compound-v3",
     "create-local": "graph create --node http://localhost:8020/ 86c28nvyp-compound-v3",

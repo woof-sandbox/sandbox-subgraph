@@ -1,5 +1,7 @@
-type Comet @entity(immutable: false) {
+type Comet @entity(immutable: true) {
   id: Bytes! # address
+  configController: Bytes!
+
   createdAt: BigInt!
 }
 
@@ -8,5 +10,45 @@ type User @entity(immutable: false) {
   principal: BigInt!
   userAddress: Bytes!
   proxyCometAddress: Bytes!
+
+  createdAt: BigInt!
+}
+
+type WhitelistedCollateral @entity(immutable: true) {
+  id: Bytes! # address
+  priceFeed: Bytes! # address
+  decimals: BigInt!
+  maxBorrowCollateralFactor: BigInt!
+  minBorrowCollateralFactor: BigInt!
+  maxLiquidateCollateralFactor: BigInt!
+  minLiquidateCollateralFactor: BigInt!
+  maxLiquidationFactor: BigInt!
+  minLiquidationFactor: BigInt!
+
+  createdAt: BigInt!
+}
+
+type BaseAssetCurve @entity(immutable: false) {
+  id: String!
+  supplyKink: BigInt!
+  supplyPerYearInterestRateBase: BigInt!
+  supplyPerYearInterestRateSlopeLow: BigInt!
+  supplyPerYearInterestRateSlopeHigh: BigInt!
+  borrowKink: BigInt!
+  borrowPerYearInterestRateBase: BigInt!
+  borrowPerYearInterestRateSlopeLow: BigInt!
+  borrowPerYearInterestRateSlopeHigh: BigInt!
+
+  createdAt: BigInt!
+}
+type WhitelistedBase @entity(immutable: false) {
+  id: Bytes! # address
+  priceFeed: Bytes! # address
+  decimals: BigInt!
+
+  curve: BaseAssetCurve!
+
+  minBorrow: BigInt!
+
   createdAt: BigInt!
 }
