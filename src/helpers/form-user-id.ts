@@ -2,9 +2,9 @@ import { Address, Bytes } from '@graphprotocol/graph-ts';
 
 export function formUserId(
   proxyCometAddress: Address,
-  userAddress: Address,
+  userAddress: Address
 ): Bytes {
   return Bytes.fromHexString(
-    proxyCometAddress.toHexString() + userAddress.toHexString(),
+    proxyCometAddress.toHexString() + userAddress.toHexString()
   );
 }

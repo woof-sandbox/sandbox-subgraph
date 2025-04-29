@@ -11,7 +11,7 @@ export function createWhitelistedBase(
   //
   minBorrow: BigInt,
   //
-  createdAt: BigInt,
+  createdAt: BigInt
 ): WhitelistedBase {
   const id = Bytes.fromHexString(address.toHexString());
 

@@ -13,7 +13,7 @@ export function createCurve(
   borrowPerYearInterestRateSlopeLow: BigInt,
   borrowPerYearInterestRateSlopeHigh: BigInt,
   //
-  createdAt: BigInt,
+  createdAt: BigInt
 ): BaseAssetCurve {
   let curve = BaseAssetCurve.load(id);
   if (!curve) {

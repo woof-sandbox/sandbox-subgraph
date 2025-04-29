@@ -1,17 +1,17 @@
 import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
-import { describe, test, assert, createMockedFunction } from 'matchstick-as';
-import { updateUserPrincipal } from '../src/helpers/update-user-principal';
+import { assert, createMockedFunction, describe, test } from 'matchstick-as';
 import { User } from '../generated/schema';
+import { updateUserPrincipal } from '../src/helpers/update-user-principal';
 
 function mockCometContract(
   proxyCometAddress: Address,
   userAddress: Address,
-  principal: BigInt,
+  principal: BigInt
 ): void {
   createMockedFunction(
     proxyCometAddress,
     'userBasic',
-    'userBasic(address):(int104,uint64,uint64,uint16,uint8)',
+    'userBasic(address):(int104,uint64,uint64,uint16,uint8)'
   )
     .withArgs([ethereum.Value.fromAddress(userAddress)])
     .returns([
@@ -26,13 +26,13 @@ function mockCometContract(
 describe('updateUserPrincipal', () => {
   test('updates user principal if user exists', () => {
     let proxyAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000001',
+      '0x0000000000000000000000000000000000000001'
     );
     let userAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000002',
+      '0x0000000000000000000000000000000000000002'
     );
     let userId = Bytes.fromHexString(
-      proxyAddress.toHexString() + userAddress.toHexString(),
+      proxyAddress.toHexString() + userAddress.toHexString()
     );
     let initialPrincipal = BigInt.fromI32(500);
     let updatedPrincipal = BigInt.fromI32(1000);

@@ -26,6 +26,7 @@ dataSources:
       eventHandlers:
         - event: MarketCreated(indexed address,indexed address)
           handler: handleMarketCreated
+          receipt: true
       file: ./src/market-factory.ts
   - kind: ethereum
     name: SandboxController
@@ -48,9 +49,11 @@ dataSources:
         - event: CollateralAssetWhitelisted(indexed address,indexed
             address,uint256,uint64,uint64,uint64,uint64,uint64,uint64)
           handler: handleCollateralAssetWhitelisted
+          receipt: true
         - event: BaseAssetWhitelisted(indexed address,indexed
             address,uint8,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),uint256)
-          handler: handleCollateralAssetWhitelisted
+          handler: handleBaseAssetWhitelisted
+          receipt: true
       file: ./src/sandbox-controller.ts
 templates:
   - name: Comet
@@ -71,10 +74,14 @@ templates:
       eventHandlers:
         - event: Withdraw(indexed address,indexed address,uint256)
           handler: handleWithdraw
+          receipt: true
         - event: AbsorbDebt(indexed address,indexed address,uint256,uint256)
           handler: handleAbsorbDebt
+          receipt: true
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
+          receipt: true
         - event: Supply(indexed address,indexed address,uint256)
           handler: handleSupply
+          receipt: true
       file: ./src/comet.ts

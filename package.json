@@ -1,11 +1,14 @@
 {
   "name": "86c28nvyp-sandbox-subgraph",
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "type": "module",
   "scripts": {
     "clean": "rimraf build generated",
     "codegen": "graph codegen",
     "build": "graph build",
-    "rebuild:sepolia": "rimraf build generated && graph codegen && graph build --network=sepolia",
+    "generate": "node scripts/generate-event-names.js",
+    "generate:sepolia": "NETWORK=sepolia node scripts/generate-contract-names.js & npm run generate",
+    "rebuild:sepolia": "rimraf build generated && graph codegen && npm run generate:sepolia && graph build --network=sepolia",
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ 86c28nvyp-compound-v3",
     "create-local": "graph create --node http://localhost:8020/ 86c28nvyp-compound-v3",
@@ -18,6 +21,8 @@
     "@graphprotocol/graph-ts": "0.37.0"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "ethers": "^6.13.7",
     "matchstick-as": "0.6.0",
     "prettier": "^3.5.2"
   }

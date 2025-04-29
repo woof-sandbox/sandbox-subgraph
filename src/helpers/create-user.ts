@@ -6,7 +6,7 @@ import { getUserPrincipal } from './get-user-principal';
 export function createUser(
   proxyCometAddress: Address,
   userAddress: Address,
-  createdAt: BigInt,
+  createdAt: BigInt
 ): User {
   const id = formUserId(proxyCometAddress, userAddress);
 

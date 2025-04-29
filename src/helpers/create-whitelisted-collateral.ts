@@ -13,7 +13,7 @@ export function createWhitelistedCollateral(
   maxLiquidationFactor: BigInt,
   minLiquidationFactor: BigInt,
   //
-  createdAt: BigInt,
+  createdAt: BigInt
 ): WhitelistedCollateral {
   const id = Bytes.fromHexString(address.toHexString());
 

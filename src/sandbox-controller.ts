@@ -1,13 +1,15 @@
+import { BigInt } from '@graphprotocol/graph-ts';
 import { CollateralAssetWhitelisted as CollateralAssetWhitelistedEvent } from '../generated/SandboxController/SandboxController';
 import { BaseAssetWhitelisted as BaseAssetWhitelistedEvent } from '../generated/SandboxController/SandboxController';
-import { createWhitelistedCollateral } from './helpers/create-whitelisted-collateral';
-import { createWhitelistedBase } from './helpers/create-whitelisted-base';
+import { logEvent } from './utils/log-event';
 import { createCurve } from './helpers/create-curve';
-import { BigInt, log } from '@graphprotocol/graph-ts';
+import { createWhitelistedBase } from './helpers/create-whitelisted-base';
+import { createWhitelistedCollateral } from './helpers/create-whitelisted-collateral';
 
 export function handleCollateralAssetWhitelisted(
-  event: CollateralAssetWhitelistedEvent,
+  event: CollateralAssetWhitelistedEvent
 ): void {
+  logEvent(event);
   createWhitelistedCollateral(
     event.params.token,
     //
@@ -20,13 +22,14 @@ export function handleCollateralAssetWhitelisted(
     event.params.maxLiquidationFactor,
     event.params.minLiquidationFactor,
     //
-    event.block.timestamp,
+    event.block.timestamp
   );
 }
 
 export function handleBaseAssetWhitelisted(
-  event: BaseAssetWhitelistedEvent,
+  event: BaseAssetWhitelistedEvent
 ): void {
+  logEvent(event);
   const curve = createCurve(
     event.block.number.toString(), // TODO: use real curve id
     //
@@ -39,12 +42,10 @@ export function handleBaseAssetWhitelisted(
     event.params.baseAssetCurve.borrowPerYearInterestRateSlopeLow,
     event.params.baseAssetCurve.borrowPerYearInterestRateSlopeHigh,
     //
-    event.block.timestamp,
+    event.block.timestamp
   );
 
-  log.debug('before', []);
-  const decimals = BigInt.fromI32(event.params.decimals); // !:
-  log.debug('after', []);
+  const decimals = BigInt.fromI32(event.params.decimals); // !
 
   createWhitelistedBase(
     event.params.token,
@@ -56,6 +57,6 @@ export function handleBaseAssetWhitelisted(
     //
     event.params.minBorrow,
     //
-    event.block.timestamp,
+    event.block.timestamp
   );
 }

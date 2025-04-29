@@ -4,7 +4,7 @@ import { Comet } from '../../generated/schema';
 export function createComet(
   address: Address,
   configController: Address,
-  createdAt: BigInt,
+  createdAt: BigInt
 ): Comet {
   const id = Bytes.fromHexString(address.toHexString());
 

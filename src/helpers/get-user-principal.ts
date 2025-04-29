@@ -3,7 +3,7 @@ import { Comet } from '../../generated/templates/Comet/Comet';
 
 export function getUserPrincipal(
   proxyCometAddress: Address,
-  userAddress: Address,
+  userAddress: Address
 ): BigInt {
   let cometContract = Comet.bind(proxyCometAddress);
   let userBasic = cometContract.try_userBasic(userAddress);

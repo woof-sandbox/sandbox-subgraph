@@ -1,32 +1,41 @@
 import {
-  Withdraw,
+  AbsorbDebt,
   Supply,
   Transfer,
-  AbsorbDebt,
+  Withdraw,
 } from '../generated/templates/Comet/Comet';
+import { logEvent } from './utils/log-event';
 import { createUser } from './helpers/create-user';
 import { updateUserPrincipal } from './helpers/update-user-principal';
 
+// START: USER
+
 export function handleWithdraw(event: Withdraw): void {
+  logEvent(event);
   createUser(event.address, event.params.to, event.block.timestamp);
   updateUserPrincipal(event.address, event.params.to);
 }
 
 export function handleSupply(event: Supply): void {
+  logEvent(event);
   createUser(event.address, event.params.dst, event.block.timestamp);
   updateUserPrincipal(event.address, event.params.dst);
 }
 
 export function handleTransfer(event: Transfer): void {
+  logEvent(event);
   createUser(event.address, event.params.to, event.block.timestamp);
   updateUserPrincipal(event.address, event.params.from);
   updateUserPrincipal(event.address, event.params.to);
 }
 
 export function handleAbsorbDebt(event: AbsorbDebt): void {
+  logEvent(event);
   createUser(event.address, event.params.borrower, event.block.timestamp);
   updateUserPrincipal(event.address, event.params.borrower);
 }
+
+// END: USER
 
 // -=-=-=-=-=-=-=-=-=-=-=-=- Paperclip Start -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 

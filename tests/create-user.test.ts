@@ -1,25 +1,25 @@
 import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts';
 import {
-  describe,
-  test,
   assert,
   createMockedFunction,
+  describe,
+  test,
 } from 'matchstick-as/assembly';
+import { User } from '../generated/schema';
 import { createUser } from '../src/helpers/create-user';
 import { formUserId } from '../src/helpers/form-user-id';
 import { getUserPrincipal } from '../src/helpers/get-user-principal';
-import { User } from '../generated/schema';
 
 function mockCometContract(
   proxyCometAddress: Address,
   userAddress: Address,
   principal: BigInt,
-  reverted: boolean,
+  reverted: boolean
 ): void {
   createMockedFunction(
     proxyCometAddress,
     'userBasic',
-    'userBasic(address):(int104,uint64,uint64,uint16,uint8)',
+    'userBasic(address):(int104,uint64,uint64,uint16,uint8)'
   )
     .withArgs([ethereum.Value.fromAddress(userAddress)])
     .returns([
@@ -34,17 +34,17 @@ function mockCometContract(
 describe('formUserId', () => {
   test('generates unique user ID', () => {
     let proxyAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000001',
+      '0x0000000000000000000000000000000000000001'
     );
     let userAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000002',
+      '0x0000000000000000000000000000000000000002'
     );
 
     let userId = formUserId(proxyAddress, userAddress);
 
     assert.stringEquals(
       userId.toHexString(),
-      '0x0000000000000000000000000000000000000001000000000000000000000000000000000000000002',
+      '0x0000000000000000000000000000000000000001000000000000000000000000000000000000000002'
     );
   });
 });
@@ -52,10 +52,10 @@ describe('formUserId', () => {
 describe('getUserPrincipal', () => {
   test('returns principal when not reverted', () => {
     let proxyAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000001',
+      '0x0000000000000000000000000000000000000001'
     );
     let userAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000002',
+      '0x0000000000000000000000000000000000000002'
     );
     let principal = BigInt.fromI32(1000);
 
@@ -68,10 +68,10 @@ describe('getUserPrincipal', () => {
 
   test('returns 0 when reverted', () => {
     let proxyAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000001',
+      '0x0000000000000000000000000000000000000001'
     );
     let userAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000002',
+      '0x0000000000000000000000000000000000000002'
     );
 
     mockCometContract(proxyAddress, userAddress, BigInt.zero(), true);
@@ -85,10 +85,10 @@ describe('getUserPrincipal', () => {
 describe('createUser', () => {
   test('creates user entity when it does not exist', () => {
     let proxyAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000001',
+      '0x0000000000000000000000000000000000000001'
     );
     let userAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000002',
+      '0x0000000000000000000000000000000000000002'
     );
     let createdAt = BigInt.fromI32(123456);
 
@@ -99,7 +99,7 @@ describe('createUser', () => {
     assert.assertNotNull(user);
     assert.bigIntEquals(
       user!.principal,
-      getUserPrincipal(proxyAddress, userAddress),
+      getUserPrincipal(proxyAddress, userAddress)
     );
     assert.bytesEquals(user!.userAddress, userAddress);
     assert.bytesEquals(user!.proxyCometAddress, proxyAddress);
@@ -108,10 +108,10 @@ describe('createUser', () => {
 
   test('does not overwrite existing user entity', () => {
     let proxyAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000001',
+      '0x0000000000000000000000000000000000000001'
     );
     let userAddress = Address.fromString(
-      '0x0000000000000000000000000000000000000002',
+      '0x0000000000000000000000000000000000000002'
     );
     let createdAt = BigInt.fromI32(123456);
 

@@ -1,11 +1,11 @@
 import { Address } from '@graphprotocol/graph-ts';
-import { User } from '../../generated/schema';
 import { Comet } from '../../generated/templates/Comet/Comet';
+import { User } from '../../generated/schema';
 import { formUserId } from './form-user-id';
 
 export function updateUserPrincipal(
   proxyCometAddress: Address,
-  userAddress: Address,
+  userAddress: Address
 ): void {
   const userId = formUserId(proxyCometAddress, userAddress);
   let user = User.load(userId);
