@@ -31,7 +31,6 @@ export function createCurve(
       borrowPerYearInterestRateSlopeHigh;
     //
     curve.createdAt = createdAt;
-
     curve.save();
   }
 

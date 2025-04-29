@@ -9,7 +9,7 @@ dataSources:
     network: sepolia
     source:
       abi: MarketFactory
-      address: "0x6e79d9f14346Ba53c171CECc8Cc1602b9E509eBa"
+      address: "0x6e79d9f14346ba53c171cecc8cc1602b9e509eba"
       startBlock: 8144213
     mapping:
       kind: ethereum/events
@@ -33,7 +33,7 @@ dataSources:
     network: sepolia
     source:
       abi: SandboxController
-      address: "0xaf39746D87b067267B23C2169BF727F237f303b9"
+      address: "0xaf39746d87b067267b23c2169bf727f237f303b9"
       startBlock: 8144213
     mapping:
       kind: ethereum/events
@@ -46,6 +46,14 @@ dataSources:
         - name: SandboxController
           file: ./abis/SandboxController.json
       eventHandlers:
+        - event: BaseAssetCurveAdded(indexed
+            address,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64))
+          handler: handleBaseAssetCurveAdded
+          receipt: true
+        - event: BaseAssetCurveChanged(indexed
+            address,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64))
+          handler: handleBaseAssetCurveChanged
+          receipt: true
         - event: CollateralAssetWhitelisted(indexed address,indexed
             address,uint256,uint64,uint64,uint64,uint64,uint64,uint64)
           handler: handleCollateralAssetWhitelisted

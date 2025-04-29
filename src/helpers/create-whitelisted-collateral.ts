@@ -31,7 +31,6 @@ export function createWhitelistedCollateral(
     collateral.minLiquidationFactor = minLiquidationFactor;
     //
     collateral.createdAt = createdAt;
-
     collateral.save();
   }
 

@@ -16,8 +16,9 @@ export function createUser(
     user.principal = getUserPrincipal(proxyCometAddress, userAddress);
     user.userAddress = userAddress;
     user.proxyCometAddress = proxyCometAddress;
+    //
     user.createdAt = createdAt;
-
+    user.updatedAt = createdAt;
     user.save();
   }
 

@@ -2,6 +2,7 @@ type Comet @entity(immutable: true) {
   id: Bytes! # address
   configController: Bytes!
 
+  updatedAt: BigInt!
   createdAt: BigInt!
 }
 
@@ -11,6 +12,7 @@ type User @entity(immutable: false) {
   userAddress: Bytes!
   proxyCometAddress: Bytes!
 
+  updatedAt: BigInt!
   createdAt: BigInt!
 }
 
@@ -28,7 +30,7 @@ type WhitelistedCollateral @entity(immutable: true) {
   createdAt: BigInt!
 }
 
-type BaseAssetCurve @entity(immutable: false) {
+type BaseAssetCurve @entity(immutable: true) {
   id: String!
   supplyKink: BigInt!
   supplyPerYearInterestRateBase: BigInt!
@@ -50,5 +52,6 @@ type WhitelistedBase @entity(immutable: false) {
 
   minBorrow: BigInt!
 
+  updatedAt: BigInt!
   createdAt: BigInt!
 }

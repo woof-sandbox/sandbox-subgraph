@@ -27,7 +27,7 @@ export function createWhitelistedBase(
     base.minBorrow = minBorrow;
     //
     base.createdAt = createdAt;
-
+    base.updatedAt = createdAt;
     base.save();
   }
 

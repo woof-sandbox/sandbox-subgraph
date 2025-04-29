@@ -7,8 +7,12 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "generate": "node scripts/generate-event-names.js",
+
     "generate:sepolia": "NETWORK=sepolia node scripts/generate-contract-names.js & npm run generate",
-    "rebuild:sepolia": "rimraf build generated && graph codegen && npm run generate:sepolia && graph build --network=sepolia",
+    "prepublish:sepolia": "rimraf build generated && graph codegen && npm run generate:sepolia && graph build --network=sepolia",
+    "bump:sepolia": "node scripts/bump-version.js sepolia",
+    "publish:sepolia": "npm run prepublish:sepolia && npm run bump:sepolia && graph deploy --version-label $(jq -r '.sepolia' versions.json) sandbox-sepolia",
+
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ 86c28nvyp-compound-v3",
     "create-local": "graph create --node http://localhost:8020/ 86c28nvyp-compound-v3",
