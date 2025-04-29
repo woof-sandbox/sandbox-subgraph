@@ -1,10 +1,5 @@
 import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
-import {
-  describe,
-  test,
-  assert,
-  createMockedFunction,
-} from 'matchstick-as/assembly/index';
+import { describe, test, assert, createMockedFunction } from 'matchstick-as';
 import { updateUserPrincipal } from '../src/helpers/update-user-principal';
 import { User } from '../generated/schema';
 

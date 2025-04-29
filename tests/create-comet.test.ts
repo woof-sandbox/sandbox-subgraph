@@ -16,7 +16,7 @@ describe('createComet tests', () => {
     );
     let createdAt = BigInt.fromI32(1633024800);
 
-    createComet(address, createdAt);
+    createComet(address, address, createdAt);
   });
 
   afterAll(() => {

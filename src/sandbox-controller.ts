@@ -40,12 +40,11 @@ export function handleBaseAssetWhitelisted(
     event.params.baseAssetCurve.borrowPerYearInterestRateSlopeHigh,
     //
     event.block.timestamp,
-  )
+  );
 
   log.debug('before', []);
   const decimals = BigInt.fromI32(event.params.decimals); // !:
   log.debug('after', []);
-
 
   createWhitelistedBase(
     event.params.token,
@@ -58,5 +57,5 @@ export function handleBaseAssetWhitelisted(
     event.params.minBorrow,
     //
     event.block.timestamp,
-  )
+  );
 }

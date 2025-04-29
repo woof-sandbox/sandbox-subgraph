@@ -1,22 +1,7 @@
-import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { User } from '../../generated/schema';
-import { Comet } from '../../generated/templates/Comet/Comet';
 import { formUserId } from './form-user-id';
-
-// Used locally
-function getUserPrincipal(
-  proxyCometAddress: Address,
-  userAddress: Address,
-): BigInt {
-  let cometContract = Comet.bind(proxyCometAddress);
-  let userBasic = cometContract.try_userBasic(userAddress);
-
-  if (userBasic.reverted) {
-    return BigInt.fromI32(0);
-  }
-
-  return userBasic.value.value0;
-}
+import { getUserPrincipal } from './get-user-principal';
 
 export function createUser(
   proxyCometAddress: Address,
