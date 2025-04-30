@@ -55,3 +55,56 @@ type WhitelistedBase @entity(immutable: false) {
   updatedAt: BigInt!
   createdAt: BigInt!
 }
+
+
+type ConfigController @entity(immutable: false) {
+  id: Bytes! # address
+  owner: Bytes! # address
+  guardian: Bytes! # address
+  sandboxController: Bytes! # address
+  marketFactory: Bytes! # address
+
+  curatorFee: BigInt!
+  name: String!
+  curatorProposalDuration: BigInt!
+  proposalDuration: BigInt!
+
+  updatedAt: BigInt!
+  createdAt: BigInt!
+}
+
+type MarketConfiguration @entity(immutable: false) {
+  id: Bytes! # market address
+
+  market: Comet!
+  baseToken: Bytes!
+  baseTokenId: BigInt!
+  priceFeed: Bytes!
+
+  updatedAt: BigInt!
+  createdAt: BigInt!
+}
+
+type BaseConfiguration @entity(immutable: false) {
+  id: Bytes! # ConfigController address
+
+  comet: Comet!
+  curve: BaseAssetCurve!
+
+  updatedAt: BigInt!
+  createdAt: BigInt!
+}
+
+type CollateralConfiguration @entity(immutable: false) {
+  id: Bytes! # asset address
+
+  priceFeed: Bytes!
+  decimals: BigInt!
+  borrowCollateralFactor: BigInt!
+  liquidateCollateralFactor: BigInt!
+  liquidationFactor: BigInt!
+  supplyCap: BigInt!
+
+  updatedAt: BigInt!
+  createdAt: BigInt!
+}

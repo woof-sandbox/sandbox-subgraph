@@ -5,30 +5,6 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: MarketFactory
-    network: sepolia
-    source:
-      abi: MarketFactory
-      address: "0x6e79d9f14346ba53c171cecc8cc1602b9e509eba"
-      startBlock: 8144213
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.9
-      language: wasm/assemblyscript
-      entities:
-        - Comet
-        - Borrower
-      abis:
-        - name: MarketFactory
-          file: ./abis/MarketFactory.json
-        - name: Comet
-          file: ./abis/Comet.json
-      eventHandlers:
-        - event: MarketCreated(indexed address,indexed address)
-          handler: handleMarketCreated
-          receipt: true
-      file: ./src/market-factory.ts
-  - kind: ethereum
     name: SandboxController
     network: sepolia
     source:
@@ -63,6 +39,52 @@ dataSources:
           handler: handleBaseAssetWhitelisted
           receipt: true
       file: ./src/sandbox-controller.ts
+  - kind: ethereum
+    name: MarketFactory
+    network: sepolia
+    source:
+      abi: MarketFactory
+      address: "0x6e79d9f14346ba53c171cecc8cc1602b9e509eba"
+      startBlock: 8144213
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - Comet
+        - Borrower
+      abis:
+        - name: MarketFactory
+          file: ./abis/MarketFactory.json
+        - name: Comet
+          file: ./abis/Comet.json
+      eventHandlers:
+        - event: MarketCreated(indexed address,indexed address)
+          handler: handleMarketCreated
+          receipt: true
+      file: ./src/market-factory.ts
+  - kind: ethereum
+    name: ConfigControllerFactory
+    network: sepolia
+    source:
+      abi: ConfigControllerFactory
+      address: "0xb9535d0dbc7fe3adf9371ab166e136746a3819c9"
+      startBlock: 8144213
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - Comet
+      abis:
+        - name: ConfigControllerFactory
+          file: ./abis/ConfigControllerFactory.json
+      eventHandlers:
+        - event: ConfigControllerCreated(indexed address,indexed address,indexed
+            address,address,address,uint256,string,uint256,uint256)
+          handler: handleConfigControllerCreated
+          receipt: true
+      file: ./src/config-controller-factory.ts
 templates:
   - name: Comet
     kind: ethereum/contract
@@ -93,3 +115,28 @@ templates:
           handler: handleSupply
           receipt: true
       file: ./src/comet.ts
+  - name: ConfigController
+    kind: ethereum/contract
+    network: sepolia
+    source:
+      abi: ConfigController
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - ConfigController
+      abis:
+        - name: ConfigController
+          file: ./abis/ConfigController.json
+      eventHandlers:
+        - event: MarketConfigurationCreated(address,address,address,uint256)
+          handler: handleMarketConfigurationCreated
+          receipt: true
+        - event: AddedBaseTokenConfig(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64)
+          handler: handleAddedBaseTokenConfig
+          receipt: true
+        - event: AddedCollateralTokenConfig(address,address,uint8,uint64,uint64,uint64,uint128)
+          handler: handleAddedCollateralTokenConfig
+          receipt: true
+      file: ./src/config-controller.ts

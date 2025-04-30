@@ -38,7 +38,8 @@ export function handleBaseAssetCurveChanged(
   event: BaseAssetCurveChangedEvent
 ): void {
   logEvent(event);
-  const newCurve = createCurve( // TODO: change curve by id
+  const newCurve = createCurve(
+    // TODO: change curve by id
     event.block.number.toString(), // TODO: use real curve id
     //
     event.params.newCurve.supplyKink,

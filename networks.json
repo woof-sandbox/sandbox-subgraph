@@ -1,11 +1,15 @@
 {
   "sepolia": {
+    "SandboxController": {
+      "address": "0xaf39746d87b067267b23c2169bf727f237f303b9",
+      "startBlock": 8144213
+    },
     "MarketFactory": {
       "address": "0x6e79d9f14346ba53c171cecc8cc1602b9e509eba",
       "startBlock": 8144213
     },
-    "SandboxController": {
-      "address": "0xaf39746d87b067267b23c2169bf727f237f303b9",
+    "ConfigControllerFactory": {
+      "address": "0xb9535d0dbc7fe3adf9371ab166e136746a3819c9",
       "startBlock": 8144213
     }
   }

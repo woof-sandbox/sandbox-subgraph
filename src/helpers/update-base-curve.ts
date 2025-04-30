@@ -6,7 +6,7 @@ export function updateBaseCurve(
   //
   newCurveId: string,
   //
-  updatedAt: BigInt,
+  updatedAt: BigInt
 ): void {
   const id = Bytes.fromHexString(address.toHexString());
 

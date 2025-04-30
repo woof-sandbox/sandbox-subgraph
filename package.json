@@ -8,7 +8,7 @@
     "build": "graph build",
     "generate": "node scripts/generate-event-names.js",
 
-    "generate:sepolia": "NETWORK=sepolia node scripts/generate-contract-names.js & npm run generate",
+    "generate:sepolia": "NETWORK=sepolia node scripts/generate-contract-names.js & NETWORK=sepolia node scripts/generate-addresses.js & npm run generate",
     "prepublish:sepolia": "rimraf build generated && graph codegen && npm run generate:sepolia && graph build --network=sepolia",
     "bump:sepolia": "node scripts/bump-version.js sepolia",
     "publish:sepolia": "npm run prepublish:sepolia && npm run bump:sepolia && graph deploy --version-label $(jq -r '.sepolia' versions.json) sandbox-sepolia",

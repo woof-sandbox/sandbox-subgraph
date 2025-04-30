@@ -6,7 +6,7 @@ import { formUserId } from './form-user-id';
 export function updateUserPrincipal(
   proxyCometAddress: Address,
   userAddress: Address,
-  updatedAt: BigInt,
+  updatedAt: BigInt
 ): void {
   const userId = formUserId(proxyCometAddress, userAddress);
   let user = User.load(userId);

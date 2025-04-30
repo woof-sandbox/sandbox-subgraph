@@ -32,20 +32,39 @@ for (const file of files) {
         const inputs = item.inputs.map((input) => input.type).join(",");
         const signatureString = `${item.name}(${inputs})`;
         const hash = keccak256(toUtf8Bytes(signatureString)).toLowerCase();
-        eventSignatures.set(hash, signatureString);
+        eventSignatures.set(hash, { signature: signatureString, abiFile: file });
       }
     }
   }
 }
 
-// Preparing TypedMap
+// Prepare the output
 
 let output = `// Auto-generated file. Do not edit manually.\n`;
 output += `import { TypedMap } from "@graphprotocol/graph-ts";\n\n`;
 output += `export let EVENT_NAMES = new TypedMap<string, string>();\n\n`;
 
-for (const [hash, signature] of eventSignatures.entries()) {
-  output += `EVENT_NAMES.set("${hash}", "${signature}");\n`;
+// Group events by ABI file
+const groupedByAbi = {};
+
+for (const [hash, { signature, abiFile }] of eventSignatures.entries()) {
+  if (!groupedByAbi[abiFile]) {
+    groupedByAbi[abiFile] = [];
+  }
+  groupedByAbi[abiFile].push([hash, signature]);
+}
+
+// Write grouped and sorted events
+const sortedAbiFiles = Object.keys(groupedByAbi).sort();
+
+for (const abiFile of sortedAbiFiles) {
+  output += `// Events from ABI: ${abiFile}\n`;
+  const entries = groupedByAbi[abiFile];
+
+  for (const [hash, signature] of entries) {
+    output += `EVENT_NAMES.set("${hash}", "${signature}");\n`;
+  }
+  output += `\n`;
 }
 
 fs.writeFileSync(OUTPUT_FILE, output);
