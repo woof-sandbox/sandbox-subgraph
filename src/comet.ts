@@ -8,7 +8,6 @@ import { logEvent } from './utils/log-event';
 import { createUser } from './helpers/create-user';
 import { updateUserPrincipal } from './helpers/update-user-principal';
 
-// START: USER
 
 export function handleSupply(event: SupplyEvent): void {
   logEvent(event);
