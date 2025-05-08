@@ -11,6 +11,10 @@
     "ConfigControllerFactory": {
       "address": "0x927dc6d6f18c5e15ebd3553269b4ba2b7ca220d9",
       "startBlock": 8281658
+    },
+    "CometRewards": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 8281658
     }
   }
 }

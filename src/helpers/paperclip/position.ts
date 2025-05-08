@@ -1,0 +1,217 @@
+import { Address, Bytes, ethereum } from '@graphprotocol/graph-ts';
+import { Comet as CometContract } from '../../../generated/templates/Comet/Comet';
+import {
+  Account,
+  BaseToken,
+  CollateralToken,
+  Market,
+  Position,
+  PositionAccounting,
+  PositionAccountingSnapshot,
+  PositionCollateralBalance,
+} from '../../../generated/schema';
+import {
+  computeTokenValueUsd,
+  presentValue,
+} from '../../common/paperclip/utils';
+import { ZERO_BD, ZERO_BI } from '../../common/paperclip/constants';
+import {
+  createPositionCollateralBalanceSnapshot,
+  getOrCreatePositionCollateralBalance,
+  updatePositionCollateralBalanceUsd,
+} from './collateralBalance';
+import {
+  getOrCreateMarket,
+  getOrCreateMarketAccounting,
+  getOrCreateMarketConfiguration,
+} from './market';
+import { getOrCreateToken, getTokenPriceUsd } from './token';
+
+////
+// Position Accounting
+////
+
+export function getOrCreatePositionAccounting(
+  position: Position,
+  event: ethereum.Event
+): PositionAccounting {
+  const id = position.id;
+
+  let positionAccounting = PositionAccounting.load(id);
+
+  if (!positionAccounting) {
+    positionAccounting = new PositionAccounting(id);
+
+    positionAccounting.position = position.id;
+
+    // Set here to solve init issue, since we optimize to not update when block number didn't change
+    positionAccounting.lastUpdatedBlockNumber = ZERO_BI;
+
+    // Set cumulatives
+    positionAccounting.cumulativeBaseSupplied = ZERO_BI;
+    positionAccounting.cumulativeBaseWithdrawn = ZERO_BI;
+    positionAccounting.cumulativeBaseDebtAbsorbed = ZERO_BI;
+
+    positionAccounting.cumulativeBaseSuppliedUsd = ZERO_BD;
+    positionAccounting.cumulativeBaseWithdrawnUsd = ZERO_BD;
+    positionAccounting.cumulativeCollateralLiquidatedUsd = ZERO_BD;
+
+    positionAccounting.cumulativeRewardsClaimed = ZERO_BI;
+    positionAccounting.cumulativeRewardsClaimedUsd = ZERO_BD;
+
+    positionAccounting.cumulativeGasUsedWei = ZERO_BI;
+    positionAccounting.cumulativeGasUsedUsd = ZERO_BD;
+
+    updatePositionAccounting(position, positionAccounting, event);
+    positionAccounting.save();
+  }
+
+  return positionAccounting;
+}
+
+export function updatePositionAccounting(
+  position: Position,
+  accounting: PositionAccounting,
+  event: ethereum.Event
+): void {
+  if (accounting.lastUpdatedBlockNumber.equals(event.block.number)) {
+    // Don't bother to update if we already did this block, assume this gets set on init
+    return;
+  }
+
+  const market = getOrCreateMarket(Address.fromBytes(position.market), event);
+  const marketAccounting = getOrCreateMarketAccounting(market, event);
+  const marketConfiguration = getOrCreateMarketConfiguration(market, event);
+
+  const comet = CometContract.bind(Address.fromBytes(market.id));
+
+  const userBasic = comet.userBasic(Address.fromBytes(position.account));
+
+  accounting.lastUpdatedBlockNumber = event.block.number;
+  accounting.basePrincipal = userBasic.getPrincipal();
+  accounting.baseBalance = presentValue(
+    accounting.basePrincipal,
+    accounting.basePrincipal.lt(ZERO_BI)
+      ? marketAccounting.baseBorrowIndex
+      : marketAccounting.baseSupplyIndex
+  );
+  accounting.baseTrackingIndex = userBasic.getBaseTrackingIndex();
+  accounting.baseTrackingAccrued = userBasic.getBaseTrackingAccrued();
+
+  // Base Token Balance USD
+  const baseToken = BaseToken.load(marketConfiguration.baseToken)!;
+  const baseTokenToken = getOrCreateToken(
+    Address.fromBytes(baseToken.token),
+    event
+  );
+  const baseTokenPriceUsd = getTokenPriceUsd(baseToken, event);
+  accounting.baseBalanceUsd = computeTokenValueUsd(
+    accounting.baseBalance,
+    u8(baseTokenToken.decimals),
+    baseTokenPriceUsd
+  );
+
+  // Collateral Balance USD
+  const collateralTokenIds = marketConfiguration.collateralTokens;
+  let totalCollateralBalanceUsd = ZERO_BD;
+  let collateralBalances: Bytes[] = [];
+  for (let i = 0; i < collateralTokenIds.length; i++) {
+    const collateralToken = CollateralToken.load(collateralTokenIds[i])!; // Guaranteed to exist
+    const collateralBalance = getOrCreatePositionCollateralBalance(
+      collateralToken,
+      position,
+      event
+    );
+
+    updatePositionCollateralBalanceUsd(collateralBalance, event);
+    collateralBalance.save();
+
+    collateralBalances.push(collateralBalance.id);
+
+    totalCollateralBalanceUsd = totalCollateralBalanceUsd.plus(
+      collateralBalance.balanceUsd
+    );
+  }
+  accounting.collateralBalanceUsd = totalCollateralBalanceUsd;
+  accounting.collateralBalances = collateralBalances;
+
+  // Create snapshot on change
+  createPositionAccountingSnapshot(accounting, event);
+}
+
+export function createPositionAccountingSnapshot(
+  accounting: PositionAccounting,
+  event: ethereum.Event
+): void {
+  const snapshotId = accounting.position
+    .concat(Bytes.fromByteArray(Bytes.fromBigInt(event.block.number)))
+    .concat(Bytes.fromByteArray(Bytes.fromBigInt(event.logIndex)));
+
+  // If we already took it, but have manually retriggered, update it
+  let accountingSnapshot = PositionAccounting.load(snapshotId);
+  if (!accountingSnapshot) {
+    accountingSnapshot = new PositionAccounting(snapshotId);
+  }
+
+  let entries = accounting.entries;
+  for (let i = 0; i < entries.length; ++i) {
+    const key = entries[i].key.toString();
+    if (key != 'id' && key != 'collateralBalances') {
+      accountingSnapshot.set(entries[i].key, entries[i].value);
+    }
+  }
+
+  // Copy collateral balances (needs special handling since we need to deep copy)
+  let collateralBalancesSnapshot: Bytes[] = [];
+  for (let i = 0; i < accounting.collateralBalances.length; i++) {
+    const collateralBalance = PositionCollateralBalance.load(
+      accounting.collateralBalances[i]
+    )!; // Guaranteed to exist
+    const collateralBalanceSnapshot = createPositionCollateralBalanceSnapshot(
+      collateralBalance,
+      event
+    );
+    collateralBalancesSnapshot.push(collateralBalanceSnapshot.id);
+  }
+  accountingSnapshot.collateralBalances = collateralBalancesSnapshot;
+
+  accountingSnapshot.save();
+
+  // Create snapshot, or we already took it, but have manually retriggered, update it
+  let positionAccountingSnapshot = PositionAccountingSnapshot.load(snapshotId);
+  if (!positionAccountingSnapshot) {
+    positionAccountingSnapshot = new PositionAccountingSnapshot(snapshotId);
+  }
+  positionAccountingSnapshot.timestamp = event.block.timestamp;
+  positionAccountingSnapshot.position = accountingSnapshot.position;
+  positionAccountingSnapshot.accounting = accountingSnapshot.id;
+  positionAccountingSnapshot.save();
+}
+
+////
+// Position
+////
+
+export function getOrCreatePosition(
+  market: Market,
+  account: Account,
+  event: ethereum.Event
+): Position {
+  const id = market.id.concat(account.id);
+  let position = Position.load(id);
+
+  if (!position) {
+    position = new Position(id);
+
+    position.creationBlockNumber = event.block.number;
+    position.market = market.id;
+    position.account = account.id;
+
+    const accounting = getOrCreatePositionAccounting(position, event);
+    position.accounting = accounting.id;
+
+    position.save();
+  }
+
+  return position;
+}

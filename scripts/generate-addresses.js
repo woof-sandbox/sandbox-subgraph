@@ -41,14 +41,21 @@ if (Array.isArray(contractsOrArray)) {
   }
 }
 
-let output = `// Auto-generated file. Do not edit manually.\n`;
-output += `export const ADDRESSES = {\n`;
-
-for (const [name, address] of nameToAddress.entries()) {
-  output += `  ${name}: "${address}",\n`;
+// CamelCase → UPPER_SNAKE_CASE
+function toSnakeUpperCase(str) {
+  return str
+    .replace(/([a-z0-9])([A-Z])/g, '$1_$2')
+    .replace(/[-\s]/g, '_')
+    .toUpperCase();
 }
 
-output += `};\n`;
+let output = `// Auto-generated file. Do not edit manually.\n`;
+output += `import { Bytes } from "@graphprotocol/graph-ts";\n\n`;
+
+for (const [name, address] of nameToAddress.entries()) {
+  const constName = `${toSnakeUpperCase(name)}_ADDRESS`;
+  output += `export const ${constName} = Bytes.fromHexString("${address}");\n`;
+}
 
 fs.writeFileSync(outputPath, output);
 

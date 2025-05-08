@@ -101,6 +101,10 @@ templates:
       abis:
         - name: Comet
           file: ./abis/Comet.json
+        - name: Erc20
+          file: ./abis/Erc20.json
+        - name: ChainlinkPriceFeed
+          file: ./abis/ChainlinkPriceFeed.json
       eventHandlers:
         - event: Withdraw(indexed address,indexed address,uint256)
           handler: handleWithdraw
@@ -113,6 +117,27 @@ templates:
           receipt: true
         - event: Supply(indexed address,indexed address,uint256)
           handler: handleSupply
+          receipt: true
+        - event: SupplyCollateral(indexed address,indexed address,indexed address,uint256)
+          handler: handleSupplyCollateral
+          receipt: true
+        - event: WithdrawCollateral(indexed address,indexed address,indexed
+            address,uint256)
+          handler: handleWithdrawCollateral
+          receipt: true
+        - event: TransferCollateral(indexed address,indexed address,indexed
+            address,uint256)
+          handler: handleTransferCollateral
+          receipt: true
+        - event: AbsorbCollateral(indexed address,indexed address,indexed
+            address,uint256,uint256)
+          handler: handleAbsorbCollateral
+          receipt: true
+        - event: BuyCollateral(indexed address,indexed address,uint256,uint256)
+          handler: handleBuyCollateral
+          receipt: true
+        - event: WithdrawReserves(indexed address,uint256)
+          handler: handleWithdrawReserves
           receipt: true
       file: ./src/comet.ts
   - name: ConfigController
