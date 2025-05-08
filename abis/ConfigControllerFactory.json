@@ -87,6 +87,12 @@
         "internalType": "uint256",
         "name": "proposalDuration",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "controllerId",
+        "type": "uint256"
       }
     ],
     "name": "ConfigControllerCreated",
@@ -135,6 +141,11 @@
       {
         "internalType": "address",
         "name": "owner_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_curator",
         "type": "address"
       },
       {

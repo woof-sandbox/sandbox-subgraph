@@ -43,7 +43,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "_targetReserves",
+        "name": "_targetPercent",
         "type": "uint256"
       },
       {
@@ -72,6 +72,56 @@
   },
   {
     "inputs": [],
+    "name": "BaseTokenAlreadyWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BaseTokenNotWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BorrowCollateralFactorTooHigh",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BorrowCollateralFactorTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CollateralTokenAlreadyAdded",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CollateralTokenAlreadyWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CollateralTokenNotWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ExecutionFailed",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InsufficientBalance",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidCurator",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidCurveConfiguration",
     "type": "error"
   },
@@ -82,25 +132,49 @@
   },
   {
     "inputs": [],
+    "name": "InvalidFeePercentage",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidPriceFeed",
     "type": "error"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "NotAuthorized",
+    "inputs": [],
+    "name": "LiquidateCollateralFactorTooHigh",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LiquidateCollateralFactorTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LiquidationFactorTooHigh",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "LiquidationFactorTooLow",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MarketFactoryNotInitialized",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NoActiveProposal",
     "type": "error"
   },
   {
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "caller",
         "type": "address"
       }
     ],
@@ -111,7 +185,7 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "caller",
         "type": "address"
       }
     ],
@@ -125,17 +199,42 @@
   },
   {
     "inputs": [],
-    "name": "TokenAlreadyWhitelisted",
+    "name": "ProposalExists",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "TokenNotWhitelisted",
+    "name": "ProposalExpired",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ProposalNotExpired",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "Test",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "Unauthorized",
     "type": "error"
   },
   {
     "inputs": [],
     "name": "ZeroAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAmount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroCollateralAssets",
     "type": "error"
   },
   {
@@ -455,6 +554,11 @@
         "components": [
           {
             "internalType": "uint256",
+            "name": "targetPercent",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "storeFrontPriceFactor",
             "type": "uint256"
           },
@@ -481,6 +585,11 @@
       },
       {
         "components": [
+          {
+            "internalType": "uint256",
+            "name": "targetPercent",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "storeFrontPriceFactor",
@@ -679,6 +788,11 @@
     "inputs": [],
     "name": "_controllerConfiguration",
     "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "targetPercent",
+        "type": "uint256"
+      },
       {
         "internalType": "uint256",
         "name": "storeFrontPriceFactor",
@@ -884,6 +998,25 @@
         "internalType": "address",
         "name": "token",
         "type": "address"
+      }
+    ],
+    "name": "borrowMin",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
       },
       {
         "internalType": "uint256",
@@ -1043,10 +1176,15 @@
   },
   {
     "inputs": [],
-    "name": "controllerConfiguration",
+    "name": "config",
     "outputs": [
       {
         "components": [
+          {
+            "internalType": "uint256",
+            "name": "targetPercent",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "storeFrontPriceFactor",
@@ -1078,25 +1216,39 @@
   },
   {
     "inputs": [],
-    "name": "dao",
+    "name": "controllerConfiguration",
     "outputs": [
       {
-        "internalType": "address",
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "targetPercent",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "storeFrontPriceFactor",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "minUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedAmountOfSeedReserves",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct ISandboxController.SandboxControllerConfiguration",
         "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "feeEnabled",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
+        "type": "tuple"
       }
     ],
     "stateMutability": "view",
@@ -1110,7 +1262,7 @@
         "type": "address"
       }
     ],
-    "name": "getBaseAssetCurves",
+    "name": "curves",
     "outputs": [
       {
         "components": [
@@ -1158,6 +1310,32 @@
         "internalType": "struct ISandboxController.BaseAssetCurve[]",
         "name": "",
         "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "dao",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "feeEnabled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -1401,6 +1579,11 @@
     "inputs": [
       {
         "components": [
+          {
+            "internalType": "uint256",
+            "name": "targetPercent",
+            "type": "uint256"
+          },
           {
             "internalType": "uint256",
             "name": "storeFrontPriceFactor",

@@ -73,18 +73,6 @@ type ConfigController @entity(immutable: false) {
   createdAt: BigInt!
 }
 
-type MarketConfiguration @entity(immutable: false) {
-  id: Bytes! # market address
-
-  market: Comet!
-  baseToken: Bytes!
-  baseTokenId: BigInt!
-  priceFeed: Bytes!
-
-  updatedAt: BigInt!
-  createdAt: BigInt!
-}
-
 type BaseConfiguration @entity(immutable: false) {
   id: Bytes! # ConfigController address
 

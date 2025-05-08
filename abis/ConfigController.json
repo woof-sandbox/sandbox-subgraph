@@ -41,6 +41,11 @@
   },
   {
     "inputs": [],
+    "name": "InvalidCurveId",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidFeePercentage",
     "type": "error"
   },
@@ -71,7 +76,22 @@
   },
   {
     "inputs": [],
+    "name": "MarketAlreadyAdded",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "MarketNotOwned",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "NoActiveProposal",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NonConfigController",
     "type": "error"
   },
   {
@@ -96,7 +116,17 @@
   },
   {
     "inputs": [],
-    "name": "ProposalNotExpired",
+    "name": "ProposalNotReady",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ProposalNotRevertable",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SameCurve",
     "type": "error"
   },
   {
@@ -391,6 +421,75 @@
         "type": "address"
       }
     ],
+    "name": "MarketBaseTokenCurveProposalCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "executedBy",
+        "type": "address"
+      }
+    ],
+    "name": "MarketBaseTokenCurveProposalExecuted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "proposer",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "revertTime",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "curveId",
+        "type": "uint256"
+      }
+    ],
+    "name": "MarketBaseTokenCurveProposed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "cancelledBy",
+        "type": "address"
+      }
+    ],
     "name": "MarketConfigProposalCancelled",
     "type": "event"
   },
@@ -431,7 +530,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "expiration",
+        "name": "revertTime",
         "type": "uint256"
       }
     ],
@@ -462,11 +561,17 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "baseTokenId",
+        "name": "marketId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "baseTokenCurveId",
         "type": "uint256"
       }
     ],
-    "name": "MarketConfigurationCreated",
+    "name": "MarketCreated",
     "type": "event"
   },
   {
@@ -655,18 +760,13 @@
       },
       {
         "internalType": "uint256",
-        "name": "expiration",
+        "name": "revertTime",
         "type": "uint256"
       },
       {
         "internalType": "address",
         "name": "proposer",
         "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -696,11 +796,6 @@
         "internalType": "uint256",
         "name": "expiration",
         "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -740,6 +835,73 @@
       }
     ],
     "name": "accumulateRevenue",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      }
+    ],
+    "name": "addMarket",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      }
+    ],
+    "name": "baseAssetsCurvesProposals",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "market",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "curveId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "revertTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "proposer",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct IConfigController.MarketBaseTokenCurveProposal",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      }
+    ],
+    "name": "cancelBaseTokenCurveProposal",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -858,7 +1020,7 @@
               }
             ],
             "internalType": "struct IConfigController.CollateralTokenConfig[]",
-            "name": "collateraTokens",
+            "name": "collateralTokens",
             "type": "tuple[]"
           },
           {
@@ -943,6 +1105,19 @@
         "type": "address"
       }
     ],
+    "name": "executeBaseTokenCurveProposal",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      }
+    ],
     "name": "executeMarketConfigProposal",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -1007,6 +1182,11 @@
       },
       {
         "internalType": "address",
+        "name": "_curator",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_guardian",
         "type": "address"
       },
@@ -1049,6 +1229,25 @@
     "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "marketBaseTokenCurveId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1139,18 +1338,13 @@
           },
           {
             "internalType": "uint256",
-            "name": "expiration",
+            "name": "revertTime",
             "type": "uint256"
           },
           {
             "internalType": "address",
             "name": "proposer",
             "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isActive",
-            "type": "bool"
           }
         ],
         "internalType": "struct IConfigController.MarketConfigProposal",
@@ -1187,11 +1381,6 @@
             "internalType": "uint256",
             "name": "expiration",
             "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isActive",
-            "type": "bool"
           }
         ],
         "internalType": "struct IConfigController.MarketTransferProposal",
@@ -1352,6 +1541,58 @@
     "name": "proposeMarketTransfer",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "curveId",
+        "type": "uint256"
+      }
+    ],
+    "name": "proposeUpdateBaseTokenCurve",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "proposedBaseAssetCurve",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "curveId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "revertTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "proposer",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {

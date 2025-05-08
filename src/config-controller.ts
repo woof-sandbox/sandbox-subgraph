@@ -2,28 +2,11 @@ import { BigInt } from '@graphprotocol/graph-ts';
 import {
   AddedBaseTokenConfig as AddedBaseTokenConfigEvent,
   AddedCollateralTokenConfig as AddedCollateralTokenConfigEvent,
-  MarketConfigurationCreated as MarketConfigurationCreatedEvent,
 } from '../generated/templates/ConfigController/ConfigController';
 import { logEvent } from './utils/log-event';
 import { createBaseConfiguration } from './helpers/create-base-configuration';
 import { createCollateralConfiguration } from './helpers/create-collateral-configuration';
 import { createCurveSecondsRate } from './helpers/create-curve';
-import { createMarketConfiguration } from './helpers/create-market-configuration';
-
-export function handleMarketConfigurationCreated(
-  event: MarketConfigurationCreatedEvent
-): void {
-  logEvent(event);
-  createMarketConfiguration(
-    event.params.market,
-    //
-    event.params.baseToken,
-    event.params.baseTokenId,
-    event.params.priceFeed,
-    //
-    event.block.timestamp
-  );
-}
 
 export function handleAddedBaseTokenConfig(
   event: AddedBaseTokenConfigEvent

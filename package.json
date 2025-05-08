@@ -1,5 +1,5 @@
 {
-  "name": "86c28nvyp-sandbox-subgraph",
+  "name": "sandbox-subgraph",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -14,10 +14,10 @@
     "publish:sepolia": "npm run prepublish:sepolia && npm run bump:sepolia && graph deploy --version-label $(jq -r '.sepolia' versions.json) sandbox-sepolia",
 
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ 86c28nvyp-compound-v3",
-    "create-local": "graph create --node http://localhost:8020/ 86c28nvyp-compound-v3",
-    "remove-local": "graph remove --node http://localhost:8020/ 86c28nvyp-compound-v3",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 86c28nvyp-compound-v3",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ sandbox-subgraph",
+    "create-local": "graph create --node http://localhost:8020/ sandbox-subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ sandbox-subgraph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 sandbox-subgraph",
     "test": "graph test"
   },
   "dependencies": {

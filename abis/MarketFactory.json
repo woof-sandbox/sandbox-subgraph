@@ -10,6 +10,11 @@
         "internalType": "address",
         "name": "_configControllerFactory",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_sandboxController",
+        "type": "address"
       }
     ],
     "stateMutability": "nonpayable",
@@ -53,12 +58,44 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "newController",
+        "type": "address"
+      }
+    ],
+    "name": "MarketControllerChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "configController",
         "type": "address"
       }
     ],
     "name": "MarketCreated",
     "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "market",
+        "type": "address"
+      }
+    ],
+    "name": "changeMarketController",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [],
@@ -121,7 +158,7 @@
               }
             ],
             "internalType": "struct IConfigController.CollateralTokenConfig[]",
-            "name": "collateraTokens",
+            "name": "collateralTokens",
             "type": "tuple[]"
           },
           {
@@ -200,6 +237,19 @@
       }
     ],
     "name": "markets",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "sandboxController",
     "outputs": [
       {
         "internalType": "address",
