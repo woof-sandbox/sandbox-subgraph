@@ -1,23 +1,23 @@
+import { Address, ethereum } from '@graphprotocol/graph-ts';
 import { newMockEvent } from 'matchstick-as';
-import { ethereum, Address } from '@graphprotocol/graph-ts';
-import { CometDeployed } from '../generated/Configurator/Configurator';
+import { MarketCreated as MarketCreatedEvent } from '../generated/MarketFactory/MarketFactory';
 
 export function createCometDeployedEvent(
-  cometProxy: Address,
-  newComet: Address,
-): CometDeployed {
-  let cometDeployedEvent = changetype<CometDeployed>(newMockEvent());
+  market: Address,
+  configController: Address
+): MarketCreatedEvent {
+  let cometDeployedEvent = changetype<MarketCreatedEvent>(newMockEvent());
 
-  cometDeployedEvent.parameters = new Array();
+  cometDeployedEvent.parameters = [];
 
   cometDeployedEvent.parameters.push(
-    new ethereum.EventParam(
-      'cometProxy',
-      ethereum.Value.fromAddress(cometProxy),
-    ),
+    new ethereum.EventParam('market', ethereum.Value.fromAddress(market))
   );
   cometDeployedEvent.parameters.push(
-    new ethereum.EventParam('newComet', ethereum.Value.fromAddress(newComet)),
+    new ethereum.EventParam(
+      'configController',
+      ethereum.Value.fromAddress(configController)
+    )
   );
 
   return cometDeployedEvent;

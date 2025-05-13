@@ -1,4 +1,19 @@
 {
   "singleQuote": true,
-  "trailingComma": "all"
+  "trailingComma": "es5",
+  "semi": true,
+  "printWidth": 80,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrderSortSpecifiers": true,
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^.*/generated/templates(.*)$",
+    "^.*/generated/(contract-names|event-names)$",
+    "^.*/generated/(.*)$",
+    "^.*/utils(.*)$",
+    "^.*/constants(.*)$",
+    "^.*/config(.*)$",
+    "^.*/helpers(.*)$",
+    "^[./]"
+  ]
 }

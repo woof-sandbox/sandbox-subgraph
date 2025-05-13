@@ -1,16 +1,22 @@
-import { Address } from '@graphprotocol/graph-ts'
-import { User } from '../../generated/schema';
-import { createUserId } from './create-user';
+import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { Comet } from '../../generated/templates/Comet/Comet';
+import { User } from '../../generated/schema';
+import { formUserId } from './form-user-id';
 
-export function updateUserPrincipal(proxyCometAddress: Address, userAddress: Address): void {
-  let userId = createUserId(proxyCometAddress, userAddress);
+export function updateUserPrincipal(
+  proxyCometAddress: Address,
+  userAddress: Address,
+  updatedAt: BigInt
+): void {
+  const userId = formUserId(proxyCometAddress, userAddress);
   let user = User.load(userId);
 
   if (user) {
     let cometContract = Comet.bind(proxyCometAddress);
     let userBasic = cometContract.userBasic(userAddress);
     user.principal = userBasic.value0;
+    //
+    user.updatedAt = updatedAt;
     user.save();
   }
 }

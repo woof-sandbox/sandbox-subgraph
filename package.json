@@ -1,23 +1,34 @@
 {
-  "name": "86c28nvyp-sandbox-subgraph",
-  "license": "UNLICENSED",
+  "name": "sandbox-subgraph",
+  "license": "MIT",
+  "type": "module",
   "scripts": {
     "clean": "rimraf build generated",
     "codegen": "graph codegen",
     "build": "graph build",
-    "rebuild": "rimraf build generated && graph codegen && graph build",
+    "generate": "node scripts/generate-event-names.js",
+
+    "generate:sepolia": "NETWORK=sepolia node scripts/generate-contract-names.js & NETWORK=sepolia node scripts/generate-addresses.js & npm run generate",
+    "prepublish:sepolia": "rimraf build generated && graph codegen && npm run generate:sepolia && graph build --network=sepolia",
+    "bump:sepolia": "node scripts/bump-version.js sepolia",
+    "deploy:sepolia": "graph deploy --version-label $(jq -r '.sepolia' versions.json) sandbox-sepolia",
+    "redeploy:sepolia": "NETWORK=sepolia node scripts/retry-deploy.js",
+    "publish:sepolia": "npm run prepublish:sepolia && npm run bump:sepolia && npm run redeploy:sepolia",
+
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ 86c28nvyp-compound-v3",
-    "create-local": "graph create --node http://localhost:8020/ 86c28nvyp-compound-v3",
-    "remove-local": "graph remove --node http://localhost:8020/ 86c28nvyp-compound-v3",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 86c28nvyp-compound-v3",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ sandbox-subgraph",
+    "create-local": "graph create --node http://localhost:8020/ sandbox-subgraph",
+    "remove-local": "graph remove --node http://localhost:8020/ sandbox-subgraph",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 sandbox-subgraph",
     "test": "graph test"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "0.96.0",
-    "@graphprotocol/graph-ts": "0.37.0"
+    "@graphprotocol/graph-cli": "0.97.0",
+    "@graphprotocol/graph-ts": "0.38.0"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
+    "ethers": "^6.13.7",
     "matchstick-as": "0.6.0",
     "prettier": "^3.5.2"
   }
