@@ -1,8 +1,11 @@
 import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
-import { ONE_BI, SECONDS_PER_DAY } from '../constants';
 import { CometDailyPopularity } from '../../generated/schema';
+import { ONE_BI, SECONDS_PER_DAY } from '../constants';
 
-export function createInitialCometDailyPopularity(address: Address, createdAt: BigInt): void {
+export function createInitialCometDailyPopularity(
+  address: Address,
+  createdAt: BigInt
+): void {
   const day = createdAt.div(SECONDS_PER_DAY);
   const id = Bytes.fromHexString(address.toHexString() + day.toHexString());
 

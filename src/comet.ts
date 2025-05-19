@@ -60,8 +60,8 @@ import {
   getOrCreateToken,
 } from './helpers/paperclip/token';
 import { updateUsageMetrics } from './helpers/paperclip/usage';
-import { updateUserPrincipal } from './helpers/update-user-principal';
 import { updateCometDailyPopularity } from './helpers/update-comet-daily-popularity';
+import { updateUserPrincipal } from './helpers/update-user-principal';
 
 export function handleSupply(event: SupplyEvent): void {
   logEvent(event);
