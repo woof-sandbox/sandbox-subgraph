@@ -6,7 +6,7 @@ type Comet @entity(immutable: true) {
   createdAt: BigInt!
 }
 
-type User @entity(immutable: true) {
+type User @entity(immutable: false) {
   id: Bytes! # address
   principal: BigInt!
   userAddress: Bytes!
@@ -95,6 +95,15 @@ type CollateralConfiguration @entity(immutable: false) {
 
   updatedAt: BigInt!
   createdAt: BigInt!
+}
+
+type CometDailyPopularity @entity(immutable: false) {
+  id: Bytes!
+  comet: Bytes!
+  day: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+  count: BigInt!
 }
 
 ### PAPERCLIP
