@@ -6,7 +6,7 @@ type Comet @entity(immutable: true) {
   createdAt: BigInt!
 }
 
-type User @entity(immutable: false) {
+type User @entity(immutable: true) {
   id: Bytes! # address
   principal: BigInt!
   userAddress: Bytes!

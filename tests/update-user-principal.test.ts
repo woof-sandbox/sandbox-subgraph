@@ -41,12 +41,13 @@ describe('updateUserPrincipal', () => {
     user.principal = initialPrincipal;
     user.userAddress = userAddress;
     user.proxyCometAddress = proxyAddress;
-    user.createdAt = BigInt.fromI32(123456); // Добавлен createdAt
+    user.createdAt = BigInt.fromI32(123456); // add createdAt
+    user.updatedAt = BigInt.fromI32(123456);
     user.save();
 
     mockCometContract(proxyAddress, userAddress, updatedPrincipal);
 
-    updateUserPrincipal(proxyAddress, userAddress);
+    updateUserPrincipal(proxyAddress, userAddress, updatedPrincipal);
 
     let updatedUser = User.load(userId);
 

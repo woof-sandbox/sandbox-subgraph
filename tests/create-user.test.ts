@@ -120,6 +120,7 @@ describe('createUser', () => {
     user.userAddress = userAddress;
     user.proxyCometAddress = proxyAddress;
     user.createdAt = createdAt;
+    user.updatedAt = createdAt;
     user.save();
 
     createUser(proxyAddress, userAddress, BigInt.fromI32(999999));
