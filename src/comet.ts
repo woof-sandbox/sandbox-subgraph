@@ -60,6 +60,7 @@ import {
   getOrCreateToken,
 } from './helpers/paperclip/token';
 import { updateUsageMetrics } from './helpers/paperclip/usage';
+import { updateCometDailyPopularity } from './helpers/update-comet-daily-popularity';
 import { updateUserPrincipal } from './helpers/update-user-principal';
 
 export function handleSupply(event: SupplyEvent): void {
@@ -94,26 +95,32 @@ export function handleAbsorbDebt(event: AbsorbDebtEvent): void {
 export function handleSupplyCollateral(event: SupplyCollateralEvent): void {
   logEvent(event);
   handleSupplyCollateralPaperclip(event);
+  updateCometDailyPopularity(event);
 }
 export function handleWithdrawCollateral(event: WithdrawCollateralEvent): void {
   logEvent(event);
   handleWithdrawCollateralPaperclip(event);
+  updateCometDailyPopularity(event);
 }
 export function handleTransferCollateral(event: TransferCollateralEvent): void {
   logEvent(event);
   handleTransferCollateralPaperclip(event);
+  updateCometDailyPopularity(event);
 }
 export function handleAbsorbCollateral(event: AbsorbCollateralEvent): void {
   logEvent(event);
   handleAbsorbCollateralPaperclip(event);
+  updateCometDailyPopularity(event);
 }
 export function handleBuyCollateral(event: BuyCollateralEvent): void {
   logEvent(event);
   handleBuyCollateralPaperclip(event);
+  updateCometDailyPopularity(event);
 }
 export function handleWithdrawReserves(event: WithdrawReservesEvent): void {
   logEvent(event);
   handleWithdrawReservesPaperclip(event);
+  updateCometDailyPopularity(event);
 }
 
 /// PAPERCLIP

@@ -97,6 +97,15 @@ type CollateralConfiguration @entity(immutable: false) {
   createdAt: BigInt!
 }
 
+type CometDailyPopularity @entity(immutable: false) {
+  id: Bytes!
+  comet: Bytes!
+  day: BigInt!
+  createdAt: BigInt!
+  updatedAt: BigInt!
+  count: BigInt!
+}
+
 ### PAPERCLIP
 
 ####
