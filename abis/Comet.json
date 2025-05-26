@@ -31,11 +31,6 @@
   },
   {
     "inputs": [],
-    "name": "BadMinimum",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "BadPrice",
     "type": "error"
   },
@@ -542,6 +537,10 @@
     "type": "event"
   },
   {
+    "stateMutability": "payable",
+    "type": "fallback"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -916,6 +915,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "extension",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint8",
@@ -1055,163 +1067,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getConfiguration",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "configController",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "baseToken",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "baseTokenPriceFeed",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "extensionDelegate",
-            "type": "address"
-          },
-          {
-            "internalType": "uint64",
-            "name": "supplyKink",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "supplyPerYearInterestRateSlopeLow",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "supplyPerYearInterestRateSlopeHigh",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "supplyPerYearInterestRateBase",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "borrowKink",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "borrowPerYearInterestRateSlopeLow",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "borrowPerYearInterestRateSlopeHigh",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "borrowPerYearInterestRateBase",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "storeFrontPriceFactor",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "trackingIndexScale",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "baseTrackingSupplySpeed",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "baseTrackingBorrowSpeed",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint104",
-            "name": "baseMinForRewards",
-            "type": "uint104"
-          },
-          {
-            "internalType": "uint104",
-            "name": "baseBorrowMin",
-            "type": "uint104"
-          },
-          {
-            "internalType": "uint104",
-            "name": "targetPercent",
-            "type": "uint104"
-          },
-          {
-            "internalType": "uint104",
-            "name": "seedReserves",
-            "type": "uint104"
-          },
-          {
-            "internalType": "uint104",
-            "name": "unlockTimestamp",
-            "type": "uint104"
-          },
-          {
-            "components": [
-              {
-                "internalType": "address",
-                "name": "collateralToken",
-                "type": "address"
-              },
-              {
-                "internalType": "address",
-                "name": "priceFeed",
-                "type": "address"
-              },
-              {
-                "internalType": "uint64",
-                "name": "borrowCollateralFactor",
-                "type": "uint64"
-              },
-              {
-                "internalType": "uint64",
-                "name": "liquidateCollateralFactor",
-                "type": "uint64"
-              },
-              {
-                "internalType": "uint64",
-                "name": "liquidationFactor",
-                "type": "uint64"
-              },
-              {
-                "internalType": "uint128",
-                "name": "supplyCap",
-                "type": "uint128"
-              }
-            ],
-            "internalType": "struct IConfigController.CollateralTokenConfig[]",
-            "name": "assetConfigs",
-            "type": "tuple[]"
-          }
-        ],
-        "internalType": "struct SandboxComet.Configuration",
-        "name": "",
-        "type": "tuple"
       }
     ],
     "stateMutability": "view",
@@ -1360,10 +1215,37 @@
             "internalType": "uint256",
             "name": "baseTokenCurveId",
             "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "baseTrackingSupplySpeed",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "baseTrackingBorrowSpeed",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "trackingIndexScale",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "baseMinForRewards",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct IConfigController.CometOptions",
+            "name": "options",
+            "type": "tuple"
           }
         ],
-        "internalType": "struct IConfigController.MarketConfig",
-        "name": "market",
+        "internalType": "struct IConfigController.CometConfig",
+        "name": "comet",
         "type": "tuple"
       },
       {
@@ -1406,6 +1288,11 @@
       {
         "internalType": "address",
         "name": "sandboxController_",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "ext",
         "type": "address"
       },
       {
@@ -1554,34 +1441,13 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "liquidatorPoints",
+    "inputs": [],
+    "name": "lastReserveBalance",
     "outputs": [
       {
-        "internalType": "uint32",
-        "name": "numAbsorbs",
-        "type": "uint32"
-      },
-      {
-        "internalType": "uint64",
-        "name": "numAbsorbed",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint128",
-        "name": "approxSpend",
-        "type": "uint128"
-      },
-      {
-        "internalType": "uint32",
-        "name": "_reserved",
-        "type": "uint32"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1709,6 +1575,19 @@
   {
     "inputs": [],
     "name": "storeFrontPriceFactor",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "suggestedReserves",
     "outputs": [
       {
         "internalType": "uint256",
@@ -2205,5 +2084,1180 @@
   {
     "stateMutability": "payable",
     "type": "receive"
+  },
+
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_name32",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_symbol32",
+        "type": "bytes32"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "BadAmount",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BadNonce",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "BadSignatory",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidInt104",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidInt256",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidUInt104",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidUInt128",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidUInt64",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidValueS",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidValueV",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "NegativeNumber",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SignatureExpired",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Approval",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "isAllowed_",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nonce",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "expiry",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint8",
+        "name": "v",
+        "type": "uint8"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "r",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "s",
+        "type": "bytes32"
+      }
+    ],
+    "name": "allowBySig",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "allowance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "approve",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseAccrualScale",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseBorrowMin",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseIndexScale",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseMinForRewards",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseScale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseToken",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseTokenPriceFeed",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "baseTrackingAccrued",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseTrackingBorrowSpeed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "baseTrackingSupplySpeed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "borrowKink",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "borrowPerSecondInterestRateBase",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "borrowPerSecondInterestRateSlopeHigh",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "borrowPerSecondInterestRateSlopeLow",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "name": "collateralAssetAddress",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "collateralAssetIndex",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "collateralAssets",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "collateralToken",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "priceFeed",
+        "type": "address"
+      },
+      {
+        "internalType": "uint64",
+        "name": "borrowCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "liquidateCollateralFactor",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "liquidationFactor",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint128",
+        "name": "supplyCap",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "asset",
+        "type": "address"
+      }
+    ],
+    "name": "collateralBalanceOf",
+    "outputs": [
+      {
+        "internalType": "uint128",
+        "name": "",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "configController",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "daoBaseTrackingBorrowSpeed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "daoBaseTrackingSupplySpeed",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "extension",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "factorScale",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getConfiguration",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "configController",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "baseToken",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "baseTokenPriceFeed",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "extensionDelegate",
+            "type": "address"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "supplyPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowKink",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeLow",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateSlopeHigh",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "borrowPerYearInterestRateBase",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "storeFrontPriceFactor",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "trackingIndexScale",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "baseTrackingSupplySpeed",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "baseTrackingBorrowSpeed",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint104",
+            "name": "baseMinForRewards",
+            "type": "uint104"
+          },
+          {
+            "internalType": "uint104",
+            "name": "baseBorrowMin",
+            "type": "uint104"
+          },
+          {
+            "internalType": "uint104",
+            "name": "targetPercent",
+            "type": "uint104"
+          },
+          {
+            "internalType": "uint104",
+            "name": "seedReserves",
+            "type": "uint104"
+          },
+          {
+            "internalType": "uint104",
+            "name": "unlockTimestamp",
+            "type": "uint104"
+          },
+          {
+            "components": [
+              {
+                "internalType": "address",
+                "name": "collateralToken",
+                "type": "address"
+              },
+              {
+                "internalType": "address",
+                "name": "priceFeed",
+                "type": "address"
+              },
+              {
+                "internalType": "uint64",
+                "name": "borrowCollateralFactor",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "liquidateCollateralFactor",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint64",
+                "name": "liquidationFactor",
+                "type": "uint64"
+              },
+              {
+                "internalType": "uint128",
+                "name": "supplyCap",
+                "type": "uint128"
+              }
+            ],
+            "internalType": "struct IConfigController.CollateralTokenConfig[]",
+            "name": "assetConfigs",
+            "type": "tuple[]"
+          }
+        ],
+        "internalType": "struct ICometExtension.Configuration",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "manager",
+        "type": "address"
+      }
+    ],
+    "name": "hasPermission",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "isAllowed",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastReserveBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "maxAssets",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "name",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "numAssets",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "priceScale",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "sandboxController",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "seedReserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "storeFrontPriceFactor",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "suggestedReserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "supplyKink",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "supplyPerSecondInterestRateBase",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "supplyPerSecondInterestRateSlopeHigh",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "supplyPerSecondInterestRateSlopeLow",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "symbol",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "targetPercent",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalsBasic",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "baseSupplyIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "baseBorrowIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "trackingSupplyIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "trackingBorrowIndex",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint104",
+            "name": "totalSupplyBase",
+            "type": "uint104"
+          },
+          {
+            "internalType": "uint104",
+            "name": "totalBorrowBase",
+            "type": "uint104"
+          },
+          {
+            "internalType": "uint40",
+            "name": "lastAccrualTime",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint8",
+            "name": "pauseFlags",
+            "type": "uint8"
+          }
+        ],
+        "internalType": "struct CometStorage.TotalsBasic",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "totalsCollateral",
+    "outputs": [
+      {
+        "internalType": "uint128",
+        "name": "totalSupplyAsset",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "_reserved",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trackingIndexScale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "unlockTimestamp",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "userBasic",
+    "outputs": [
+      {
+        "internalType": "int104",
+        "name": "principal",
+        "type": "int104"
+      },
+      {
+        "internalType": "uint64",
+        "name": "baseTrackingIndex",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "baseTrackingAccrued",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint16",
+        "name": "assetsIn",
+        "type": "uint16"
+      },
+      {
+        "internalType": "uint8",
+        "name": "_reserved",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "userCollateral",
+    "outputs": [
+      {
+        "internalType": "uint128",
+        "name": "balance",
+        "type": "uint128"
+      },
+      {
+        "internalType": "uint128",
+        "name": "_reserved",
+        "type": "uint128"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "userNonce",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "version",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   }
 ]
