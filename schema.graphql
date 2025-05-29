@@ -1,4 +1,13 @@
-type Comet @entity(immutable: true) {
+type Progress @entity(immutable: false) {
+  id: String! # ProgressId enum
+
+  seekId: String!
+
+  updatedAt: BigInt!
+  createdAt: BigInt!
+}
+
+type Comet @entity(immutable: false) {
   id: Bytes! # address
   configController: Bytes!
 
@@ -59,8 +68,10 @@ type WhitelistedBase @entity(immutable: false) {
 
 type ConfigController @entity(immutable: false) {
   id: Bytes! # address
+
+  curator: Bytes # address
   owner: Bytes! # address
-  guardian: Bytes! # address
+  guardian: Bytes # address
   sandboxController: Bytes! # address
   marketFactory: Bytes! # address
 
@@ -68,6 +79,17 @@ type ConfigController @entity(immutable: false) {
   name: String!
   curatorProposalDuration: BigInt!
   proposalDuration: BigInt!
+
+  updatedAt: BigInt!
+  createdAt: BigInt!
+}
+
+type CuratorProposal @entity(immutable: false) {
+  id: String! # address:timestamp
+
+  proposedCurator: Bytes # address
+  expiry: BigInt!
+  status: String! # ProposalStatus
 
   updatedAt: BigInt!
   createdAt: BigInt!
@@ -99,11 +121,13 @@ type CollateralConfiguration @entity(immutable: false) {
 
 type CometDailyPopularity @entity(immutable: false) {
   id: Bytes!
+
   comet: Bytes!
   day: BigInt!
+  count: BigInt!
+
   createdAt: BigInt!
   updatedAt: BigInt!
-  count: BigInt!
 }
 
 ### PAPERCLIP

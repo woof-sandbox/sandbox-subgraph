@@ -151,6 +151,9 @@ templates:
       language: wasm/assemblyscript
       entities:
         - ConfigController
+        - Comet
+        - Progress
+        - CuratorProposal
       abis:
         - name: ConfigController
           file: ./abis/ConfigController.json
@@ -160,5 +163,20 @@ templates:
           receipt: true
         - event: AddedCollateralTokenConfig(address,address,uint8,uint64,uint64,uint64,uint128)
           handler: handleAddedCollateralTokenConfig
+          receipt: true
+        - event: CuratorProposed(indexed address,indexed address,uint256)
+          handler: handleCuratorProposed
+          receipt: true
+        - event: CuratorAccepted(indexed address,indexed address)
+          handler: handleCuratorAccepted
+          receipt: true
+        - event: CuratorCanceled(indexed address)
+          handler: handleCuratorCanceled
+          receipt: true
+        - event: CuratorProposalCancelled(indexed address)
+          handler: handleCuratorProposalCancelled
+          receipt: true
+        - event: GuardianUpdated(indexed address,indexed address)
+          handler: handleGuardianUpdated
           receipt: true
       file: ./src/config-controller.ts
