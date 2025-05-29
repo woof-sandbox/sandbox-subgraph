@@ -1,6 +1,6 @@
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { CuratorProposal } from '../../generated/schema';
-import { createCuratorProposalId } from '../utils/create-curator-proposal-id';
+import { formCuratorProposalId } from '../utils/form-curator-proposal-id';
 import { ProposalStatus } from '../common/proposal-status';
 import { createOrUpdateProgress, getProgress, ProgressId } from '../progress';
 
@@ -10,7 +10,7 @@ export function createCuratorProposal(
   timestamp: BigInt
 ): CuratorProposal {
   const curatorProposal = new CuratorProposal(
-    createCuratorProposalId(proposedCuratorAddress, timestamp)
+    formCuratorProposalId(proposedCuratorAddress, timestamp)
   );
   curatorProposal.proposedCurator = proposedCuratorAddress;
   curatorProposal.expiry = expiry;

@@ -1,8 +1,8 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts';
 
-export function createCuratorProposalId(
+export function formCuratorProposalId(
   curatorAddress: Address,
   timestamp: BigInt
 ): string {
-  return `${curatorAddress}:${timestamp}`;
+  return `${curatorAddress.toHexString()}:${timestamp}`;
 }
