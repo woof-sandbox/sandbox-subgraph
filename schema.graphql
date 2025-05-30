@@ -9,7 +9,7 @@ type Progress @entity(immutable: false) {
 
 type Comet @entity(immutable: false) {
   id: Bytes! # address
-  configController: Bytes!
+  configController: ConfigController!
 
   updatedAt: BigInt!
   createdAt: BigInt!

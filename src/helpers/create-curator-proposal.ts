@@ -13,6 +13,7 @@ export function createCuratorProposal(
   const curatorProposal = new CuratorProposal(
     formCuratorProposalId(configController, proposedCurator, timestamp)
   );
+  curatorProposal.configController = configController;
   curatorProposal.proposedCurator = proposedCurator;
   curatorProposal.expiry = expiry;
 
