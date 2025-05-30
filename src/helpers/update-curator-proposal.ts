@@ -1,18 +1,21 @@
-import { BigInt, log } from '@graphprotocol/graph-ts';
+import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { CuratorProposal, Progress } from '../../generated/schema';
 import { ProgressId } from '../progress';
 
 export function updateCuratorProposal(
+  configController: Address,
   newStatus: string, // namespace ProposalStatus
   timestamp: BigInt
 ): CuratorProposal | null {
-  let lastProposalProgress = Progress.load(ProgressId.LastCuratorProposal);
+  let lastProposalProgress = Progress.load(
+    ProgressId.LastCuratorProposal(configController)
+  );
   if (!lastProposalProgress) {
     log.error('LastCuratorProposal not found: {}', [timestamp.toString()]);
     return null;
   }
 
-  const curatorProposal = new CuratorProposal(lastProposalProgress.seekId);
+  const curatorProposal = CuratorProposal.load(lastProposalProgress.seekId);
   if (!curatorProposal) {
     log.error('CuratorProposal not found: {}', [lastProposalProgress.seekId]);
     return null;

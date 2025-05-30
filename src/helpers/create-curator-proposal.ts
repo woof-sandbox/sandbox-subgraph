@@ -2,17 +2,18 @@ import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { CuratorProposal } from '../../generated/schema';
 import { formCuratorProposalId } from '../utils/form-curator-proposal-id';
 import { ProposalStatus } from '../common/proposal-status';
-import { createOrUpdateProgress, getProgress, ProgressId } from '../progress';
+import { ProgressId, createOrUpdateProgress, getProgress } from '../progress';
 
 export function createCuratorProposal(
-  proposedCuratorAddress: Address,
+  configController: Address,
+  proposedCurator: Address,
   expiry: BigInt,
   timestamp: BigInt
 ): CuratorProposal {
   const curatorProposal = new CuratorProposal(
-    formCuratorProposalId(proposedCuratorAddress, timestamp)
+    formCuratorProposalId(configController, proposedCurator, timestamp)
   );
-  curatorProposal.proposedCurator = proposedCuratorAddress;
+  curatorProposal.proposedCurator = proposedCurator;
   curatorProposal.expiry = expiry;
 
   curatorProposal.status = ProposalStatus.Pending;
@@ -20,7 +21,9 @@ export function createCuratorProposal(
   curatorProposal.updatedAt = timestamp;
   curatorProposal.save();
 
-  let lastProposalProgress = getProgress(ProgressId.LastCuratorProposal);
+  const progressId = ProgressId.LastCuratorProposal(configController);
+
+  let lastProposalProgress = getProgress(progressId);
   if (lastProposalProgress) {
     const lastProposal = CuratorProposal.load(lastProposalProgress.id);
 
@@ -33,12 +36,12 @@ export function createCuratorProposal(
       }
     } else {
       log.error('Progress exists, but last proposal not found: {}', [
-        proposedCuratorAddress.toHexString(),
+        proposedCurator.toHexString(),
       ]);
     }
   }
 
-  createOrUpdateProgress(ProgressId.LastCuratorProposal, curatorProposal.id, timestamp);
+  createOrUpdateProgress(progressId, curatorProposal.id, timestamp);
 
   return curatorProposal;
 }

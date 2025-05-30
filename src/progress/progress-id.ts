@@ -1,3 +1,7 @@
+import { Address } from '@graphprotocol/graph-ts';
+
 export namespace ProgressId {
-  export const LastCuratorProposal = 'LastCuratorProposal';
+  export function LastCuratorProposal(configController: Address): string {
+    return `LastCuratorProposal:${configController.toHexString()}`;
+  }
 }

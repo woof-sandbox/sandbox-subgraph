@@ -87,7 +87,8 @@ type ConfigController @entity(immutable: false) {
 type CuratorProposal @entity(immutable: false) {
   id: String! # address:timestamp
 
-  proposedCurator: Bytes # address
+  configController: Bytes! # address
+  proposedCurator: Bytes! # address
   expiry: BigInt!
   status: String! # ProposalStatus
 

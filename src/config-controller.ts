@@ -72,6 +72,7 @@ export function handleCuratorProposed(event: CuratorProposedEvent): void {
   logEvent(event);
 
   createCuratorProposal(
+    event.address,
     event.params.proposedCurator,
     event.params.expiry,
     event.block.timestamp
@@ -81,7 +82,11 @@ export function handleCuratorProposed(event: CuratorProposedEvent): void {
 export function handleCuratorAccepted(event: CuratorAcceptedEvent): void {
   logEvent(event);
 
-  updateCuratorProposal(ProposalStatus.Accepted, event.block.timestamp);
+  updateCuratorProposal(
+    event.address,
+    ProposalStatus.Accepted,
+    event.block.timestamp
+  );
 }
 
 export function handleCuratorCanceled(event: CuratorCanceledEvent): void {
@@ -100,7 +105,11 @@ export function handleCuratorProposalCancelled(
 ): void {
   logEvent(event);
 
-  updateCuratorProposal(ProposalStatus.Canceled, event.block.timestamp);
+  updateCuratorProposal(
+    event.address,
+    ProposalStatus.Canceled,
+    event.block.timestamp
+  );
 }
 
 export function handleGuardianUpdated(event: GuardianUpdatedEvent): void {
