@@ -121,7 +121,7 @@ type CollateralConfiguration @entity(immutable: false) {
 }
 
 type CometDailyPopularity @entity(immutable: false) {
-  id: Bytes!
+  id: String! # address:day
 
   comet: Bytes!
   day: BigInt!
