@@ -60,7 +60,7 @@ import {
   getOrCreateToken,
 } from './helpers/paperclip/token';
 import { updateUsageMetrics } from './helpers/paperclip/usage';
-import { updateCometDailyPopularity } from './helpers/update-comet-daily-popularity';
+import { createOrUpdateCometDailyPopularity } from './helpers/create-or-update-comet-daily-popularity';
 import { updateUserPrincipal } from './helpers/update-user-principal';
 
 export function handleSupply(event: SupplyEvent): void {
@@ -74,12 +74,14 @@ export function handleWithdraw(event: WithdrawEvent): void {
   logEvent(event);
   createUser(event.address, event.params.to, event.block.timestamp);
   updateUserPrincipal(event.address, event.params.to, event.block.timestamp);
+  handleWithdrawPaperclip(event);
 }
 
 export function handleTransfer(event: TransferEvent): void {
   logEvent(event);
   createUser(event.address, event.params.to, event.block.timestamp);
   updateUserPrincipal(event.address, event.params.from, event.block.timestamp);
+  handleTransferPaperclip(event);
 }
 
 export function handleAbsorbDebt(event: AbsorbDebtEvent): void {
@@ -90,37 +92,38 @@ export function handleAbsorbDebt(event: AbsorbDebtEvent): void {
     event.params.borrower,
     event.block.timestamp
   );
+  handleAbsorbDebtPaperclip(event);
 }
 
 export function handleSupplyCollateral(event: SupplyCollateralEvent): void {
   logEvent(event);
+  createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleSupplyCollateralPaperclip(event);
-  updateCometDailyPopularity(event);
 }
 export function handleWithdrawCollateral(event: WithdrawCollateralEvent): void {
   logEvent(event);
+  createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleWithdrawCollateralPaperclip(event);
-  updateCometDailyPopularity(event);
 }
 export function handleTransferCollateral(event: TransferCollateralEvent): void {
   logEvent(event);
+  createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleTransferCollateralPaperclip(event);
-  updateCometDailyPopularity(event);
 }
 export function handleAbsorbCollateral(event: AbsorbCollateralEvent): void {
   logEvent(event);
+  createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleAbsorbCollateralPaperclip(event);
-  updateCometDailyPopularity(event);
 }
 export function handleBuyCollateral(event: BuyCollateralEvent): void {
   logEvent(event);
+  createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleBuyCollateralPaperclip(event);
-  updateCometDailyPopularity(event);
 }
 export function handleWithdrawReserves(event: WithdrawReservesEvent): void {
   logEvent(event);
+  createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleWithdrawReservesPaperclip(event);
-  updateCometDailyPopularity(event);
 }
 
 /// PAPERCLIP

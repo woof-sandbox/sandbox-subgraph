@@ -9,7 +9,7 @@ import {
 } from 'matchstick-as';
 import { CometDailyPopularity } from '../generated/schema';
 import { ONE_BI, SECONDS_PER_DAY } from '../src/constants';
-import { updateCometDailyPopularity } from '../src/helpers/update-comet-daily-popularity';
+import { createOrUpdateCometDailyPopularity } from '../src/helpers/create-or-update-comet-daily-popularity';
 
 const ADDRESS = Address.fromString(
   '0x1234567890abcdef1234567890abcdef12345678'
@@ -49,7 +49,7 @@ describe('updateCometDailyPopularity', () => {
     createCometDailyPopularity(ID, DAY, TIMESTAMP, ONE_BI);
     let event = createMockEvent(ADDRESS, TIMESTAMP.plus(BigInt.fromI32(3600))); // 1 hour later
 
-    updateCometDailyPopularity(event);
+    createOrUpdateCometDailyPopularity(event);
 
     let updatedEntity = CometDailyPopularity.load(ID);
     assert.assertNotNull(updatedEntity, 'Entity should exist');
@@ -74,7 +74,7 @@ describe('updateCometDailyPopularity', () => {
   test('should do nothing if CometDailyPopularity entity does not exist', () => {
     let event = createMockEvent(ADDRESS, TIMESTAMP);
 
-    updateCometDailyPopularity(event);
+    createOrUpdateCometDailyPopularity(event);
 
     let entity = CometDailyPopularity.load(ID);
     assert.assertNull(entity, 'No entity should exist');
