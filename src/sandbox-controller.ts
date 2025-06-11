@@ -1,4 +1,4 @@
-import { BigInt } from '@graphprotocol/graph-ts';
+import { BigInt, log } from '@graphprotocol/graph-ts';
 import {
   BaseAssetCurveAdded as BaseAssetCurveAddedEvent,
   BaseAssetCurveChanged as BaseAssetCurveChangedEvent,
@@ -10,14 +10,15 @@ import { createCurve } from './helpers/create-curve';
 import { createWhitelistedBase } from './helpers/create-whitelisted-base';
 import { createWhitelistedCollateral } from './helpers/create-whitelisted-collateral';
 import { updateBaseCurve } from './helpers/update-base-curve';
+import { updateCurve } from './helpers/update-curve';
 
-// TODO
 export function handleBaseAssetCurveAdded(
   event: BaseAssetCurveAddedEvent
 ): void {
   logEvent(event);
   const curve = createCurve(
-    event.block.number.toString(), // TODO: use real curve id
+    event.params.token,
+    event.params.curveIndex,
     //
     event.params.baseAssetCurve.supplyKink,
     event.params.baseAssetCurve.supplyPerYearInterestRateBase,
@@ -33,14 +34,13 @@ export function handleBaseAssetCurveAdded(
   updateBaseCurve(event.params.token, curve.id, event.block.timestamp);
 }
 
-// TODO
 export function handleBaseAssetCurveChanged(
   event: BaseAssetCurveChangedEvent
 ): void {
   logEvent(event);
-  const newCurve = createCurve(
-    // TODO: change curve by id
-    event.block.number.toString(), // TODO: use real curve id
+  const existing = updateCurve(
+    event.params.token,
+    event.params.curveIndex,
     //
     event.params.newCurve.supplyKink,
     event.params.newCurve.supplyPerYearInterestRateBase,
@@ -53,7 +53,12 @@ export function handleBaseAssetCurveChanged(
     //
     event.block.timestamp
   );
-  updateBaseCurve(event.params.token, newCurve.id, event.block.timestamp);
+  if (!existing) {
+    log.warning(
+      `Curve for update does not exists => address: {}, curveIndex: {}`,
+      [event.params.token.toHexString(), event.params.curveIndex.toString()]
+    );
+  }
 }
 
 export function handleCollateralAssetWhitelisted(
@@ -81,7 +86,8 @@ export function handleBaseAssetWhitelisted(
 ): void {
   logEvent(event);
   const curve = createCurve(
-    event.block.number.toString(), // TODO: use real curve id
+    event.params.token,
+    event.params.curveIndex,
     //
     event.params.baseAssetCurve.supplyKink,
     event.params.baseAssetCurve.supplyPerYearInterestRateBase,

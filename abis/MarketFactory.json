@@ -3,17 +3,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_marketImplementation",
+        "name": "_cometImplementation",
         "type": "address"
       },
       {
         "internalType": "address",
         "name": "_configControllerFactory",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_sandboxController",
         "type": "address"
       }
     ],
@@ -43,6 +38,11 @@
   },
   {
     "inputs": [],
+    "name": "InvalidAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "Unauthorized",
     "type": "error"
   },
@@ -52,26 +52,13 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "market",
+        "name": "comet",
         "type": "address"
       },
       {
         "indexed": true,
         "internalType": "address",
-        "name": "newController",
-        "type": "address"
-      }
-    ],
-    "name": "MarketControllerChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "market",
+        "name": "ext",
         "type": "address"
       },
       {
@@ -81,20 +68,39 @@
         "type": "address"
       }
     ],
-    "name": "MarketCreated",
+    "name": "CometCreated",
     "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "cometImplementation",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "comets",
+    "outputs": [
+      {
         "internalType": "address",
-        "name": "market",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "changeMarketController",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -111,68 +117,8 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "baseToken",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "priceFeed",
-            "type": "address"
-          },
-          {
-            "components": [
-              {
-                "internalType": "address",
-                "name": "collateralToken",
-                "type": "address"
-              },
-              {
-                "internalType": "address",
-                "name": "priceFeed",
-                "type": "address"
-              },
-              {
-                "internalType": "uint64",
-                "name": "borrowCollateralFactor",
-                "type": "uint64"
-              },
-              {
-                "internalType": "uint64",
-                "name": "liquidateCollateralFactor",
-                "type": "uint64"
-              },
-              {
-                "internalType": "uint64",
-                "name": "liquidationFactor",
-                "type": "uint64"
-              },
-              {
-                "internalType": "uint128",
-                "name": "supplyCap",
-                "type": "uint128"
-              }
-            ],
-            "internalType": "struct IConfigController.CollateralTokenConfig[]",
-            "name": "collateralTokens",
-            "type": "tuple[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "baseTokenCurveId",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct IConfigController.MarketConfig",
-        "name": "_marketConfig",
-        "type": "tuple"
-      }
-    ],
-    "name": "createMarket",
+    "inputs": [],
+    "name": "createComet",
     "outputs": [
       {
         "internalType": "address",
@@ -185,76 +131,12 @@
   },
   {
     "inputs": [],
-    "name": "getMarketLength",
+    "name": "getCometsLength",
     "outputs": [
       {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "implementation",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "marketToController",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "markets",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "sandboxController",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",

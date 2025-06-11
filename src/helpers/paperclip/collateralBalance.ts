@@ -50,12 +50,11 @@ export function updateMarketCollateralBalance(
     Address.fromBytes(collateralToken.token),
     event
   );
-  const totalsCollateral = comet.totalsCollateral(
-    Address.fromBytes(collateralToken.token)
-  );
 
   collateralBalance.lastUpdateBlockNumber = event.block.number;
-  collateralBalance.balance = totalsCollateral.getTotalSupplyAsset();
+  collateralBalance.balance = comet.totalsCollateral(
+    Address.fromBytes(collateralToken.token)
+  );
 
   const tryGetReserves = comet.try_getCollateralReserves(
     Address.fromBytes(collateralTokenToken.address)
@@ -153,13 +152,11 @@ export function updatePositionCollateralBalance(
   )!; // Guaranteed to exist
   const comet = CometContract.bind(Address.fromBytes(position.market));
 
-  const userCollateral = comet.userCollateral(
+  collateralBalance.lastUpdateBlockNumber = event.block.number;
+  collateralBalance.balance = comet.userCollateral(
     Address.fromBytes(position.account),
     Address.fromBytes(collateralToken.token)
   );
-
-  collateralBalance.lastUpdateBlockNumber = event.block.number;
-  collateralBalance.balance = userCollateral.getBalance();
 }
 
 export function createPositionCollateralBalanceSnapshot(

@@ -3,6 +3,11 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_sandboxController",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_configControllerImplementation",
         "type": "address"
       }
@@ -32,6 +37,21 @@
     "type": "error"
   },
   {
+    "inputs": [],
+    "name": "InvalidAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidFactory",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ZeroAddress",
+    "type": "error"
+  },
+  {
     "anonymous": false,
     "inputs": [
       {
@@ -49,13 +69,13 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "guardian",
+        "name": "curator",
         "type": "address"
       },
       {
         "indexed": false,
         "internalType": "address",
-        "name": "sandboxController",
+        "name": "guardian",
         "type": "address"
       },
       {
@@ -99,6 +119,19 @@
     "type": "event"
   },
   {
+    "inputs": [],
+    "name": "configControllerImplementation",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -140,22 +173,12 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "owner_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
         "name": "_curator",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "guardian_",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_sandboxController",
+        "name": "_guardian",
         "type": "address"
       },
       {
@@ -196,32 +219,13 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "getLastControllerLength",
+    "outputs": [
       {
         "internalType": "uint256",
-        "name": "_controllerId",
+        "name": "",
         "type": "uint256"
-      }
-    ],
-    "name": "getController",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "implementation",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -248,12 +252,12 @@
   },
   {
     "inputs": [],
-    "name": "lastController",
+    "name": "sandboxController",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",

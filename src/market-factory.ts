@@ -1,14 +1,14 @@
 import { Comet } from '../generated/templates';
-import { MarketCreated as MarketCreatedEvent } from '../generated/MarketFactory/MarketFactory';
+import { CometCreated as CometCreatedEvent } from '../generated/MarketFactory/MarketFactory';
 import { logEvent } from './utils/log-event';
 import { createComet } from './helpers/create-comet';
 
-export function handleMarketCreated(event: MarketCreatedEvent): void {
+export function handleCometCreated(event: CometCreatedEvent): void {
   logEvent(event);
   createComet(
-    event.params.market,
+    event.params.comet,
     event.params.configController,
     event.block.timestamp
   );
-  Comet.create(event.params.market);
+  Comet.create(event.params.comet);
 }
