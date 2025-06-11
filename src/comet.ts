@@ -24,6 +24,7 @@ import {
   ZERO_BD,
   ZERO_BI,
 } from './common/paperclip/constants';
+import { createOrUpdateCometDailyPopularity } from './helpers/create-or-update-comet-daily-popularity';
 import { createUser } from './helpers/create-user';
 import { getOrCreateAccount } from './helpers/paperclip/account';
 import {
@@ -60,7 +61,6 @@ import {
   getOrCreateToken,
 } from './helpers/paperclip/token';
 import { updateUsageMetrics } from './helpers/paperclip/usage';
-import { createOrUpdateCometDailyPopularity } from './helpers/create-or-update-comet-daily-popularity';
 import { updateUserPrincipal } from './helpers/update-user-principal';
 
 export function handleSupply(event: SupplyEvent): void {

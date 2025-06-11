@@ -1,7 +1,7 @@
 import { BigInt } from '@graphprotocol/graph-ts';
 import {
-  AddedBaseTokenConfig as AddedBaseTokenConfigEvent,
   AddedCollateralTokenConfig as AddedCollateralTokenConfigEvent,
+  CometCreated as CometCreatedEvent,
   CuratorAccepted as CuratorAcceptedEvent,
   CuratorCanceled as CuratorCanceledEvent,
   CuratorProposalCancelled as CuratorProposalCancelledEvent,
@@ -12,35 +12,18 @@ import { logEvent } from './utils/log-event';
 import { createBaseConfiguration } from './helpers/create-base-configuration';
 import { createCollateralConfiguration } from './helpers/create-collateral-configuration';
 import { createCuratorProposal } from './helpers/create-curator-proposal';
-import { createCurveSecondsRate } from './helpers/create-curve';
+import { formCurveId } from './helpers/form-curve-id';
 import { getConfigController } from './helpers/get-config-controller';
 import { updateCuratorProposal } from './helpers/update-curator-proposal';
 import { ProposalStatus } from './common/proposal-status';
 
-export function handleAddedBaseTokenConfig(
-  event: AddedBaseTokenConfigEvent
-): void {
+export function handleCometCreated(event: CometCreatedEvent): void {
   logEvent(event);
-
-  const curve = createCurveSecondsRate(
-    event.block.number.toString(), // TODO: replace with the real id
-    //
-    event.params.supplyKink,
-    event.params.supplyPerSecondInterestRateBase,
-    event.params.supplyPerSecondInterestRateSlopeLow,
-    event.params.supplyPerSecondInterestRateSlopeHigh,
-    event.params.borrowKink,
-    event.params.borrowPerSecondInterestRateBase,
-    event.params.borrowPerSecondInterestRateSlopeLow,
-    event.params.borrowPerSecondInterestRateSlopeHigh,
-    //
-    event.block.timestamp
-  );
 
   createBaseConfiguration(
     event.address,
     //
-    curve.id,
+    formCurveId(event.params.baseToken, event.params.baseTokenCurveId),
     //
     event.block.timestamp
   );

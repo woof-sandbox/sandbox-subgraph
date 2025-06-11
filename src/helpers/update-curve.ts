@@ -2,7 +2,7 @@ import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { BaseAssetCurve } from '../../generated/schema';
 import { formCurveId } from './form-curve-id';
 
-export function createCurve(
+export function updateCurve(
   tokenAddress: Address,
   curveIndex: BigInt,
   //
@@ -15,14 +15,12 @@ export function createCurve(
   borrowPerYearInterestRateSlopeLow: BigInt,
   borrowPerYearInterestRateSlopeHigh: BigInt,
   //
-  createdAt: BigInt
-): BaseAssetCurve {
+  updatedAt: BigInt
+): BaseAssetCurve | null {
   const id = formCurveId(tokenAddress, curveIndex);
 
   let curve = BaseAssetCurve.load(id);
-  if (!curve) {
-    curve = new BaseAssetCurve(id);
-    //
+  if (curve) {
     curve.supplyKink = supplyKink;
     curve.supplyPerYearInterestRateBase = supplyPerYearInterestRateBase;
     curve.supplyPerYearInterestRateSlopeLow = supplyPerYearInterestRateSlopeLow;
@@ -37,10 +35,11 @@ export function createCurve(
     curve.baseToken = tokenAddress;
     curve.curveIndex = curveIndex;
     //
-    curve.createdAt = createdAt;
-    curve.updatedAt = createdAt;
+    curve.updatedAt = updatedAt;
     curve.save();
+
+    return curve;
   }
 
-  return curve;
+  return null;
 }

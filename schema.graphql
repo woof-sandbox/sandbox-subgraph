@@ -39,7 +39,7 @@ type WhitelistedCollateral @entity(immutable: true) {
   createdAt: BigInt!
 }
 
-type BaseAssetCurve @entity(immutable: true) {
+type BaseAssetCurve @entity(immutable: false) {
   id: String!
   supplyKink: BigInt!
   supplyPerYearInterestRateBase: BigInt!
@@ -50,7 +50,11 @@ type BaseAssetCurve @entity(immutable: true) {
   borrowPerYearInterestRateSlopeLow: BigInt!
   borrowPerYearInterestRateSlopeHigh: BigInt!
 
+  baseToken: Bytes!
+  curveIndex: BigInt!
+
   createdAt: BigInt!
+  updatedAt: BigInt!
 }
 type WhitelistedBase @entity(immutable: false) {
   id: Bytes! # address
@@ -72,7 +76,6 @@ type ConfigController @entity(immutable: false) {
   curator: Bytes # address
   owner: Bytes! # address
   guardian: Bytes # address
-  sandboxController: Bytes! # address
   marketFactory: Bytes! # address
 
   curatorFee: BigInt!
@@ -401,10 +404,10 @@ type ProtocolAccounting @entity(immutable: false) {
   avgSupplyApr: BigDecimal!
   "Average base borrow APR of the protocol (average over all markets)"
   avgBorrowApr: BigDecimal!
-  "Average reward supply APR of the protocol (average over all markets)"
-  avgRewardSupplyApr: BigDecimal!
-  "Average reward borrow APR of the protocol (average over all markets)"
-  avgRewardBorrowApr: BigDecimal!
+  #### "Average reward supply APR of the protocol (average over all markets)"
+  #### avgRewardSupplyApr: BigDecimal!
+  #### "Average reward borrow APR of the protocol (average over all markets)"
+  #### avgRewardBorrowApr: BigDecimal!
   "Average net supply APR of the protocol (avgSupplyApr + avgRewardSupplyApy)"
   avgNetSupplyApr: BigDecimal!
   "Average net borrow APR of the protocol (avgBorrowApr - avgRewardBorrowApr)"
@@ -469,17 +472,17 @@ type MarketAccounting @entity(immutable: false) {
   supplyApr: BigDecimal!
   "Base borrow APR of the market"
   borrowApr: BigDecimal!
-  "Reward supply APR of the market"
-  rewardSupplyApr: BigDecimal!
-  "Reward borrow APR of the market"
-  rewardBorrowApr: BigDecimal!
+  #### "Reward supply APR of the market"
+  #### rewardSupplyApr: BigDecimal!
+  #### "Reward borrow APR of the market"
+  #### rewardBorrowApr: BigDecimal!
   "Net supply APR of the market (supplyApr + rewardSupplyApr)"
   netSupplyApr: BigDecimal!
   "Net borrow APR of the market (borrowApr - rewardBorrowApr)"
   netBorrowApr: BigDecimal!
 
-  "Reward token price in USD"
-  rewardTokenUsdPrice: BigDecimal!
+  #### "Reward token price in USD"
+  #### rewardTokenUsdPrice: BigDecimal!
 }
 
 type PositionAccounting @entity(immutable: false) {

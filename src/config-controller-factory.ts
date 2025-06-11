@@ -12,7 +12,6 @@ export function handleConfigControllerCreated(
     //
     event.params.owner,
     event.params.guardian,
-    event.params.sandboxController,
     event.params.marketFactory,
     //
     event.params.curatorFee,

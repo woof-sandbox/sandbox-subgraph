@@ -1,8 +1,8 @@
 [
   {
     "inputs": [],
-    "stateMutability": "nonpayable",
-    "type": "constructor"
+    "name": "AlreadyInitialized",
+    "type": "error"
   },
   {
     "inputs": [],
@@ -31,6 +31,16 @@
   },
   {
     "inputs": [],
+    "name": "CometAlreadyAdded",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "CometNotOwned",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InsufficientBalance",
     "type": "error"
   },
@@ -41,12 +51,12 @@
   },
   {
     "inputs": [],
-    "name": "InvalidFeePercentage",
+    "name": "InvalidCurveId",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "InvalidInitialization",
+    "name": "InvalidFeePercentage",
     "type": "error"
   },
   {
@@ -76,7 +86,12 @@
   },
   {
     "inputs": [],
-    "name": "NotInitializing",
+    "name": "NonConfigController",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ProposalDurationTooLong",
     "type": "error"
   },
   {
@@ -96,7 +111,28 @@
   },
   {
     "inputs": [],
-    "name": "ProposalNotExpired",
+    "name": "ProposalNotReady",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "ProposalNotRevertable",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "SafeERC20FailedOperation",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "SameCurve",
     "type": "error"
   },
   {
@@ -260,6 +296,244 @@
       {
         "indexed": true,
         "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "cancelledBy",
+        "type": "address"
+      }
+    ],
+    "name": "CometBaseTokenCurveProposalCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "executedBy",
+        "type": "address"
+      }
+    ],
+    "name": "CometBaseTokenCurveProposalExecuted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "proposer",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "revertTime",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "curveId",
+        "type": "uint256"
+      }
+    ],
+    "name": "CometBaseTokenCurveProposed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "cancelledBy",
+        "type": "address"
+      }
+    ],
+    "name": "CometConfigProposalCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "executedBy",
+        "type": "address"
+      }
+    ],
+    "name": "CometConfigProposalExecuted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "proposer",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "revertTime",
+        "type": "uint256"
+      }
+    ],
+    "name": "CometConfigProposed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "priceFeed",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "cometId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "baseTokenCurveId",
+        "type": "uint256"
+      }
+    ],
+    "name": "CometCreated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "oldController",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newController",
+        "type": "address"
+      }
+    ],
+    "name": "CometTransferProposalAccepted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "cancelledBy",
+        "type": "address"
+      }
+    ],
+    "name": "CometTransferProposalCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newController",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "expiration",
+        "type": "uint256"
+      }
+    ],
+    "name": "CometTransferProposed",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
         "name": "oldCurator",
         "type": "address"
       },
@@ -367,182 +641,6 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint64",
-        "name": "version",
-        "type": "uint64"
-      }
-    ],
-    "name": "Initialized",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "cancelledBy",
-        "type": "address"
-      }
-    ],
-    "name": "MarketConfigProposalCancelled",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "executedBy",
-        "type": "address"
-      }
-    ],
-    "name": "MarketConfigProposalExecuted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "proposer",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "expiration",
-        "type": "uint256"
-      }
-    ],
-    "name": "MarketConfigProposed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "baseToken",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "priceFeed",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "baseTokenId",
-        "type": "uint256"
-      }
-    ],
-    "name": "MarketConfigurationCreated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "oldController",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newController",
-        "type": "address"
-      }
-    ],
-    "name": "MarketTransferProposalAccepted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "cancelledBy",
-        "type": "address"
-      }
-    ],
-    "name": "MarketTransferProposalCancelled",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newController",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "expiration",
-        "type": "uint256"
-      }
-    ],
-    "name": "MarketTransferProposed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
         "internalType": "uint256",
         "name": "oldCuratorDuration",
         "type": "uint256"
@@ -639,68 +737,26 @@
     "type": "event"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "_marketProposals",
+    "inputs": [],
+    "name": "FEE_DIVISOR",
     "outputs": [
       {
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
-        "name": "expiration",
+        "name": "",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "proposer",
-        "type": "address"
-      },
-      {
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "ZERO_ADDRESS",
+    "outputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
-      }
-    ],
-    "name": "_marketTransferProposals",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "newController",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "expiration",
-        "type": "uint256"
-      },
-      {
-        "internalType": "bool",
-        "name": "isActive",
-        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -714,37 +770,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      }
-    ],
-    "name": "acceptMarketTransferProposal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "accumulateRevenue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "cancelCuratorProposal",
     "outputs": [],
@@ -752,49 +777,67 @@
     "type": "function"
   },
   {
-    "inputs": [
+    "inputs": [],
+    "name": "cometFactory",
+    "outputs": [
       {
         "internalType": "address",
-        "name": "market",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "cancelMarketConfigProposal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [
       {
         "internalType": "address",
-        "name": "market",
+        "name": "",
         "type": "address"
       }
     ],
-    "name": "cancelMarketTransferProposal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "name": "cometId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "comets",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
     "inputs": [],
-    "name": "claimAllRevenue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+    "name": "cometsLength",
+    "outputs": [
       {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "claimRevenue",
-    "outputs": [],
-    "stateMutability": "nonpayable",
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -820,9 +863,36 @@
             "type": "address"
           },
           {
-            "internalType": "address",
-            "name": "priceFeed",
-            "type": "address"
+            "internalType": "uint256",
+            "name": "baseTokenCurveId",
+            "type": "uint256"
+          },
+          {
+            "components": [
+              {
+                "internalType": "uint256",
+                "name": "baseTrackingSupplySpeed",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "baseTrackingBorrowSpeed",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "trackingIndexScale",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "baseMinForRewards",
+                "type": "uint256"
+              }
+            ],
+            "internalType": "struct IConfigController.CometOptions",
+            "name": "options",
+            "type": "tuple"
           },
           {
             "components": [
@@ -835,6 +905,11 @@
                 "internalType": "address",
                 "name": "priceFeed",
                 "type": "address"
+              },
+              {
+                "internalType": "uint128",
+                "name": "supplyCap",
+                "type": "uint128"
               },
               {
                 "internalType": "uint64",
@@ -852,27 +927,22 @@
                 "type": "uint64"
               },
               {
-                "internalType": "uint128",
-                "name": "supplyCap",
-                "type": "uint128"
+                "internalType": "uint64",
+                "name": "scale",
+                "type": "uint64"
               }
             ],
             "internalType": "struct IConfigController.CollateralTokenConfig[]",
-            "name": "collateraTokens",
+            "name": "collateralTokens",
             "type": "tuple[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "baseTokenCurveId",
-            "type": "uint256"
           }
         ],
-        "internalType": "struct IConfigController.MarketConfig",
-        "name": "_marketConfig",
+        "internalType": "struct IConfigController.CometConfig",
+        "name": "_cometConfig",
         "type": "tuple"
       }
     ],
-    "name": "createMarket",
+    "name": "createComet",
     "outputs": [
       {
         "internalType": "address",
@@ -939,43 +1009,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "market",
-        "type": "address"
-      }
-    ],
-    "name": "executeMarketConfigProposal",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getUnclaimedRevenue",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "_newOwner",
         "type": "address"
       }
@@ -1007,17 +1040,17 @@
       },
       {
         "internalType": "address",
+        "name": "_curator",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_guardian",
         "type": "address"
       },
       {
         "internalType": "address",
-        "name": "_sandboxController",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_marketFactory",
+        "name": "_cometFactory",
         "type": "address"
       },
       {
@@ -1039,199 +1072,11 @@
         "internalType": "uint256",
         "name": "_proposalDuration",
         "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "_configControllerFactory",
-        "type": "address"
       }
     ],
     "name": "initialize",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "marketFactory",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "marketId",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      }
-    ],
-    "name": "marketProposals",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "market",
-            "type": "address"
-          },
-          {
-            "components": [
-              {
-                "internalType": "address",
-                "name": "collateralToken",
-                "type": "address"
-              },
-              {
-                "internalType": "address",
-                "name": "priceFeed",
-                "type": "address"
-              },
-              {
-                "internalType": "uint64",
-                "name": "borrowCollateralFactor",
-                "type": "uint64"
-              },
-              {
-                "internalType": "uint64",
-                "name": "liquidateCollateralFactor",
-                "type": "uint64"
-              },
-              {
-                "internalType": "uint64",
-                "name": "liquidationFactor",
-                "type": "uint64"
-              },
-              {
-                "internalType": "uint128",
-                "name": "supplyCap",
-                "type": "uint128"
-              }
-            ],
-            "internalType": "struct IConfigController.CollateralTokenConfig[]",
-            "name": "collateralTokens",
-            "type": "tuple[]"
-          },
-          {
-            "internalType": "uint256",
-            "name": "expiration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "address",
-            "name": "proposer",
-            "type": "address"
-          },
-          {
-            "internalType": "bool",
-            "name": "isActive",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct IConfigController.MarketConfigProposal",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      }
-    ],
-    "name": "marketTransferProposals",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "market",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "newController",
-            "type": "address"
-          },
-          {
-            "internalType": "uint256",
-            "name": "expiration",
-            "type": "uint256"
-          },
-          {
-            "internalType": "bool",
-            "name": "isActive",
-            "type": "bool"
-          }
-        ],
-        "internalType": "struct IConfigController.MarketTransferProposal",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "markets",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "marketsLength",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1287,74 +1132,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "components": [
-          {
-            "internalType": "address",
-            "name": "collateralToken",
-            "type": "address"
-          },
-          {
-            "internalType": "address",
-            "name": "priceFeed",
-            "type": "address"
-          },
-          {
-            "internalType": "uint64",
-            "name": "borrowCollateralFactor",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "liquidateCollateralFactor",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "liquidationFactor",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint128",
-            "name": "supplyCap",
-            "type": "uint128"
-          }
-        ],
-        "internalType": "struct IConfigController.CollateralTokenConfig[]",
-        "name": "_collateralTokens",
-        "type": "tuple[]"
-      }
-    ],
-    "name": "proposeMarketCollateralTokens",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "market",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "newController",
-        "type": "address"
-      }
-    ],
-    "name": "proposeMarketTransfer",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "proposedCurator",
     "outputs": [
@@ -1368,74 +1145,10 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      }
-    ],
-    "name": "removeClaimRevenueToken",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "removeCurator",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "revenueTokenIndex",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "revenueTokens",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "revenueTokensLength",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1449,19 +1162,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "_curatorFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "setCuratorFee",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1493,30 +1193,6 @@
     "name": "setProposalDurations",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "unclaimedRevenue",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   }
 ]

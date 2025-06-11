@@ -408,12 +408,12 @@ export function updateMarketAccounting(
     accounting.collateralReservesBalanceUsd
   );
 
-  accounting.netSupplyApr = accounting.supplyApr.plus(
+  accounting.netSupplyApr = accounting.supplyApr /*.plus(
     accounting.rewardSupplyApr
-  );
-  accounting.netBorrowApr = accounting.borrowApr.minus(
+  )*/; //// Changed
+  accounting.netBorrowApr = accounting.borrowApr /*.minus(
     accounting.rewardBorrowApr
-  );
+  )*/; //// Changed
 
   accounting.collateralization = bigDecimalSafeDiv(
     accounting.totalBaseSupply.toBigDecimal(),

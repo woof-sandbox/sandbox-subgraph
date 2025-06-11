@@ -9,8 +9,8 @@ dataSources:
     network: sepolia
     source:
       abi: SandboxController
-      address: "0xd4c67cc70297adc9716b87529cfa066cba7c3b67"
-      startBlock: 8281658
+      address: "0x03f649d5d02f02222f4324649519a0f8b178a418"
+      startBlock: 8489273
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -23,11 +23,11 @@ dataSources:
           file: ./abis/SandboxController.json
       eventHandlers:
         - event: BaseAssetCurveAdded(indexed
-            address,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64))
+            address,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),uint256)
           handler: handleBaseAssetCurveAdded
           receipt: true
         - event: BaseAssetCurveChanged(indexed
-            address,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64))
+            address,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),uint256)
           handler: handleBaseAssetCurveChanged
           receipt: true
         - event: CollateralAssetWhitelisted(indexed address,indexed
@@ -35,7 +35,7 @@ dataSources:
           handler: handleCollateralAssetWhitelisted
           receipt: true
         - event: BaseAssetWhitelisted(indexed address,indexed
-            address,uint8,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),uint256)
+            address,uint8,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),uint256,uint256,uint256)
           handler: handleBaseAssetWhitelisted
           receipt: true
       file: ./src/sandbox-controller.ts
@@ -44,8 +44,8 @@ dataSources:
     network: sepolia
     source:
       abi: MarketFactory
-      address: "0x202308a5c8156a2d29fbb365608ea52a963c3a34"
-      startBlock: 8281658
+      address: "0x7946caffc182e795d2f06b83cb9e11e8b6d9f08e"
+      startBlock: 8489275
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -59,8 +59,8 @@ dataSources:
         - name: Comet
           file: ./abis/Comet.json
       eventHandlers:
-        - event: MarketCreated(indexed address,indexed address)
-          handler: handleMarketCreated
+        - event: CometCreated(indexed address,indexed address,indexed address)
+          handler: handleCometCreated
           receipt: true
       file: ./src/market-factory.ts
   - kind: ethereum
@@ -68,8 +68,8 @@ dataSources:
     network: sepolia
     source:
       abi: ConfigControllerFactory
-      address: "0x927dc6d6f18c5e15ebd3553269b4ba2b7ca220d9"
-      startBlock: 8281658
+      address: "0x633f13cb071d47bc8ab05137f8894eda1a4eb432"
+      startBlock: 8489274
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -158,6 +158,9 @@ templates:
         - name: ConfigController
           file: ./abis/ConfigController.json
       eventHandlers:
+        - event: CometCreated(address,address,address,uint256,uint256)
+          handler: handleCometCreated
+          receipt: true
         - event: AddedBaseTokenConfig(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64)
           handler: handleAddedBaseTokenConfig
           receipt: true

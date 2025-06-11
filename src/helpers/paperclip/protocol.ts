@@ -88,7 +88,8 @@ export function updateProtocolAccounting(
     weightedSumBorrowApr = weightedSumBorrowApr.plus(
       marketAccounting.borrowApr.times(marketAccounting.totalBaseBorrowUsd)
     );
-    weightedSumRewardSupplyApr = weightedSumRewardSupplyApr.plus(
+    //// Changed
+    /*weightedSumRewardSupplyApr = weightedSumRewardSupplyApr.plus(
       marketAccounting.rewardSupplyApr.times(
         marketAccounting.totalBaseSupplyUsd
       )
@@ -97,7 +98,7 @@ export function updateProtocolAccounting(
       marketAccounting.rewardBorrowApr.times(
         marketAccounting.totalBaseBorrowUsd
       )
-    );
+    );*/
     weightedSumNetSupplyApr = weightedSumNetSupplyApr.plus(
       marketAccounting.netSupplyApr.times(marketAccounting.totalBaseSupplyUsd)
     );
@@ -126,14 +127,15 @@ export function updateProtocolAccounting(
     weightedSumBorrowApr,
     accounting.totalBorrowUsd
   );
-  accounting.avgRewardSupplyApr = bigDecimalSafeDiv(
+  //// Changed
+  /*accounting.avgRewardSupplyApr = bigDecimalSafeDiv(
     weightedSumRewardSupplyApr,
     accounting.totalSupplyUsd
   );
   accounting.avgRewardBorrowApr = bigDecimalSafeDiv(
     weightedSumRewardBorrowApr,
     accounting.totalBorrowUsd
-  );
+  );*/
   accounting.avgNetSupplyApr = bigDecimalSafeDiv(
     weightedSumNetSupplyApr,
     accounting.totalSupplyUsd

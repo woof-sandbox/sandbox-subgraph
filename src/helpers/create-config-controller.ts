@@ -6,7 +6,6 @@ export function createConfigController(
   //
   owner: Address,
   guardian: Address,
-  sandboxController: Address,
   marketFactory: Address,
   //
   curatorFee: BigInt,
@@ -24,7 +23,6 @@ export function createConfigController(
     //
     configController.owner = owner;
     configController.guardian = guardian;
-    configController.sandboxController = sandboxController;
     configController.marketFactory = marketFactory;
     //
     configController.curatorFee = curatorFee;

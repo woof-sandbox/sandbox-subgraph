@@ -38,11 +38,6 @@
       },
       {
         "internalType": "uint256",
-        "name": "_maxCollateralAssets",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
         "name": "_targetPercent",
         "type": "uint256"
       },
@@ -54,6 +49,11 @@
       {
         "internalType": "uint256",
         "name": "_minUpdateTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxUpdateTime",
         "type": "uint256"
       },
       {
@@ -103,6 +103,11 @@
   {
     "inputs": [],
     "name": "CollateralTokenNotWhitelisted",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "DifferentPriceFeedAlreadyUsedForToken",
     "type": "error"
   },
   {
@@ -214,12 +219,12 @@
   },
   {
     "inputs": [],
-    "name": "Test",
+    "name": "Unauthorized",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "Unauthorized",
+    "name": "WrongPriceFeedUnderlying",
     "type": "error"
   },
   {
@@ -293,6 +298,12 @@
         "internalType": "struct ISandboxController.BaseAssetCurve",
         "name": "baseAssetCurve",
         "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "curveIndex",
+        "type": "uint256"
       }
     ],
     "name": "BaseAssetCurveAdded",
@@ -402,6 +413,12 @@
         "internalType": "struct ISandboxController.BaseAssetCurve",
         "name": "newCurve",
         "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "curveIndex",
+        "type": "uint256"
       }
     ],
     "name": "BaseAssetCurveChanged",
@@ -480,6 +497,18 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "minBorrow",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "baseAssetCount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "curveIndex",
         "type": "uint256"
       }
     ],
@@ -569,6 +598,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "maxUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "suggestedAmountOfSeedReserves",
             "type": "uint256"
           },
@@ -598,6 +632,11 @@
           {
             "internalType": "uint256",
             "name": "minUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxUpdateTime",
             "type": "uint256"
           },
           {
@@ -726,25 +765,6 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "oldTargetReserves",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "newTargetReserves",
-        "type": "uint256"
-      }
-    ],
-    "name": "TargetReservesChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
         "internalType": "enum ISandboxController.MarketState",
         "name": "state",
         "type": "uint8"
@@ -801,6 +821,11 @@
       {
         "internalType": "uint256",
         "name": "minUpdateTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxUpdateTime",
         "type": "uint256"
       },
       {
@@ -875,19 +900,6 @@
     "name": "addBaseAssetCurve",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "baseAssetCount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1077,19 +1089,6 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "collateralAssetCount",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
         "internalType": "uint256",
@@ -1197,6 +1196,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "maxUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "suggestedAmountOfSeedReserves",
             "type": "uint256"
           },
@@ -1233,6 +1237,11 @@
           {
             "internalType": "uint256",
             "name": "minUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxUpdateTime",
             "type": "uint256"
           },
           {
@@ -1342,6 +1351,32 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getBaseAssetLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCollateralAssetLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -1441,38 +1476,6 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "name": "isPriceFeedWhitelisted",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "maxCollateralAssets",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [],
     "name": "owner",
     "outputs": [
@@ -1480,6 +1483,24 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proposalBoundaries",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1596,6 +1617,11 @@
           },
           {
             "internalType": "uint256",
+            "name": "maxUpdateTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
             "name": "suggestedAmountOfSeedReserves",
             "type": "uint256"
           },
@@ -1657,32 +1683,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "_targetReserves",
-        "type": "uint256"
-      }
-    ],
-    "name": "setTargetReserves",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256[3]",
-        "name": "thresholds",
-        "type": "uint256[3]"
-      }
-    ],
-    "name": "setThresholds",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "_treasury",
         "type": "address"
@@ -1694,32 +1694,19 @@
     "type": "function"
   },
   {
-    "inputs": [],
-    "name": "targetReserves",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
     "inputs": [
       {
-        "internalType": "enum ISandboxController.MarketState",
+        "internalType": "address",
         "name": "",
-        "type": "uint8"
+        "type": "address"
       }
     ],
-    "name": "threshold",
+    "name": "tokenToPriceFeed",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "address",
         "name": "",
-        "type": "uint256"
+        "type": "address"
       }
     ],
     "stateMutability": "view",
