@@ -19,7 +19,7 @@ type User @entity(immutable: false) {
   id: Bytes! # address
   principal: BigInt!
   userAddress: Bytes!
-  proxyCometAddress: Bytes!
+  cometAddress: Comet!
 
   updatedAt: BigInt!
   createdAt: BigInt!

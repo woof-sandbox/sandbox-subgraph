@@ -11,13 +11,13 @@ import { formUserId } from '../src/helpers/form-user-id';
 import { getUserPrincipal } from '../src/helpers/get-user-principal';
 
 function mockCometContract(
-  proxyCometAddress: Address,
+  cometAddress: Address,
   userAddress: Address,
   principal: BigInt,
   reverted: boolean
 ): void {
   createMockedFunction(
-    proxyCometAddress,
+    cometAddress,
     'userBasic',
     'userBasic(address):(int104,uint64,uint64,uint16,uint8)'
   )
@@ -102,7 +102,7 @@ describe('createUser', () => {
       getUserPrincipal(proxyAddress, userAddress)
     );
     assert.bytesEquals(user!.userAddress, userAddress);
-    assert.bytesEquals(user!.proxyCometAddress, proxyAddress);
+    assert.bytesEquals(user!.cometAddress, proxyAddress);
     assert.bigIntEquals(user!.createdAt, createdAt);
   });
 
@@ -118,7 +118,7 @@ describe('createUser', () => {
     let user = new User(formUserId(proxyAddress, userAddress));
     user.principal = BigInt.fromI32(500);
     user.userAddress = userAddress;
-    user.proxyCometAddress = proxyAddress;
+    user.cometAddress = proxyAddress;
     user.createdAt = createdAt;
     user.updatedAt = createdAt;
     user.save();
