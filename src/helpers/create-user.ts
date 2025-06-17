@@ -15,7 +15,7 @@ export function createUser(
     user = new User(id);
     user.principal = getUserPrincipal(cometAddress, userAddress);
     user.userAddress = userAddress;
-    user.cometAddress = cometAddress;
+    user.comet = cometAddress;
     //
     user.createdAt = createdAt;
     user.updatedAt = createdAt;

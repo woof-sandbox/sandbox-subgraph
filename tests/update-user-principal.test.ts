@@ -40,7 +40,7 @@ describe('updateUserPrincipal', () => {
     let user = new User(userId);
     user.principal = initialPrincipal;
     user.userAddress = userAddress;
-    user.cometAddress = proxyAddress;
+    user.comet = proxyAddress;
     user.createdAt = BigInt.fromI32(123456); // add createdAt
     user.updatedAt = BigInt.fromI32(123456);
     user.save();
