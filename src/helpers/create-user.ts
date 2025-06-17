@@ -4,18 +4,18 @@ import { formUserId } from './form-user-id';
 import { getUserPrincipal } from './get-user-principal';
 
 export function createUser(
-  proxyCometAddress: Address,
+  cometAddress: Address,
   userAddress: Address,
   createdAt: BigInt
 ): User {
-  const id = formUserId(proxyCometAddress, userAddress);
+  const id = formUserId(cometAddress, userAddress);
 
   let user = User.load(id);
   if (!user) {
     user = new User(id);
-    user.principal = getUserPrincipal(proxyCometAddress, userAddress);
+    user.principal = getUserPrincipal(cometAddress, userAddress);
     user.userAddress = userAddress;
-    user.proxyCometAddress = proxyCometAddress;
+    user.comet = cometAddress;
     //
     user.createdAt = createdAt;
     user.updatedAt = createdAt;

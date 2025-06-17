@@ -3,12 +3,12 @@
 Tracking Both Borrowers and Suppliers  
 
 all Comets:  
-**proxyCometAddress (id)**  
+**cometAddress (id)**  
 **createdAt**
 
 all Users:  
 **id (comet-user)**  
 **principal**  
 **userAddress**  
-**proxyCometAddress**  
+**cometAddress**  
 **createdAt**  

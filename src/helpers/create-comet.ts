@@ -12,6 +12,7 @@ export function createComet(
   if (!comet) {
     comet = new Comet(id);
     comet.configController = configController;
+    comet.market = id;
     //
     comet.createdAt = createdAt;
     comet.updatedAt = createdAt;

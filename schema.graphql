@@ -10,16 +10,17 @@ type Progress @entity(immutable: false) {
 type Comet @entity(immutable: false) {
   id: Bytes! # address
   configController: ConfigController!
+  market: Market!
 
   updatedAt: BigInt!
   createdAt: BigInt!
 }
 
 type User @entity(immutable: false) {
-  id: Bytes! # address
+  id: Bytes!
   principal: BigInt!
   userAddress: Bytes!
-  proxyCometAddress: Bytes!
+  comet: Comet!
 
   updatedAt: BigInt!
   createdAt: BigInt!
@@ -182,7 +183,7 @@ type Market @entity(immutable: true) {
   "Comet proxy address"
   id: Bytes!
   "Comet proxy address"
-  cometProxy: Bytes!
+  cometProxy: Comet!
   "Protocol this market is part of"
   protocol: Protocol!
   "Block number the market was created"

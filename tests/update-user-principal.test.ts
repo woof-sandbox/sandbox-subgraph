@@ -4,12 +4,12 @@ import { User } from '../generated/schema';
 import { updateUserPrincipal } from '../src/helpers/update-user-principal';
 
 function mockCometContract(
-  proxyCometAddress: Address,
+  cometAddress: Address,
   userAddress: Address,
   principal: BigInt
 ): void {
   createMockedFunction(
-    proxyCometAddress,
+    cometAddress,
     'userBasic',
     'userBasic(address):(int104,uint64,uint64,uint16,uint8)'
   )
@@ -40,7 +40,7 @@ describe('updateUserPrincipal', () => {
     let user = new User(userId);
     user.principal = initialPrincipal;
     user.userAddress = userAddress;
-    user.proxyCometAddress = proxyAddress;
+    user.comet = proxyAddress;
     user.createdAt = BigInt.fromI32(123456); // add createdAt
     user.updatedAt = BigInt.fromI32(123456);
     user.save();

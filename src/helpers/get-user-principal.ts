@@ -2,10 +2,10 @@ import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { Comet } from '../../generated/templates/Comet/Comet';
 
 export function getUserPrincipal(
-  proxyCometAddress: Address,
+  cometAddress: Address,
   userAddress: Address
 ): BigInt {
-  let cometContract = Comet.bind(proxyCometAddress);
+  let cometContract = Comet.bind(cometAddress);
   let userBasic = cometContract.try_userBasic(userAddress);
 
   if (userBasic.reverted) {
