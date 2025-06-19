@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
+import { Address, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import { Comet as CometContract } from '../../../generated/templates/Comet/Comet';
 import {
   COMET_REWARDS_ADDRESS,
@@ -25,10 +25,7 @@ import {
   getRewardConfigData,
 } from '../../common/paperclip/utils';
 import {
-  BASE_INDEX_SCALE,
   COMET_FACTOR_SCALE,
-  DAYS_PER_YEAR,
-  REWARD_FACTOR_SCALE,
   SECONDS_PER_DAY,
   SECONDS_PER_HOUR,
   SECONDS_PER_WEEK,
@@ -37,6 +34,7 @@ import {
   ZERO_BD,
   ZERO_BI,
 } from '../../common/paperclip/constants';
+import { UNKNOWN } from '../../constants';
 import {
   createMarketCollateralBalanceSnapshot,
   getOrCreateMarketCollateralBalance,
@@ -90,10 +88,20 @@ export function updateMarketConfiguration(
   // cometImplementation must be added externally
   config.market = market.id;
   config.lastConfigurationUpdateBlockNumber = event.block.number;
-  //// config.name = comet.name();
-  config.name = '';
-  //// config.symbol = comet.symbol();
-  config.symbol = '';
+
+  const nameResult = comet.try_name();
+  if (nameResult.reverted) {
+    config.name = UNKNOWN;
+  } else {
+    config.name = nameResult.value;
+  }
+
+  const symbolResult = comet.try_symbol();
+  if (symbolResult.reverted) {
+    config.symbol = UNKNOWN;
+  } else {
+    config.symbol = nameResult.value;
+  }
   /*config.factory = tryFactory.reverted ? ZERO_ADDRESS : tryFactory.value;
     config.governor = comet.governor();
     config.pauseGuardian = comet.pauseGuardian();
@@ -263,28 +271,21 @@ export function updateMarketAccounting(
   const configuration = getOrCreateMarketConfiguration(market, event);
   //// const rewardConfigData = getOrCreateMarketRewardConfiguration(market, event);
 
-  //// const totalsBasic = comet.totalsBasic();
+  const totalsBasic = comet.totalsBasic();
 
   // const rewardConfigData = getRewardConfigData(Address.fromBytes(market.id));
 
   accounting.market = market.id;
   accounting.lastAccountingUpdatedBlockNumber = event.block.number;
 
-  //// accounting.baseSupplyIndex = totalsBasic.baseSupplyIndex;
-  accounting.baseSupplyIndex = ZERO_BI;
-  //// accounting.baseBorrowIndex = totalsBasic.baseBorrowIndex;
-  accounting.baseBorrowIndex = ZERO_BI;
-  //// accounting.trackingSupplyIndex = totalsBasic.trackingSupplyIndex;
-  accounting.trackingSupplyIndex = ZERO_BI;
-  //// accounting.trackingBorrowIndex = totalsBasic.trackingBorrowIndex;
-  accounting.trackingBorrowIndex = ZERO_BI;
-  //// accounting.lastAccrualTime = totalsBasic.lastAccrualTime;
-  accounting.lastAccrualTime = ZERO_BI;
+  accounting.baseSupplyIndex = totalsBasic.baseSupplyIndex;
+  accounting.baseBorrowIndex = totalsBasic.baseBorrowIndex;
+  accounting.trackingSupplyIndex = totalsBasic.trackingSupplyIndex;
+  accounting.trackingBorrowIndex = totalsBasic.trackingBorrowIndex;
+  accounting.lastAccrualTime = totalsBasic.lastAccrualTime;
 
-  //// accounting.totalBasePrincipalSupply = totalsBasic.totalSupplyBase;
-  accounting.totalBasePrincipalSupply = ZERO_BI;
-  //// accounting.totalBasePrincipalBorrow = totalsBasic.totalBorrowBase;
-  accounting.totalBasePrincipalBorrow = ZERO_BI;
+  accounting.totalBasePrincipalSupply = totalsBasic.totalSupplyBase;
+  accounting.totalBasePrincipalBorrow = totalsBasic.totalBorrowBase;
 
   accounting.baseReserveBalance = comet.getReserves();
 
