@@ -21,6 +21,7 @@ import {
   ZERO_BD,
   ZERO_BI,
 } from '../../common/paperclip/constants';
+import { UNKNOWN } from '../../constants';
 import {
   getChainlinkCompUsdPriceFeedAddress,
   getCompTokenAddress,
@@ -46,8 +47,8 @@ export function getOrCreateToken(
     const trySymbol = erc20.try_symbol();
 
     token.address = address;
-    token.name = tryName.reverted ? 'UNKNOWN' : tryName.value;
-    token.symbol = trySymbol.reverted ? 'UNKNOWN' : trySymbol.value;
+    token.name = tryName.reverted ? UNKNOWN : tryName.value;
+    token.symbol = trySymbol.reverted ? UNKNOWN : trySymbol.value;
     token.decimals = erc20.decimals();
 
     token.lastPriceBlockNumber = ZERO_BI;
@@ -78,12 +79,17 @@ export function getOrCreateBaseToken(
     baseToken.market = market.id;
     baseToken.token = token.id;
 
-    baseToken.lastPriceBlockNumber = ZERO_BI;
-    baseToken.lastPriceUsd = ZERO_BD;
+    //// replaced zeros with the price
+    baseToken.lastPriceBlockNumber = token.lastPriceBlockNumber;
+    baseToken.lastPriceUsd = token.lastPriceUsd;
 
     updateBaseTokenConfig(baseToken, event);
 
     baseToken.save();
+    //// replaced zeros with the price
+    if (baseToken.lastPriceUsd === ZERO_BD) {
+      getBaseTokenPriceUsd(baseToken, event);
+    }
   }
 
   return baseToken;
@@ -193,6 +199,7 @@ function getPriceFeedAddressForToken(token: Token): Address {
   }
 }
 
+// !: mutates token
 function getTokenPriceWithGenericOracleUsd(
   token: Token,
   event: ethereum.Event
@@ -222,6 +229,7 @@ function getTokenPriceWithGenericOracleUsd(
   return token.lastPriceUsd;
 }
 
+// !: mutates token
 function getBaseTokenPriceUsd(
   token: BaseToken,
   event: ethereum.Event

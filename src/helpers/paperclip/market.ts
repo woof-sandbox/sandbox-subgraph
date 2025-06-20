@@ -90,18 +90,10 @@ export function updateMarketConfiguration(
   config.lastConfigurationUpdateBlockNumber = event.block.number;
 
   const nameResult = comet.try_name();
-  if (nameResult.reverted) {
-    config.name = UNKNOWN;
-  } else {
-    config.name = nameResult.value;
-  }
-
   const symbolResult = comet.try_symbol();
-  if (symbolResult.reverted) {
-    config.symbol = UNKNOWN;
-  } else {
-    config.symbol = nameResult.value;
-  }
+
+  config.name = nameResult.reverted ? UNKNOWN : nameResult.value;
+  config.symbol = symbolResult.reverted ? UNKNOWN : symbolResult.value;
   /*config.factory = tryFactory.reverted ? ZERO_ADDRESS : tryFactory.value;
     config.governor = comet.governor();
     config.pauseGuardian = comet.pauseGuardian();
