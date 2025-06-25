@@ -70,6 +70,13 @@ export function handleCuratorAccepted(event: CuratorAcceptedEvent): void {
     ProposalStatus.Accepted,
     event.block.timestamp
   );
+
+  const controller = getConfigController(event.address);
+  if (!controller) return;
+
+  controller.curator = event.params.newCurator;
+  controller.updatedAt = event.block.timestamp;
+  controller.save();
 }
 
 export function handleCuratorCanceled(event: CuratorCanceledEvent): void {
