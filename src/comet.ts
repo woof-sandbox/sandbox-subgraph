@@ -97,6 +97,7 @@ export function handleAbsorbDebt(event: AbsorbDebtEvent): void {
 
 export function handleSupplyCollateral(event: SupplyCollateralEvent): void {
   logEvent(event);
+  createUser(event.address, event.params.from, event.block.timestamp); // Can be supplied without a position
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleSupplyCollateralPaperclip(event);
 }
