@@ -69,11 +69,10 @@ export function getOrCreateMarketConfiguration(
 
   if (!config) {
     config = new MarketConfiguration(id);
-
-    updateMarketConfiguration(market, config, event);
-
-    config.save();
   }
+
+  updateMarketConfiguration(market, config, event);
+  config.save();
 
   return config;
 }
@@ -476,29 +475,30 @@ function createMarketAccountingSnapshots(
 
     if (!hourlyAccounting) {
       hourlyAccounting = new HourlyMarketAccounting(hourlyId);
-      hourlyAccounting.hour = hour;
-      hourlyAccounting.timestamp = event.block.timestamp;
-      hourlyAccounting.market = accounting.market;
-      hourlyAccounting.accounting = copiedAccounting.id;
-      hourlyAccounting.save();
     }
+    hourlyAccounting.hour = hour;
+    hourlyAccounting.timestamp = event.block.timestamp;
+    hourlyAccounting.market = accounting.market;
+    hourlyAccounting.accounting = copiedAccounting.id;
+    hourlyAccounting.save();
 
     if (!dailyAccounting) {
       dailyAccounting = new DailyMarketAccounting(dailyId);
-      dailyAccounting.day = day;
-      dailyAccounting.timestamp = event.block.timestamp;
-      dailyAccounting.market = accounting.market;
-      dailyAccounting.accounting = copiedAccounting.id;
-      dailyAccounting.save();
     }
+    dailyAccounting.day = day;
+    dailyAccounting.timestamp = event.block.timestamp;
+    dailyAccounting.market = accounting.market;
+    dailyAccounting.accounting = copiedAccounting.id;
+    dailyAccounting.save();
+
     if (!weeklyAccounting) {
       weeklyAccounting = new WeeklyMarketAccounting(weeklyId);
-      weeklyAccounting.week = week;
-      weeklyAccounting.timestamp = event.block.timestamp;
-      weeklyAccounting.market = accounting.market;
-      weeklyAccounting.accounting = copiedAccounting.id;
-      weeklyAccounting.save();
     }
+    weeklyAccounting.week = week;
+    weeklyAccounting.timestamp = event.block.timestamp;
+    weeklyAccounting.market = accounting.market;
+    weeklyAccounting.accounting = copiedAccounting.id;
+    weeklyAccounting.save();
   }
 }
 
