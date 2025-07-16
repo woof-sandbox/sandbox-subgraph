@@ -518,7 +518,7 @@ export function getOrCreateMarket(
       Bytes.fromUTF8('MARKET_CUMULATIVE').concat(market.id)
     );
 
-    market.cometProxy = marketId;
+    market.comet = marketId;
     market.protocol = SANDBOX_CONTROLLER_ADDRESS;
     market.creationBlockNumber = event.block.number;
 

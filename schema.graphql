@@ -52,7 +52,7 @@ type BaseAssetCurve @entity(immutable: false) {
   borrowPerYearInterestRateSlopeHigh: BigInt!
 
   baseToken: Bytes!
-  curveIndex: BigInt!
+  curveIndex: Int!
 
   createdAt: BigInt!
   updatedAt: BigInt!
@@ -105,20 +105,6 @@ type BaseConfiguration @entity(immutable: false) {
 
   comet: Comet!
   curve: BaseAssetCurve!
-
-  updatedAt: BigInt!
-  createdAt: BigInt!
-}
-
-type CollateralConfiguration @entity(immutable: false) {
-  id: Bytes! # asset address
-
-  priceFeed: Bytes!
-  decimals: BigInt!
-  borrowCollateralFactor: BigInt!
-  liquidateCollateralFactor: BigInt!
-  liquidationFactor: BigInt!
-  supplyCap: BigInt!
 
   updatedAt: BigInt!
   createdAt: BigInt!
@@ -183,7 +169,7 @@ type Market @entity(immutable: true) {
   "Comet proxy address"
   id: Bytes!
   "Comet proxy address"
-  cometProxy: Comet!
+  comet: Comet!
   "Protocol this market is part of"
   protocol: Protocol!
   "Block number the market was created"

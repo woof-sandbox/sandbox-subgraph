@@ -31,17 +31,7 @@
   },
   {
     "inputs": [],
-    "name": "CometAlreadyAdded",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "CometNotOwned",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InsufficientBalance",
+    "name": "IncorrectValue",
     "type": "error"
   },
   {
@@ -86,7 +76,7 @@
   },
   {
     "inputs": [],
-    "name": "NonConfigController",
+    "name": "NoCurveRegistered",
     "type": "error"
   },
   {
@@ -101,22 +91,7 @@
   },
   {
     "inputs": [],
-    "name": "ProposalExists",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "ProposalExpired",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ProposalNotReady",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ProposalNotRevertable",
     "type": "error"
   },
   {
@@ -132,17 +107,7 @@
   },
   {
     "inputs": [],
-    "name": "SameCurve",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "SupplyCapCantBeZero",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "TokenNotRevenue",
     "type": "error"
   },
   {
@@ -152,17 +117,12 @@
   },
   {
     "inputs": [],
+    "name": "UnknownComet",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "WrongCollateralTokenSettings",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "WrongCurveParams",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "WrongPriceFeed",
     "type": "error"
   },
   {
@@ -172,255 +132,8 @@
   },
   {
     "inputs": [],
-    "name": "ZeroAmount",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "ZeroCollateralAssets",
     "type": "error"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "supplyKink",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "supplyPerSecondInterestRateSlopeLow",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "supplyPerSecondInterestRateSlopeHigh",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "supplyPerSecondInterestRateBase",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "borrowKink",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "borrowPerSecondInterestRateSlopeLow",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "borrowPerSecondInterestRateSlopeHigh",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "borrowPerSecondInterestRateBase",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "storeFrontPriceFactor",
-        "type": "uint64"
-      }
-    ],
-    "name": "AddedBaseTokenConfig",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "asset",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "priceFeed",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint8",
-        "name": "decimals",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "borrowCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "liquidateCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "liquidationFactor",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint128",
-        "name": "supplyCap",
-        "type": "uint128"
-      }
-    ],
-    "name": "AddedCollateralTokenConfig",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "comet",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "cancelledBy",
-        "type": "address"
-      }
-    ],
-    "name": "CometBaseTokenCurveProposalCancelled",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "comet",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "executedBy",
-        "type": "address"
-      }
-    ],
-    "name": "CometBaseTokenCurveProposalExecuted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "comet",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "proposer",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "revertTime",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "curveId",
-        "type": "uint256"
-      }
-    ],
-    "name": "CometBaseTokenCurveProposed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "comet",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "cancelledBy",
-        "type": "address"
-      }
-    ],
-    "name": "CometConfigProposalCancelled",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "comet",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "executedBy",
-        "type": "address"
-      }
-    ],
-    "name": "CometConfigProposalExecuted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "comet",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "proposer",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "revertTime",
-        "type": "uint256"
-      }
-    ],
-    "name": "CometConfigProposed",
-    "type": "event"
   },
   {
     "anonymous": false,
@@ -451,9 +164,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint8",
         "name": "baseTokenCurveId",
-        "type": "uint256"
+        "type": "uint8"
       }
     ],
     "name": "CometCreated",
@@ -465,67 +178,23 @@
       {
         "indexed": true,
         "internalType": "address",
-        "name": "comet",
+        "name": "controller",
         "type": "address"
       },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "oldController",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newController",
-        "type": "address"
-      }
-    ],
-    "name": "CometTransferProposalAccepted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
       {
         "indexed": true,
         "internalType": "address",
         "name": "comet",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "cancelledBy",
-        "type": "address"
-      }
-    ],
-    "name": "CometTransferProposalCancelled",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "comet",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "newController",
         "type": "address"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
-        "name": "expiration",
-        "type": "uint256"
+        "internalType": "bool",
+        "name": "enabled",
+        "type": "bool"
       }
     ],
-    "name": "CometTransferProposed",
+    "name": "CometFeeEnabled",
     "type": "event"
   },
   {
@@ -564,25 +233,6 @@
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "oldFee",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "newFee",
-        "type": "uint256"
-      }
-    ],
-    "name": "CuratorFeeUpdated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "indexed": true,
         "internalType": "address",
         "name": "proposedCurator",
@@ -609,9 +259,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "expiry",
-        "type": "uint256"
+        "type": "uint64"
       }
     ],
     "name": "CuratorProposed",
@@ -640,100 +290,50 @@
     "anonymous": false,
     "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "oldOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipGranted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "oldCuratorDuration",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "newCuratorDuration",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "oldProposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "newProposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       }
     ],
     "name": "ProposalDurationsUpdated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "RevenueAccumulated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "recipient",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "RevenueClaimed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "curatorAmount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "ownerAmount",
-        "type": "uint256"
-      }
-    ],
-    "name": "RevenueDistributed",
     "type": "event"
   },
   {
@@ -741,22 +341,9 @@
     "name": "FEE_DIVISOR",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint32",
         "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "ZERO_ADDRESS",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
+        "type": "uint32"
       }
     ],
     "stateMutability": "view",
@@ -784,6 +371,25 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "cometFeeEnabled",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
       }
     ],
     "stateMutability": "view",
@@ -863,47 +469,15 @@
             "type": "address"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint8",
             "name": "baseTokenCurveId",
-            "type": "uint256"
-          },
-          {
-            "components": [
-              {
-                "internalType": "uint256",
-                "name": "baseTrackingSupplySpeed",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "baseTrackingBorrowSpeed",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "trackingIndexScale",
-                "type": "uint256"
-              },
-              {
-                "internalType": "uint256",
-                "name": "baseMinForRewards",
-                "type": "uint256"
-              }
-            ],
-            "internalType": "struct IConfigController.CometOptions",
-            "name": "options",
-            "type": "tuple"
+            "type": "uint8"
           },
           {
             "components": [
               {
                 "internalType": "address",
                 "name": "collateralToken",
-                "type": "address"
-              },
-              {
-                "internalType": "address",
-                "name": "priceFeed",
                 "type": "address"
               },
               {
@@ -925,16 +499,16 @@
                 "internalType": "uint64",
                 "name": "liquidationFactor",
                 "type": "uint64"
-              },
-              {
-                "internalType": "uint64",
-                "name": "scale",
-                "type": "uint64"
               }
             ],
             "internalType": "struct IConfigController.CollateralTokenConfig[]",
             "name": "collateralTokens",
             "type": "tuple[]"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
           }
         ],
         "internalType": "struct IConfigController.CometConfig",
@@ -971,9 +545,9 @@
     "name": "curatorFee",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint32",
         "name": "",
-        "type": "uint256"
+        "type": "uint32"
       }
     ],
     "stateMutability": "view",
@@ -984,9 +558,9 @@
     "name": "curatorProposalDuration",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "",
-        "type": "uint256"
+        "type": "uint40"
       }
     ],
     "stateMutability": "view",
@@ -997,12 +571,30 @@
     "name": "curatorProposalExpiry",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "",
-        "type": "uint256"
+        "type": "uint64"
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "asset",
+        "type": "address"
+      }
+    ],
+    "name": "extractFees",
+    "outputs": [],
+    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1054,9 +646,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint32",
         "name": "_curatorFee",
-        "type": "uint256"
+        "type": "uint32"
       },
       {
         "internalType": "string",
@@ -1064,14 +656,14 @@
         "type": "string"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "_curatorProposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "_proposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       }
     ],
     "name": "initialize",
@@ -1110,9 +702,9 @@
     "name": "proposalDuration",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "",
-        "type": "uint256"
+        "type": "uint40"
       }
     ],
     "stateMutability": "view",
@@ -1168,6 +760,24 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "comet",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "feeEnabled",
+        "type": "bool"
+      }
+    ],
+    "name": "setCometFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_newGuardian",
         "type": "address"
       }
@@ -1180,14 +790,14 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "_curatorProposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "_proposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       }
     ],
     "name": "setProposalDurations",

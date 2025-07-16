@@ -1,6 +1,4 @@
-import { BigInt } from '@graphprotocol/graph-ts';
 import {
-  AddedCollateralTokenConfig as AddedCollateralTokenConfigEvent,
   CometCreated as CometCreatedEvent,
   CuratorAccepted as CuratorAcceptedEvent,
   CuratorCanceled as CuratorCanceledEvent,
@@ -10,7 +8,6 @@ import {
 } from '../generated/templates/ConfigController/ConfigController';
 import { logEvent } from './utils/log-event';
 import { createBaseConfiguration } from './helpers/create-base-configuration';
-import { createCollateralConfiguration } from './helpers/create-collateral-configuration';
 import { createCuratorProposal } from './helpers/create-curator-proposal';
 import { formCurveId } from './helpers/form-curve-id';
 import { getConfigController } from './helpers/get-config-controller';
@@ -29,7 +26,7 @@ export function handleCometCreated(event: CometCreatedEvent): void {
   );
 }
 
-export function handleAddedCollateralTokenConfig(
+/*export function handleAddedCollateralTokenConfig(
   event: AddedCollateralTokenConfigEvent
 ): void {
   logEvent(event);
@@ -47,7 +44,7 @@ export function handleAddedCollateralTokenConfig(
     //
     event.block.timestamp
   );
-}
+}*/
 
 /// ROLES
 

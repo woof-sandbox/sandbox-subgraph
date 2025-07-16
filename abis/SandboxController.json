@@ -12,49 +12,34 @@
         "type": "address"
       },
       {
+        "internalType": "address",
+        "name": "_treasury",
+        "type": "address"
+      },
+      {
         "internalType": "bool",
         "name": "_feeEnabled",
         "type": "bool"
       },
       {
-        "internalType": "uint256",
-        "name": "_protocolFactorBorrow",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_reserveFactorBorrow",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_protocolFactorLiquidation",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_reserveFactorLiquidation",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "_targetPercent",
-        "type": "uint256"
+        "type": "uint64"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "_storeFrontPriceFactor",
-        "type": "uint256"
+        "type": "uint64"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "_minUpdateTime",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "_maxUpdateTime",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
         "internalType": "uint256",
@@ -62,9 +47,19 @@
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "_suggestedLockTimeOfSeedReserves",
-        "type": "uint256"
+        "type": "uint40"
+      },
+      {
+        "internalType": "uint64[3]",
+        "name": "_reserveCommissions",
+        "type": "uint64[3]"
+      },
+      {
+        "internalType": "uint64[3]",
+        "name": "_protocolCommissions",
+        "type": "uint64[3]"
       }
     ],
     "stateMutability": "nonpayable",
@@ -82,27 +77,7 @@
   },
   {
     "inputs": [],
-    "name": "BorrowCollateralFactorTooHigh",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "BorrowCollateralFactorTooLow",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "CollateralTokenAlreadyAdded",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "CollateralTokenAlreadyWhitelisted",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "CollateralTokenNotWhitelisted",
     "type": "error"
   },
   {
@@ -112,17 +87,12 @@
   },
   {
     "inputs": [],
-    "name": "ExecutionFailed",
+    "name": "IncorrectSetting",
     "type": "error"
   },
   {
     "inputs": [],
-    "name": "InsufficientBalance",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "InvalidCurator",
+    "name": "InvalidCommissions",
     "type": "error"
   },
   {
@@ -137,42 +107,7 @@
   },
   {
     "inputs": [],
-    "name": "InvalidFeePercentage",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "InvalidPriceFeed",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "LiquidateCollateralFactorTooHigh",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "LiquidateCollateralFactorTooLow",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "LiquidationFactorTooHigh",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "LiquidationFactorTooLow",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "MarketFactoryNotInitialized",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "NoActiveProposal",
     "type": "error"
   },
   {
@@ -199,26 +134,6 @@
   },
   {
     "inputs": [],
-    "name": "PriceFeedAlreadyWhitelisted",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ProposalExists",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ProposalExpired",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ProposalNotExpired",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "Unauthorized",
     "type": "error"
   },
@@ -230,16 +145,6 @@
   {
     "inputs": [],
     "name": "ZeroAddress",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ZeroAmount",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "ZeroCollateralAssets",
     "type": "error"
   },
   {
@@ -582,33 +487,33 @@
       {
         "components": [
           {
-            "internalType": "uint256",
+            "internalType": "uint64",
             "name": "targetPercent",
-            "type": "uint256"
+            "type": "uint64"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint64",
             "name": "storeFrontPriceFactor",
-            "type": "uint256"
+            "type": "uint64"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint40",
             "name": "minUpdateTime",
-            "type": "uint256"
+            "type": "uint40"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint40",
             "name": "maxUpdateTime",
-            "type": "uint256"
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint40"
           },
           {
             "internalType": "uint256",
             "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedLockTimeOfSeedReserves",
             "type": "uint256"
           }
         ],
@@ -620,33 +525,33 @@
       {
         "components": [
           {
-            "internalType": "uint256",
+            "internalType": "uint64",
             "name": "targetPercent",
-            "type": "uint256"
+            "type": "uint64"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint64",
             "name": "storeFrontPriceFactor",
-            "type": "uint256"
+            "type": "uint64"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint40",
             "name": "minUpdateTime",
-            "type": "uint256"
+            "type": "uint40"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint40",
             "name": "maxUpdateTime",
-            "type": "uint256"
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint40"
           },
           {
             "internalType": "uint256",
             "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedLockTimeOfSeedReserves",
             "type": "uint256"
           }
         ],
@@ -721,15 +626,15 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "oldValue",
-        "type": "uint256"
+        "type": "uint64"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "newValue",
-        "type": "uint256"
+        "type": "uint64"
       }
     ],
     "name": "ProtocolCommissionChanged",
@@ -746,43 +651,18 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "oldValue",
-        "type": "uint256"
+        "type": "uint64"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "newValue",
-        "type": "uint256"
+        "type": "uint64"
       }
     ],
     "name": "ReserveCommissionChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "enum ISandboxController.MarketState",
-        "name": "state",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "oldValue",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "newValue",
-        "type": "uint256"
-      }
-    ],
-    "name": "ThresholdChanged",
     "type": "event"
   },
   {
@@ -806,36 +686,101 @@
   },
   {
     "inputs": [],
+    "name": "MARKET_STATES",
+    "outputs": [
+      {
+        "internalType": "uint8",
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_COMMISSIONS",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_TARGET_PERCENT",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MIN_FACTOR",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PARAMETERS_SCALE",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "_controllerConfiguration",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "targetPercent",
-        "type": "uint256"
+        "type": "uint64"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "storeFrontPriceFactor",
-        "type": "uint256"
+        "type": "uint64"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "minUpdateTime",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "maxUpdateTime",
-        "type": "uint256"
+        "type": "uint40"
+      },
+      {
+        "internalType": "uint40",
+        "name": "suggestedLockTimeOfSeedReserves",
+        "type": "uint40"
       },
       {
         "internalType": "uint256",
         "name": "suggestedAmountOfSeedReserves",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "suggestedLockTimeOfSeedReserves",
         "type": "uint256"
       }
     ],
@@ -1180,78 +1125,33 @@
       {
         "components": [
           {
-            "internalType": "uint256",
+            "internalType": "uint64",
             "name": "targetPercent",
-            "type": "uint256"
+            "type": "uint64"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint64",
             "name": "storeFrontPriceFactor",
-            "type": "uint256"
+            "type": "uint64"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint40",
             "name": "minUpdateTime",
-            "type": "uint256"
+            "type": "uint40"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint40",
             "name": "maxUpdateTime",
-            "type": "uint256"
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint40"
           },
           {
             "internalType": "uint256",
             "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedLockTimeOfSeedReserves",
-            "type": "uint256"
-          }
-        ],
-        "internalType": "struct ISandboxController.SandboxControllerConfiguration",
-        "name": "",
-        "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "controllerConfiguration",
-    "outputs": [
-      {
-        "components": [
-          {
-            "internalType": "uint256",
-            "name": "targetPercent",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "storeFrontPriceFactor",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "minUpdateTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "maxUpdateTime",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedLockTimeOfSeedReserves",
             "type": "uint256"
           }
         ],
@@ -1379,6 +1279,40 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "_currentReserves",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_seedReserves",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_targetReserves",
+        "type": "uint256"
+      }
+    ],
+    "name": "getCommissions",
+    "outputs": [
+      {
+        "internalType": "uint64",
+        "name": "_reserveCommission",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "_protocolCommission",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "token",
         "type": "address"
@@ -1493,14 +1427,14 @@
     "name": "proposalBoundaries",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "",
-        "type": "uint256"
+        "type": "uint40"
       }
     ],
     "stateMutability": "view",
@@ -1509,43 +1443,17 @@
   {
     "inputs": [
       {
-        "internalType": "enum ISandboxController.MarketState",
+        "internalType": "uint256",
         "name": "",
-        "type": "uint8"
+        "type": "uint256"
       }
     ],
     "name": "protocolCommission",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "protocolFactorBorrow",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "protocolFactorLiquidation",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "type": "uint64"
       }
     ],
     "stateMutability": "view",
@@ -1554,43 +1462,17 @@
   {
     "inputs": [
       {
-        "internalType": "enum ISandboxController.MarketState",
+        "internalType": "uint256",
         "name": "",
-        "type": "uint8"
+        "type": "uint256"
       }
     ],
     "name": "reserveCommission",
     "outputs": [
       {
-        "internalType": "uint256",
+        "internalType": "uint64",
         "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "reserveFactorBorrow",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "reserveFactorLiquidation",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
+        "type": "uint64"
       }
     ],
     "stateMutability": "view",
@@ -1601,33 +1483,33 @@
       {
         "components": [
           {
-            "internalType": "uint256",
+            "internalType": "uint64",
             "name": "targetPercent",
-            "type": "uint256"
+            "type": "uint64"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint64",
             "name": "storeFrontPriceFactor",
-            "type": "uint256"
+            "type": "uint64"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint40",
             "name": "minUpdateTime",
-            "type": "uint256"
+            "type": "uint40"
           },
           {
-            "internalType": "uint256",
+            "internalType": "uint40",
             "name": "maxUpdateTime",
-            "type": "uint256"
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint40"
           },
           {
             "internalType": "uint256",
             "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedLockTimeOfSeedReserves",
             "type": "uint256"
           }
         ],
@@ -1657,9 +1539,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256[3]",
-        "name": "protocolCommissions",
-        "type": "uint256[3]"
+        "internalType": "uint64[3]",
+        "name": "_protocolCommissions",
+        "type": "uint64[3]"
       }
     ],
     "name": "setProtocolCommissions",
@@ -1670,9 +1552,9 @@
   {
     "inputs": [
       {
-        "internalType": "uint256[3]",
-        "name": "reserveCommissions",
-        "type": "uint256[3]"
+        "internalType": "uint64[3]",
+        "name": "_reserveCommissions",
+        "type": "uint64[3]"
       }
     ],
     "name": "setReserveCommissions",

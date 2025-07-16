@@ -86,9 +86,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint32",
         "name": "curatorFee",
-        "type": "uint256"
+        "type": "uint32"
       },
       {
         "indexed": false,
@@ -98,15 +98,15 @@
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "curatorProposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
         "indexed": false,
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "proposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
         "indexed": false,
@@ -187,9 +187,9 @@
         "type": "address"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint32",
         "name": "_curatorFee",
-        "type": "uint256"
+        "type": "uint32"
       },
       {
         "internalType": "string",
@@ -197,14 +197,14 @@
         "type": "string"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "_curatorProposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       },
       {
-        "internalType": "uint256",
+        "internalType": "uint40",
         "name": "_proposalDuration",
-        "type": "uint256"
+        "type": "uint40"
       }
     ],
     "name": "createConfigController",
