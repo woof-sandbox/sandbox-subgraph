@@ -4,7 +4,7 @@ import { formCurveId } from './form-curve-id';
 
 export function updateCurve(
   tokenAddress: Address,
-  curveIndex: number,
+  curveIndex: BigInt,
   //
   supplyKink: BigInt,
   supplyPerYearInterestRateBase: BigInt,
@@ -33,7 +33,7 @@ export function updateCurve(
       borrowPerYearInterestRateSlopeHigh;
     //
     curve.baseToken = tokenAddress;
-    curve.curveIndex = Math.floor(curveIndex) as i32;
+    curve.curveIndex = curveIndex;
     //
     curve.updatedAt = updatedAt;
     curve.save();

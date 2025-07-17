@@ -164,9 +164,9 @@
       },
       {
         "indexed": false,
-        "internalType": "uint8",
+        "internalType": "uint256",
         "name": "baseTokenCurveId",
-        "type": "uint8"
+        "type": "uint256"
       }
     ],
     "name": "CometCreated",
@@ -469,9 +469,9 @@
             "type": "address"
           },
           {
-            "internalType": "uint8",
+            "internalType": "uint256",
             "name": "baseTokenCurveId",
-            "type": "uint8"
+            "type": "uint256"
           },
           {
             "components": [
