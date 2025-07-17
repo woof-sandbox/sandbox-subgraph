@@ -18,7 +18,7 @@ export function handleBaseAssetCurveAdded(
   logEvent(event);
   const curve = createCurve(
     event.params.token,
-    event.params.curveIndex.toI32(),
+    event.params.curveIndex,
     //
     event.params.baseAssetCurve.supplyKink,
     event.params.baseAssetCurve.supplyPerYearInterestRateBase,
@@ -40,7 +40,7 @@ export function handleBaseAssetCurveChanged(
   logEvent(event);
   const existing = updateCurve(
     event.params.token,
-    event.params.curveIndex.toI32(),
+    event.params.curveIndex,
     //
     event.params.newCurve.supplyKink,
     event.params.newCurve.supplyPerYearInterestRateBase,
@@ -87,7 +87,7 @@ export function handleBaseAssetWhitelisted(
   logEvent(event);
   const curve = createCurve(
     event.params.token,
-    event.params.curveIndex.toI32(),
+    event.params.curveIndex,
     //
     event.params.baseAssetCurve.supplyKink,
     event.params.baseAssetCurve.supplyPerYearInterestRateBase,

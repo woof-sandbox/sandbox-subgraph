@@ -52,7 +52,7 @@ type BaseAssetCurve @entity(immutable: false) {
   borrowPerYearInterestRateSlopeHigh: BigInt!
 
   baseToken: Bytes!
-  curveIndex: Int!
+  curveIndex: BigInt!
 
   createdAt: BigInt!
   updatedAt: BigInt!
