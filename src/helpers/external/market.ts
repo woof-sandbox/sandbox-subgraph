@@ -23,7 +23,7 @@ import {
   computeTokenValueUsd,
   formatUnits,
   getRewardConfigData,
-} from '../../common/paperclip/utils';
+} from '../../common/external/utils';
 import {
   COMET_FACTOR_SCALE,
   SECONDS_PER_DAY,
@@ -33,7 +33,7 @@ import {
   ZERO_ADDRESS,
   ZERO_BD,
   ZERO_BI,
-} from '../../common/paperclip/constants';
+} from '../../common/external/constants';
 import { UNKNOWN } from '../../constants';
 import {
   createMarketCollateralBalanceSnapshot,

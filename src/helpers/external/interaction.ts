@@ -20,9 +20,9 @@ import {
   WithdrawCollateralInteraction,
   WithdrawReservesInteraction,
 } from '../../../generated/schema';
-import { computeTokenValueUsd } from '../../common/paperclip/utils';
-import { PRICE_FEED_FACTOR, ZERO_BI } from '../../common/paperclip/constants';
-import { getChainlinkEthUsdPriceFeedAddress } from '../../common/paperclip/networkSpecific';
+import { computeTokenValueUsd } from '../../common/external/utils';
+import { PRICE_FEED_FACTOR, ZERO_BI } from '../../common/external/constants';
+import { getChainlinkEthUsdPriceFeedAddress } from '../../common/external/networkSpecific';
 import { getOrCreateMarketConfiguration } from './market';
 import { getOrCreatePositionAccounting } from './position';
 import { getOrCreateToken, getTokenPriceUsd } from './token';

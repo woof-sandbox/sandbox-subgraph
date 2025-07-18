@@ -13,8 +13,8 @@ import {
 import {
   computeTokenValueUsd,
   presentValue,
-} from '../../common/paperclip/utils';
-import { ZERO_BD, ZERO_BI } from '../../common/paperclip/constants';
+} from '../../common/external/utils';
+import { ZERO_BD, ZERO_BI } from '../../common/external/constants';
 import {
   createPositionCollateralBalanceSnapshot,
   getOrCreatePositionCollateralBalance,

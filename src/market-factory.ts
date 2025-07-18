@@ -6,7 +6,7 @@ import {
   getOrCreateMarket,
   getOrCreateMarketAccounting,
   updateMarketAccounting,
-} from './helpers/paperclip/market';
+} from './helpers/external/market';
 
 export function handleCometCreated(event: CometCreatedEvent): void {
   logEvent(event);

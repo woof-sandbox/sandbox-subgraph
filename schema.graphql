@@ -121,7 +121,7 @@ type CometDailyPopularity @entity(immutable: false) {
   updatedAt: BigInt!
 }
 
-### PAPERCLIP
+### EXTERNAL
 
 ####
 # Core entities

@@ -16,7 +16,7 @@ import {
   SECONDS_PER_DAY,
   SECONDS_PER_HOUR,
   ZERO_BI,
-} from '../../common/paperclip/constants';
+} from '../../common/external/constants';
 import { getOrCreateProtocol } from './protocol';
 
 export function getOrCreateUsage(id: Bytes): Usage {

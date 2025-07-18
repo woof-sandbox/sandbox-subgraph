@@ -12,13 +12,13 @@ import {
   WeeklyProtocolAccounting,
   _ActiveAccount,
 } from '../../../generated/schema';
-import { bigDecimalSafeDiv } from '../../common/paperclip/utils';
+import { bigDecimalSafeDiv } from '../../common/external/utils';
 import {
   SECONDS_PER_DAY,
   SECONDS_PER_HOUR,
   SECONDS_PER_WEEK,
   ZERO_BD,
-} from '../../common/paperclip/constants';
+} from '../../common/external/constants';
 import { getOrCreateMarket, getOrCreateMarketAccounting } from './market';
 import { getOrCreateUsage } from './usage';
 

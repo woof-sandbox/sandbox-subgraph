@@ -7,8 +7,8 @@ import {
   PositionCollateralBalance,
   Token,
 } from '../../../generated/schema';
-import { computeTokenValueUsd } from '../../common/paperclip/utils';
-import { ZERO_BI } from '../../common/paperclip/constants';
+import { computeTokenValueUsd } from '../../common/external/utils';
+import { ZERO_BI } from '../../common/external/constants';
 import { getOrCreateToken, getTokenPriceUsd } from './token';
 
 ////

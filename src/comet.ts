@@ -16,23 +16,23 @@ import {
   bigIntMin,
   logsContainWithdrawOrSupplyOrAbsorbDebtEvents,
   presentValue,
-} from './common/paperclip/utils';
+} from './common/external/utils';
 import { logEvent } from './utils/log-event';
 import {
   InteractionType,
   ZERO_ADDRESS,
   ZERO_BD,
   ZERO_BI,
-} from './common/paperclip/constants';
+} from './common/external/constants';
 import { createOrUpdateCometDailyPopularity } from './helpers/create-or-update-comet-daily-popularity';
 import { createUser } from './helpers/create-user';
-import { getOrCreateAccount } from './helpers/paperclip/account';
+import { getOrCreateAccount } from './helpers/external/account';
 import {
   getOrCreateMarketCollateralBalance,
   getOrCreatePositionCollateralBalance,
   updateMarketCollateralBalance,
   updatePositionCollateralBalance,
-} from './helpers/paperclip/collateralBalance';
+} from './helpers/external/collateralBalance';
 import {
   createAbsorbCollateralInteraction,
   createAbsorbDebtInteraction,
@@ -44,44 +44,44 @@ import {
   createWithdrawBaseInteraction,
   createWithdrawCollateralInteraction,
   createWithdrawReservesInteraction,
-} from './helpers/paperclip/interaction';
+} from './helpers/external/interaction';
 import {
   getOrCreateMarket,
   getOrCreateMarketAccounting,
   updateMarketAccounting,
-} from './helpers/paperclip/market';
+} from './helpers/external/market';
 import {
   createPositionAccountingSnapshot,
   getOrCreatePosition,
   getOrCreatePositionAccounting,
   updatePositionAccounting,
-} from './helpers/paperclip/position';
+} from './helpers/external/position';
 import {
   getOrCreateCollateralToken,
   getOrCreateToken,
-} from './helpers/paperclip/token';
-import { updateUsageMetrics } from './helpers/paperclip/usage';
+} from './helpers/external/token';
+import { updateUsageMetrics } from './helpers/external/usage';
 import { updateUserPrincipal } from './helpers/update-user-principal';
 
 export function handleSupply(event: SupplyEvent): void {
   logEvent(event);
   createUser(event.address, event.params.dst, event.block.timestamp);
   updateUserPrincipal(event.address, event.params.dst, event.block.timestamp);
-  handleSupplyPaperclip(event);
+  handleSupplyExternal(event);
 }
 
 export function handleWithdraw(event: WithdrawEvent): void {
   logEvent(event);
   createUser(event.address, event.params.to, event.block.timestamp);
   updateUserPrincipal(event.address, event.params.to, event.block.timestamp);
-  handleWithdrawPaperclip(event);
+  handleWithdrawExternal(event);
 }
 
 export function handleTransfer(event: TransferEvent): void {
   logEvent(event);
   createUser(event.address, event.params.to, event.block.timestamp);
   updateUserPrincipal(event.address, event.params.from, event.block.timestamp);
-  handleTransferPaperclip(event);
+  handleTransferExternal(event);
 }
 
 export function handleAbsorbDebt(event: AbsorbDebtEvent): void {
@@ -92,44 +92,44 @@ export function handleAbsorbDebt(event: AbsorbDebtEvent): void {
     event.params.borrower,
     event.block.timestamp
   );
-  handleAbsorbDebtPaperclip(event);
+  handleAbsorbDebtExternal(event);
 }
 
 export function handleSupplyCollateral(event: SupplyCollateralEvent): void {
   logEvent(event);
   createUser(event.address, event.params.from, event.block.timestamp); // Can be supplied without a position
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
-  handleSupplyCollateralPaperclip(event);
+  handleSupplyCollateralExternal(event);
 }
 export function handleWithdrawCollateral(event: WithdrawCollateralEvent): void {
   logEvent(event);
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
-  handleWithdrawCollateralPaperclip(event);
+  handleWithdrawCollateralExternal(event);
 }
 export function handleTransferCollateral(event: TransferCollateralEvent): void {
   logEvent(event);
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
-  handleTransferCollateralPaperclip(event);
+  handleTransferCollateralExternal(event);
 }
 export function handleAbsorbCollateral(event: AbsorbCollateralEvent): void {
   logEvent(event);
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
-  handleAbsorbCollateralPaperclip(event);
+  handleAbsorbCollateralExternal(event);
 }
 export function handleBuyCollateral(event: BuyCollateralEvent): void {
   logEvent(event);
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
-  handleBuyCollateralPaperclip(event);
+  handleBuyCollateralExternal(event);
 }
 export function handleWithdrawReserves(event: WithdrawReservesEvent): void {
   logEvent(event);
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
-  handleWithdrawReservesPaperclip(event);
+  handleWithdrawReservesExternal(event);
 }
 
-/// PAPERCLIP
+/// EXTERNAL
 
-export function handleSupplyPaperclip(event: SupplyEvent): void {
+export function handleSupplyExternal(event: SupplyEvent): void {
   const ownerAddress = event.params.dst;
   const amount = event.params.amount;
   const from = event.params.from;
@@ -177,7 +177,7 @@ export function handleSupplyPaperclip(event: SupplyEvent): void {
   marketAccounting.save();
 }
 
-export function handleWithdrawPaperclip(event: WithdrawEvent): void {
+export function handleWithdrawExternal(event: WithdrawEvent): void {
   const ownerAddress = event.params.src;
   const amount = event.params.amount;
   const destination = event.params.to;
@@ -221,7 +221,7 @@ export function handleWithdrawPaperclip(event: WithdrawEvent): void {
   marketAccounting.save();
 }
 
-export function handleAbsorbDebtPaperclip(event: AbsorbDebtEvent): void {
+export function handleAbsorbDebtExternal(event: AbsorbDebtEvent): void {
   const ownerAddress = event.params.borrower;
   const basePaidOut = event.params.basePaidOut;
   const absorber = event.params.absorber;
@@ -244,7 +244,7 @@ export function handleAbsorbDebtPaperclip(event: AbsorbDebtEvent): void {
   positionAccounting.save();
 }
 
-export function handleSupplyCollateralPaperclip(
+export function handleSupplyCollateralExternal(
   event: SupplyCollateralEvent
 ): void {
   const ownerAddress = event.params.dst;
@@ -306,7 +306,7 @@ export function handleSupplyCollateralPaperclip(
   positionAccounting.save();
 }
 
-export function handleWithdrawCollateralPaperclip(
+export function handleWithdrawCollateralExternal(
   event: WithdrawCollateralEvent
 ): void {
   const ownerAddress = event.params.src;
@@ -373,7 +373,7 @@ export function handleWithdrawCollateralPaperclip(
   positionAccounting.save();
 }
 
-export function handleTransferCollateralPaperclip(
+export function handleTransferCollateralExternal(
   event: TransferCollateralEvent
 ): void {
   const from = event.params.from;
@@ -457,7 +457,7 @@ export function handleTransferCollateralPaperclip(
   toPositionAccounting.save();
 }
 
-export function handleAbsorbCollateralPaperclip(
+export function handleAbsorbCollateralExternal(
   event: AbsorbCollateralEvent
 ): void {
   const absorber = event.params.absorber;
@@ -510,7 +510,7 @@ export function handleAbsorbCollateralPaperclip(
   marketAccounting.save();
 }
 
-export function handleBuyCollateralPaperclip(event: BuyCollateralEvent): void {
+export function handleBuyCollateralExternal(event: BuyCollateralEvent): void {
   const assetAddress = event.params.asset;
   const buyer = event.params.buyer;
   const collateralAmount = event.params.collateralAmount;
@@ -539,7 +539,7 @@ export function handleBuyCollateralPaperclip(event: BuyCollateralEvent): void {
   marketCollateralBalance.save();
 }
 
-export function handleWithdrawReservesPaperclip(
+export function handleWithdrawReservesExternal(
   event: WithdrawReservesEvent
 ): void {
   const market = getOrCreateMarket(event.address, event);
@@ -554,7 +554,7 @@ export function handleWithdrawReservesPaperclip(
   marketAccounting.save();
 }
 
-export function handleTransferPaperclip(event: TransferEvent): void {
+export function handleTransferExternal(event: TransferEvent): void {
   if (logsContainWithdrawOrSupplyOrAbsorbDebtEvents(event)) {
     // Ignore any transfers when there is supply or withdraw events
     return;

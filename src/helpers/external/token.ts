@@ -14,19 +14,19 @@ import {
   Market,
   Token,
 } from '../../../generated/schema';
-import { formatUnits } from '../../common/paperclip/utils';
+import { formatUnits } from '../../common/external/utils';
 import {
   PRICE_FEED_FACTOR,
   ZERO_ADDRESS,
   ZERO_BD,
   ZERO_BI,
-} from '../../common/paperclip/constants';
+} from '../../common/external/constants';
 import { UNKNOWN } from '../../constants';
 import {
   getChainlinkCompUsdPriceFeedAddress,
   getCompTokenAddress,
   getMarketUnitOfAccountToUsdPriceFeed,
-} from '../../common/paperclip/networkSpecific';
+} from '../../common/external/networkSpecific';
 
 ////
 // Token
