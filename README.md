@@ -985,3 +985,7 @@ query GetMarketHistory($marketId: Bytes!, $startTime: BigInt!) {
   }
 }
 ```
+
+## Important Note on Collateral Balance Updates
+
+> **Note:** Any invocation of `updateMarketCollateralBalance` must always be accompanied by a call to `updateMarketCollateralBalanceUsd`, and vice versa. This ensures both the raw and USD-denominated collateral balances remain consistent. Failure to do so may result in data desynchronization within the subgraph index.
