@@ -31,6 +31,7 @@ import {
   getOrCreateMarketCollateralBalance,
   getOrCreatePositionCollateralBalance,
   updateMarketCollateralBalance,
+  updateMarketCollateralBalanceUsd,
   updatePositionCollateralBalance,
 } from './helpers/external/collateralBalance';
 import {
@@ -271,6 +272,7 @@ export function handleSupplyCollateralExternal(
   );
 
   updateMarketCollateralBalance(marketCollateralBalance, event);
+  updateMarketCollateralBalanceUsd(marketCollateralBalance, event);
   updatePositionCollateralBalance(position, positionCollateralBalance, event);
 
   updateMarketAccounting(market, marketAccounting, event);
@@ -333,6 +335,7 @@ export function handleWithdrawCollateralExternal(
   );
 
   updateMarketCollateralBalance(marketCollateralBalance, event);
+  updateMarketCollateralBalanceUsd(marketCollateralBalance, event);
   updatePositionCollateralBalance(position, positionCollateralBalance, event);
 
   updateMarketAccounting(market, marketAccounting, event);
@@ -484,6 +487,7 @@ export function handleAbsorbCollateralExternal(
   );
 
   updateMarketCollateralBalance(marketCollateralBalance, event);
+  updateMarketCollateralBalanceUsd(marketCollateralBalance, event);
   updatePositionCollateralBalance(position, positionCollateralBalance, event);
 
   updateMarketAccounting(market, marketAccounting, event);
@@ -526,6 +530,7 @@ export function handleBuyCollateralExternal(event: BuyCollateralEvent): void {
   );
 
   updateMarketCollateralBalance(marketCollateralBalance, event);
+  updateMarketCollateralBalanceUsd(marketCollateralBalance, event);
 
   createBuyCollateralInteraction(
     market,

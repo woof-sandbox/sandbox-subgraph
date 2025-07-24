@@ -38,6 +38,7 @@ export function getOrCreateMarketCollateralBalance(
   return collateralBalance;
 }
 
+// Any function call must be accompanied by updateMarketCollateralBalanceUsd
 export function updateMarketCollateralBalance(
   collateralBalance: MarketCollateralBalance,
   event: ethereum.Event
@@ -88,6 +89,7 @@ export function createMarketCollateralBalanceSnapshot(
 }
 
 // Update just the USD value of balance based on newest price and existing balance
+// Any function call must be accompanied by updateMarketCollateralBalance
 export function updateMarketCollateralBalanceUsd(
   collateralBalance: MarketCollateralBalance,
   event: ethereum.Event
