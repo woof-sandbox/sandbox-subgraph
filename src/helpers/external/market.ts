@@ -253,11 +253,10 @@ export function updateMarketAccounting(
   accounting: MarketAccounting,
   event: ethereum.Event
 ): void {
-  // !: If left as is, transactions within the same block might not be accounted for.
-  /*if (accounting.lastAccountingUpdatedBlockNumber.equals(event.block.number)) {
+  if (accounting.lastAccountingUpdatedBlockNumber.equals(event.block.number)) {
     // Don't bother to update if we already did this block, assume this gets set on init
     return;
-  }*/
+  }
 
   const comet = CometContract.bind(Address.fromBytes(market.id));
   const configuration = getOrCreateMarketConfiguration(market, event);
