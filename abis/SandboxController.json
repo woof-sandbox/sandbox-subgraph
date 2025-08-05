@@ -22,34 +22,41 @@
         "type": "bool"
       },
       {
-        "internalType": "uint64",
-        "name": "_targetPercent",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint64",
-        "name": "_storeFrontPriceFactor",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint40",
-        "name": "_minUpdateTime",
-        "type": "uint40"
-      },
-      {
-        "internalType": "uint40",
-        "name": "_maxUpdateTime",
-        "type": "uint40"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_suggestedAmountOfSeedReserves",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint40",
-        "name": "_suggestedLockTimeOfSeedReserves",
-        "type": "uint40"
+        "components": [
+          {
+            "internalType": "uint64",
+            "name": "targetPercent",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint64",
+            "name": "storeFrontPriceFactor",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint40",
+            "name": "minUpdateTime",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "maxUpdateTime",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint40",
+            "name": "suggestedLockTimeOfSeedReserves",
+            "type": "uint40"
+          },
+          {
+            "internalType": "uint256",
+            "name": "suggestedAmountOfSeedReserves",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct ISandboxController.SandboxControllerConfiguration",
+        "name": "_config",
+        "type": "tuple"
       },
       {
         "internalType": "uint64[3]",
@@ -83,6 +90,11 @@
   {
     "inputs": [],
     "name": "DifferentPriceFeedAlreadyUsedForToken",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "IncorrectIndex",
     "type": "error"
   },
   {
@@ -349,72 +361,6 @@
         "internalType": "uint8",
         "name": "decimals",
         "type": "uint8"
-      },
-      {
-        "components": [
-          {
-            "internalType": "uint64",
-            "name": "supplyKink",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "supplyPerYearInterestRateBase",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "supplyPerYearInterestRateSlopeLow",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "supplyPerYearInterestRateSlopeHigh",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "borrowKink",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "borrowPerYearInterestRateBase",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "borrowPerYearInterestRateSlopeLow",
-            "type": "uint64"
-          },
-          {
-            "internalType": "uint64",
-            "name": "borrowPerYearInterestRateSlopeHigh",
-            "type": "uint64"
-          }
-        ],
-        "indexed": false,
-        "internalType": "struct ISandboxController.BaseAssetCurve",
-        "name": "baseAssetCurve",
-        "type": "tuple"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "minBorrow",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "baseAssetCount",
-        "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "curveIndex",
-        "type": "uint256"
       }
     ],
     "name": "BaseAssetWhitelisted",
@@ -440,45 +386,46 @@
         "internalType": "uint256",
         "name": "decimals",
         "type": "uint256"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "maxBorrowCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "minBorrowCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "minLiquidateCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "maxLiquidateCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "minLiquidationFactor",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "maxLiquidationFactor",
-        "type": "uint64"
       }
     ],
     "name": "CollateralAssetWhitelisted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "enum ISandboxController.MarketState",
+        "name": "state",
+        "type": "uint8"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "oldReserve",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "newReserve",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "oldProtocol",
+        "type": "uint64"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint64",
+        "name": "newProtocol",
+        "type": "uint64"
+      }
+    ],
+    "name": "CommissionChanged",
     "type": "event"
   },
   {
@@ -613,56 +560,6 @@
       }
     ],
     "name": "OwnerTransferred",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "enum ISandboxController.MarketState",
-        "name": "state",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "oldValue",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "newValue",
-        "type": "uint64"
-      }
-    ],
-    "name": "ProtocolCommissionChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "enum ISandboxController.MarketState",
-        "name": "state",
-        "type": "uint8"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "oldValue",
-        "type": "uint64"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint64",
-        "name": "newValue",
-        "type": "uint64"
-      }
-    ],
-    "name": "ReserveCommissionChanged",
     "type": "event"
   },
   {
@@ -850,25 +747,6 @@
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "baseAssetTokens",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "token",
         "type": "address"
@@ -1031,25 +909,6 @@
     "name": "changeBaseAssetCurve",
     "outputs": [],
     "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "collateralAssetTokens",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1245,32 +1104,6 @@
         "internalType": "bool",
         "name": "",
         "type": "bool"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getBaseAssetLength",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "getCollateralAssetLength",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -1539,25 +1372,22 @@
   {
     "inputs": [
       {
-        "internalType": "uint64[3]",
-        "name": "_protocolCommissions",
-        "type": "uint64[3]"
-      }
-    ],
-    "name": "setProtocolCommissions",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
+        "internalType": "uint8",
+        "name": "_index",
+        "type": "uint8"
+      },
       {
-        "internalType": "uint64[3]",
-        "name": "_reserveCommissions",
-        "type": "uint64[3]"
+        "internalType": "uint64",
+        "name": "_reserveCommission",
+        "type": "uint64"
+      },
+      {
+        "internalType": "uint64",
+        "name": "_protocolCommission",
+        "type": "uint64"
       }
     ],
-    "name": "setReserveCommissions",
+    "name": "setMarketStateCommissions",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
