@@ -9,8 +9,8 @@ dataSources:
     network: sepolia
     source:
       abi: SandboxController
-      address: "0x641f1cccc8120f413889ab55ef04ec51376c2895"
-      startBlock: 8783919
+      address: "0xb99ad54cbafe262908c352d06fce0c874b69b261"
+      startBlock: 8890088
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -44,8 +44,8 @@ dataSources:
     network: sepolia
     source:
       abi: MarketFactory
-      address: "0xf9a981f5965c7711fb9edd9a9a8d33053e0e9ace"
-      startBlock: 8783919
+      address: "0x1eda949ec285ddbc83b8a806df64fe2fcbc35f80"
+      startBlock: 8890088
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -70,8 +70,8 @@ dataSources:
     network: sepolia
     source:
       abi: ConfigControllerFactory
-      address: "0x3fc4652a19c7a1126ab0959dde5a74111b8e236f"
-      startBlock: 8783919
+      address: "0x989c545362a6ad8534f91b970cf2ac5d97fa8dff"
+      startBlock: 8890088
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -137,9 +137,6 @@ templates:
           receipt: true
         - event: BuyCollateral(indexed address,indexed address,uint256,uint256)
           handler: handleBuyCollateral
-          receipt: true
-        - event: WithdrawReserves(indexed address,uint256)
-          handler: handleWithdrawReserves
           receipt: true
       file: ./src/comet.ts
   - name: ConfigController

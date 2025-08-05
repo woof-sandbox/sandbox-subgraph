@@ -1,5 +1,6 @@
 import { Address, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import { Comet as CometContract } from '../../../generated/templates/Comet/Comet';
+import { Erc20 as Erc20Contract } from '../../../generated/templates/Comet/Erc20';
 import {
   COMET_REWARDS_ADDRESS,
   SANDBOX_CONTROLLER_ADDRESS,
@@ -89,10 +90,8 @@ export function updateMarketConfiguration(
   config.lastConfigurationUpdateBlockNumber = event.block.number;
 
   const nameResult = comet.try_name();
-  const symbolResult = comet.try_symbol();
 
   config.name = nameResult.reverted ? UNKNOWN : nameResult.value;
-  config.symbol = symbolResult.reverted ? UNKNOWN : symbolResult.value;
   /*config.factory = tryFactory.reverted ? ZERO_ADDRESS : tryFactory.value;
     config.governor = comet.governor();
     config.pauseGuardian = comet.pauseGuardian();
@@ -129,6 +128,10 @@ export function updateMarketConfiguration(
   const baseToken = getOrCreateBaseToken(market, token, event);
   updateBaseTokenConfig(baseToken, event);
   baseToken.save();
+
+  const base = Erc20Contract.bind(baseTokenAddress);
+  const symbolResult = base.try_symbol();
+  config.symbol = symbolResult.reverted ? UNKNOWN : symbolResult.value;
 
   config.baseToken = baseToken.id;
 

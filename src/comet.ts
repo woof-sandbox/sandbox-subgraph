@@ -8,7 +8,7 @@ import {
   Transfer as TransferEvent,
   WithdrawCollateral as WithdrawCollateralEvent,
   Withdraw as WithdrawEvent,
-  WithdrawReserves as WithdrawReservesEvent,
+  // WithdrawReserves as WithdrawReservesEvent,
 } from '../generated/templates/Comet/Comet';
 import { Transaction } from '../generated/schema';
 import {
@@ -44,7 +44,7 @@ import {
   createTransferCollateralInteraction,
   createWithdrawBaseInteraction,
   createWithdrawCollateralInteraction,
-  createWithdrawReservesInteraction,
+  // createWithdrawReservesInteraction,
 } from './helpers/external/interaction';
 import {
   getOrCreateMarket,
@@ -122,11 +122,13 @@ export function handleBuyCollateral(event: BuyCollateralEvent): void {
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleBuyCollateralExternal(event);
 }
+/*
+!: REMOVED, WAITING FOR ALTERNATIVE ON CONTRACTS
 export function handleWithdrawReserves(event: WithdrawReservesEvent): void {
   logEvent(event);
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleWithdrawReservesExternal(event);
-}
+}*/
 
 /// EXTERNAL
 
@@ -544,6 +546,8 @@ export function handleBuyCollateralExternal(event: BuyCollateralEvent): void {
   marketCollateralBalance.save();
 }
 
+/*
+!: REMOVED, WAITING FOR ALTERNATIVE ON CONTRACTS
 export function handleWithdrawReservesExternal(
   event: WithdrawReservesEvent
 ): void {
@@ -557,7 +561,7 @@ export function handleWithdrawReservesExternal(
   createWithdrawReservesInteraction(market, destination, amount, event);
 
   marketAccounting.save();
-}
+}*/
 
 export function handleTransferExternal(event: TransferEvent): void {
   if (logsContainWithdrawOrSupplyOrAbsorbDebtEvents(event)) {
