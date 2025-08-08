@@ -39,6 +39,7 @@ import { UNKNOWN } from '../../constants';
 import {
   createMarketCollateralBalanceSnapshot,
   getOrCreateMarketCollateralBalance,
+  updateMarketCollateralBalance,
   updateMarketCollateralBalanceUsd,
 } from './collateralBalance';
 import {
@@ -383,6 +384,8 @@ export function updateMarketAccounting(
   for (let i = 0; i < collateralTokenIds.length; i++) {
     const token = CollateralToken.load(collateralTokenIds[i])!; // Guaranteed to exist
     const collateralBalance = getOrCreateMarketCollateralBalance(token, event);
+
+    updateMarketCollateralBalance(collateralBalance, event);
     updateMarketCollateralBalanceUsd(collateralBalance, event);
     collateralBalance.save();
 

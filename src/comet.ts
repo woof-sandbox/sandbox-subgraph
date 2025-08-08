@@ -272,7 +272,6 @@ export function handleSupplyCollateralExternal(
     position,
     event
   );
-
   updateMarketCollateralBalance(marketCollateralBalance, event);
   updateMarketCollateralBalanceUsd(marketCollateralBalance, event);
   updatePositionCollateralBalance(position, positionCollateralBalance, event);

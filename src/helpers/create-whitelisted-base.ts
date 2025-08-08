@@ -7,10 +7,6 @@ export function createWhitelistedBase(
   priceFeed: Address,
   decimals: BigInt,
   //
-  curveId: string,
-  //
-  minBorrow: BigInt,
-  //
   createdAt: BigInt
 ): WhitelistedBase {
   const id = Bytes.fromHexString(address.toHexString());
@@ -21,10 +17,6 @@ export function createWhitelistedBase(
     //
     base.priceFeed = priceFeed;
     base.decimals = decimals;
-    //
-    base.curve = curveId;
-    //
-    base.minBorrow = minBorrow;
     //
     base.createdAt = createdAt;
     base.updatedAt = createdAt;

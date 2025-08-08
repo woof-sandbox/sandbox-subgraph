@@ -86,7 +86,7 @@ export function logEventManual(
   placeholders = placeholders.slice(0, -2);
 
   log.info(
-    `CAUGHT ${contractInfo} ${eventInfo} (${event.transaction.hash.toHexString()}) | [${placeholders}]`,
+    `${event.block.number}/${event.block.timestamp} CAUGHT ${contractInfo} ${eventInfo} (${event.transaction.hash.toHexString()}) | [${placeholders}]`,
     params
   );
 }

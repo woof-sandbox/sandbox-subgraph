@@ -245,10 +245,7 @@ function getBaseTokenPriceUsd(
       const unitOfAccountToUsdPriceFeed = getMarketUnitOfAccountToUsdPriceFeed(
         Address.fromBytes(token.market)
       );
-      log.debug('getBaseTokenPriceUsd - unitOfAccountToUsdPriceFeed: {} - {}', [
-        Address.fromBytes(token.market).toHexString(),
-        unitOfAccountToUsdPriceFeed.toHexString(),
-      ]);
+
       if (unitOfAccountToUsdPriceFeed.notEqual(ZERO_ADDRESS)) {
         const unitOfAccountPriceUsd = comet
           .getPrice(unitOfAccountToUsdPriceFeed)

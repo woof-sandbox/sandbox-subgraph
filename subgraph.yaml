@@ -30,12 +30,10 @@ dataSources:
             address,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),uint256)
           handler: handleBaseAssetCurveChanged
           receipt: true
-        - event: CollateralAssetWhitelisted(indexed address,indexed
-            address,uint256,uint64,uint64,uint64,uint64,uint64,uint64)
+        - event: CollateralAssetWhitelisted(indexed address,indexed address,uint256)
           handler: handleCollateralAssetWhitelisted
           receipt: true
-        - event: BaseAssetWhitelisted(indexed address,indexed
-            address,uint8,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),uint256,uint256,uint256)
+        - event: BaseAssetWhitelisted(indexed address,indexed address,uint8)
           handler: handleBaseAssetWhitelisted
           receipt: true
       file: ./src/sandbox-controller.ts

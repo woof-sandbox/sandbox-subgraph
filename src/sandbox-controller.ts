@@ -9,14 +9,13 @@ import { logEvent } from './utils/log-event';
 import { createCurve } from './helpers/create-curve';
 import { createWhitelistedBase } from './helpers/create-whitelisted-base';
 import { createWhitelistedCollateral } from './helpers/create-whitelisted-collateral';
-import { updateBaseCurve } from './helpers/update-base-curve';
 import { updateCurve } from './helpers/update-curve';
 
 export function handleBaseAssetCurveAdded(
   event: BaseAssetCurveAddedEvent
 ): void {
   logEvent(event);
-  const curve = createCurve(
+  createCurve(
     event.params.token,
     event.params.curveIndex,
     //
@@ -31,7 +30,6 @@ export function handleBaseAssetCurveAdded(
     //
     event.block.timestamp
   );
-  updateBaseCurve(event.params.token, curve.id, event.block.timestamp);
 }
 
 export function handleBaseAssetCurveChanged(
@@ -70,12 +68,6 @@ export function handleCollateralAssetWhitelisted(
     //
     event.params.priceFeed,
     event.params.decimals,
-    event.params.maxBorrowCollateralFactor,
-    event.params.minBorrowCollateralFactor,
-    event.params.maxLiquidateCollateralFactor,
-    event.params.minLiquidateCollateralFactor,
-    event.params.maxLiquidationFactor,
-    event.params.minLiquidationFactor,
     //
     event.block.timestamp
   );
@@ -85,33 +77,12 @@ export function handleBaseAssetWhitelisted(
   event: BaseAssetWhitelistedEvent
 ): void {
   logEvent(event);
-  const curve = createCurve(
-    event.params.token,
-    event.params.curveIndex,
-    //
-    event.params.baseAssetCurve.supplyKink,
-    event.params.baseAssetCurve.supplyPerYearInterestRateBase,
-    event.params.baseAssetCurve.supplyPerYearInterestRateSlopeLow,
-    event.params.baseAssetCurve.supplyPerYearInterestRateSlopeHigh,
-    event.params.baseAssetCurve.borrowKink,
-    event.params.baseAssetCurve.borrowPerYearInterestRateBase,
-    event.params.baseAssetCurve.borrowPerYearInterestRateSlopeLow,
-    event.params.baseAssetCurve.borrowPerYearInterestRateSlopeHigh,
-    //
-    event.block.timestamp
-  );
-
   const decimals = BigInt.fromI32(event.params.decimals); // !
-
   createWhitelistedBase(
     event.params.token,
     //
     event.params.priceFeed,
     decimals,
-    //
-    curve.id,
-    //
-    event.params.minBorrow,
     //
     event.block.timestamp
   );
