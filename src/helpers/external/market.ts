@@ -427,7 +427,7 @@ export function updateMarketAccounting(
   createMarketAccountingSnapshots(accounting, event);
 }
 
-function createMarketAccountingSnapshots(
+function createMarketAccountingSnapshots( ///!:0
   accounting: MarketAccounting,
   event: ethereum.Event
 ): void {
@@ -450,7 +450,7 @@ function createMarketAccountingSnapshots(
   let weeklyAccounting = WeeklyMarketAccounting.load(weeklyId);
 
   if (!hourlyAccounting || !dailyAccounting || !weeklyAccounting) {
-    const accountingId = accounting.market.concat(hourlyId);
+    const accountingId = hourlyId; // replaced accounting.market.concat(hourlyId);
 
     // Copy existing config
     const copiedAccounting = new MarketAccounting(accountingId);

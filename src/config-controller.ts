@@ -26,6 +26,7 @@ export function handleCometCreated(event: CometCreatedEvent): void {
   );
 }
 
+// ?: remove
 /*export function handleAddedCollateralTokenConfig(
   event: AddedCollateralTokenConfigEvent
 ): void {

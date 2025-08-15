@@ -42,16 +42,6 @@
             "internalType": "uint40",
             "name": "maxUpdateTime",
             "type": "uint40"
-          },
-          {
-            "internalType": "uint40",
-            "name": "suggestedLockTimeOfSeedReserves",
-            "type": "uint40"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
           }
         ],
         "internalType": "struct ISandboxController.SandboxControllerConfiguration",
@@ -104,6 +94,11 @@
   },
   {
     "inputs": [],
+    "name": "InvalidAmountOfSeedReserves",
+    "type": "error"
+  },
+  {
+    "inputs": [],
     "name": "InvalidCommissions",
     "type": "error"
   },
@@ -115,6 +110,11 @@
   {
     "inputs": [],
     "name": "InvalidFactors",
+    "type": "error"
+  },
+  {
+    "inputs": [],
+    "name": "InvalidLockTimeOfSeedReserves",
     "type": "error"
   },
   {
@@ -452,16 +452,6 @@
             "internalType": "uint40",
             "name": "maxUpdateTime",
             "type": "uint40"
-          },
-          {
-            "internalType": "uint40",
-            "name": "suggestedLockTimeOfSeedReserves",
-            "type": "uint40"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
           }
         ],
         "indexed": false,
@@ -490,16 +480,6 @@
             "internalType": "uint40",
             "name": "maxUpdateTime",
             "type": "uint40"
-          },
-          {
-            "internalType": "uint40",
-            "name": "suggestedLockTimeOfSeedReserves",
-            "type": "uint40"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
           }
         ],
         "indexed": false,
@@ -560,6 +540,31 @@
       }
     ],
     "name": "OwnerTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "baseToken",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "suggestedAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint40",
+        "name": "lockTime",
+        "type": "uint40"
+      }
+    ],
+    "name": "SeedReservesSet",
     "type": "event"
   },
   {
@@ -635,6 +640,19 @@
   },
   {
     "inputs": [],
+    "name": "MIN_LOCK_TIME",
+    "outputs": [
+      {
+        "internalType": "uint40",
+        "name": "",
+        "type": "uint40"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "PARAMETERS_SCALE",
     "outputs": [
       {
@@ -669,16 +687,6 @@
         "internalType": "uint40",
         "name": "maxUpdateTime",
         "type": "uint40"
-      },
-      {
-        "internalType": "uint40",
-        "name": "suggestedLockTimeOfSeedReserves",
-        "type": "uint40"
-      },
-      {
-        "internalType": "uint256",
-        "name": "suggestedAmountOfSeedReserves",
-        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -822,6 +830,30 @@
         "internalType": "struct ISandboxController.BaseAssetConfiguration",
         "name": "",
         "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      }
+    ],
+    "name": "baseTokenSuggestedSeedReserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint40",
+        "name": "",
+        "type": "uint40"
       }
     ],
     "stateMutability": "view",
@@ -1002,16 +1034,6 @@
             "internalType": "uint40",
             "name": "maxUpdateTime",
             "type": "uint40"
-          },
-          {
-            "internalType": "uint40",
-            "name": "suggestedLockTimeOfSeedReserves",
-            "type": "uint40"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
           }
         ],
         "internalType": "struct ISandboxController.SandboxControllerConfiguration",
@@ -1118,13 +1140,13 @@
       },
       {
         "internalType": "uint256",
-        "name": "_seedReserves",
+        "name": "_targetReserves",
         "type": "uint256"
       },
       {
-        "internalType": "uint256",
-        "name": "_targetReserves",
-        "type": "uint256"
+        "internalType": "address",
+        "name": "_baseToken",
+        "type": "address"
       }
     ],
     "name": "getCommissions",
@@ -1334,16 +1356,6 @@
             "internalType": "uint40",
             "name": "maxUpdateTime",
             "type": "uint40"
-          },
-          {
-            "internalType": "uint40",
-            "name": "suggestedLockTimeOfSeedReserves",
-            "type": "uint40"
-          },
-          {
-            "internalType": "uint256",
-            "name": "suggestedAmountOfSeedReserves",
-            "type": "uint256"
           }
         ],
         "internalType": "struct ISandboxController.SandboxControllerConfiguration",
@@ -1396,6 +1408,29 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_baseToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint40",
+        "name": "_lockTime",
+        "type": "uint40"
+      }
+    ],
+    "name": "setSeedReserves",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
         "name": "_treasury",
         "type": "address"
       }
@@ -1403,6 +1438,44 @@
     "name": "setTreasury",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "suggestedAmountOfSeedReserves",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "suggestedLockTimeOfSeedReserves",
+    "outputs": [
+      {
+        "internalType": "uint40",
+        "name": "",
+        "type": "uint40"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -1526,6 +1599,16 @@
         "internalType": "uint256",
         "name": "minBorrow",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountOfSeedReserves",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint40",
+        "name": "lockTimeOfSeedReserves",
+        "type": "uint40"
       }
     ],
     "name": "whitelistBaseAsset",
