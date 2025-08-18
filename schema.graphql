@@ -111,6 +111,18 @@ type CometDailyPopularity @entity(immutable: false) {
   updatedAt: BigInt!
 }
 
+type PriceFeed @entity(immutable: false) {
+    "Address of the price feed contract"
+    id: Bytes!
+
+    "Price feed scale (decimals)"
+    priceScaleDecimals: Int!
+    lastPriceUsd: BigDecimal!
+
+    createdAt: BigInt!
+    updatedAt: BigInt!
+}
+
 ### EXTERNAL
 
 ####

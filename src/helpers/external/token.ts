@@ -16,7 +16,6 @@ import {
 } from '../../../generated/schema';
 import { formatUnits } from '../../common/external/utils';
 import {
-  PRICE_FEED_FACTOR,
   ZERO_ADDRESS,
   ZERO_BD,
   ZERO_BI,
@@ -27,6 +26,7 @@ import {
   getCompTokenAddress,
   getMarketUnitOfAccountToUsdPriceFeed,
 } from '../../common/external/networkSpecific';
+import { getAndUpdatePriceFeed } from '../get-and-update-price-feed';
 
 ////
 // Token
@@ -208,21 +208,10 @@ function getTokenPriceWithGenericOracleUsd(
     const priceFeedAddress = getPriceFeedAddressForToken(token);
 
     if (ZERO_ADDRESS != priceFeedAddress) {
-      const priceFeed = ChainlinkPriceFeedContract.bind(priceFeedAddress);
-      const tryLatestRoundData = priceFeed.try_latestRoundData();
-      if (!tryLatestRoundData.reverted) {
-        const price = tryLatestRoundData.value.value1
-          .toBigDecimal()
-          .div(PRICE_FEED_FACTOR);
-        token.lastPriceBlockNumber = event.block.number;
-        token.lastPriceUsd = price;
-        token.save();
-      } else {
-        log.warning(
-          'getTokenPriceWithGenericOracleUsd - try_latestRoundData reverted for {} - {}',
-          [priceFeedAddress.toString(), token.address.toString()]
-        );
-      }
+      const priceFeed = getAndUpdatePriceFeed(priceFeedAddress, event);
+      token.lastPriceBlockNumber = event.block.number;
+      token.lastPriceUsd = priceFeed.lastPriceUsd;
+      token.save();
     }
   }
 
@@ -235,22 +224,21 @@ function getBaseTokenPriceUsd(
   event: ethereum.Event
 ): BigDecimal {
   if (token.lastPriceBlockNumber != event.block.number) {
-    const comet = CometContract.bind(Address.fromBytes(token.market));
+    const priceFeed = getAndUpdatePriceFeed(token.priceFeed, event); /// replaced comet.try_getPrice(Address.fromBytes(token.priceFeed))
 
-    const tryPrice = comet.try_getPrice(Address.fromBytes(token.priceFeed));
-
-    if (!tryPrice.reverted) {
-      let price = tryPrice.value.toBigDecimal().div(PRICE_FEED_FACTOR); // In unit of account
+    if (priceFeed.updatedAt === event.block.timestamp) {
+      // If price was updated
+      let price = priceFeed.lastPriceUsd; // In unit of account
 
       const unitOfAccountToUsdPriceFeed = getMarketUnitOfAccountToUsdPriceFeed(
         Address.fromBytes(token.market)
       );
 
       if (unitOfAccountToUsdPriceFeed.notEqual(ZERO_ADDRESS)) {
-        const unitOfAccountPriceUsd = comet
-          .getPrice(unitOfAccountToUsdPriceFeed)
-          .toBigDecimal()
-          .div(PRICE_FEED_FACTOR);
+        const unitOfAccountPriceUsd = getAndUpdatePriceFeed(
+          unitOfAccountToUsdPriceFeed,
+          event
+        ).lastPriceUsd;
         price = price.times(unitOfAccountPriceUsd);
       }
 
@@ -270,21 +258,21 @@ function getCollateralTokenPriceUsd(
   let price = token.lastPriceUsd;
 
   if (token.lastPriceBlockNumber != event.block.number) {
-    const comet = CometContract.bind(Address.fromBytes(token.market));
+    const priceFeed = getAndUpdatePriceFeed(token.priceFeed, event); /// replaced comet.try_getPrice(Address.fromBytes(token.priceFeed))
 
-    const tryPrice = comet.try_getPrice(Address.fromBytes(token.priceFeed));
-
-    if (!tryPrice.reverted) {
-      let price = tryPrice.value.toBigDecimal().div(PRICE_FEED_FACTOR);
+    if (priceFeed.updatedAt === event.block.timestamp) {
+      // if price was updated
+      let price = priceFeed.lastPriceUsd;
 
       const unitOfAccountToUsdPriceFeed = getMarketUnitOfAccountToUsdPriceFeed(
         Address.fromBytes(token.market)
       );
       if (unitOfAccountToUsdPriceFeed.notEqual(ZERO_ADDRESS)) {
-        const unitOfAccountPriceUsd = comet
-          .getPrice(unitOfAccountToUsdPriceFeed)
-          .toBigDecimal()
-          .div(PRICE_FEED_FACTOR);
+        const unitOfAccountPriceUsd = getAndUpdatePriceFeed(
+          unitOfAccountToUsdPriceFeed,
+          event
+        ).lastPriceUsd;
+
         price = price.times(unitOfAccountPriceUsd);
       }
 
@@ -302,6 +290,7 @@ export function getTokenPriceUsd<T>(
   event: ethereum.Event
 ): BigDecimal {
   if (token instanceof Token) {
+    // ?: rewards only
     return getTokenPriceWithGenericOracleUsd(token, event);
   } else if (token instanceof BaseToken) {
     return getBaseTokenPriceUsd(token, event);
