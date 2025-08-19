@@ -52,7 +52,7 @@ export function getAndUpdatePriceFeed(
       priceFeed.updatedAt = event.block.timestamp;
     } else {
       log.warning(
-        'getOrCreatePriceFeed - try_latestRoundData reverted for {}',
+        'getAndUpdatePriceFeed - try_latestRoundData reverted for {}',
         [address.toString()]
       );
     }
