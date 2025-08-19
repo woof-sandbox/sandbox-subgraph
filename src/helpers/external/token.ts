@@ -209,9 +209,11 @@ function getTokenPriceWithGenericOracleUsd(
 
     if (ZERO_ADDRESS != priceFeedAddress) {
       const priceFeed = getAndUpdatePriceFeed(priceFeedAddress, event);
-      token.lastPriceBlockNumber = event.block.number;
-      token.lastPriceUsd = priceFeed.lastPriceUsd;
-      token.save();
+      if (priceFeed.updatedAt === event.block.timestamp) { // If price was updated
+        token.lastPriceBlockNumber = event.block.number;
+        token.lastPriceUsd = priceFeed.lastPriceUsd;
+        token.save();
+      }
     }
   }
 
