@@ -1,5 +1,4 @@
 import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
-import { ChainlinkPriceFeed as ChainlinkPriceFeedContract } from '../../../generated/templates/Comet/ChainlinkPriceFeed';
 import {
   AbsorbCollateralInteraction,
   AbsorbDebtInteraction,
@@ -21,10 +20,11 @@ import {
   WithdrawReservesInteraction,
 } from '../../../generated/schema';
 import { computeTokenValueUsd } from '../../common/external/utils';
-import { PRICE_FEED_FACTOR, ZERO_BI } from '../../common/external/constants';
 import { getChainlinkEthUsdPriceFeedAddress } from '../../common/external/networkSpecific';
+import { getAndUpdatePriceFeed } from '../get-and-update-price-feed';
 import { getOrCreateMarketConfiguration } from './market';
 import { getOrCreatePositionAccounting } from './position';
+// ?: not in use
 import { getOrCreateToken, getTokenPriceUsd } from './token';
 
 function getOrCreateTransaction(event: ethereum.Event): Transaction {
@@ -61,14 +61,14 @@ function getOrCreateTransaction(event: ethereum.Event): Transaction {
       const gasUsed = event.receipt!.gasUsed;
       transaction.gasUsed = gasUsed;
 
-      const priceFeed = ChainlinkPriceFeedContract.bind(
-        getChainlinkEthUsdPriceFeedAddress()
+      const priceFeed = getAndUpdatePriceFeed(
+        getChainlinkEthUsdPriceFeedAddress(),
+        event
       );
-      const tryLatestRoundData = priceFeed.try_latestRoundData();
-      if (!tryLatestRoundData.reverted) {
-        const price = tryLatestRoundData.value.value1
-          .toBigDecimal()
-          .div(PRICE_FEED_FACTOR);
+
+      if (priceFeed.updatedAt === event.block.timestamp) {
+        // If price was updated
+        const price = priceFeed.lastPriceUsd;
         transaction.gasUsedUsd = computeTokenValueUsd(
           gasUsed.times(transaction.gasPrice),
           18,

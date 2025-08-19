@@ -58,6 +58,8 @@ dataSources:
           file: ./abis/Comet.json
         - name: Erc20
           file: ./abis/Erc20.json
+        - name: ChainlinkPriceFeed
+          file: ./abis/ChainlinkPriceFeed.json
       eventHandlers:
         - event: CometCreated(indexed address,indexed address,indexed address)
           handler: handleCometCreated
@@ -98,6 +100,7 @@ templates:
       entities:
         - Comet
         - Borrower
+        - PriceFeed
       abis:
         - name: Comet
           file: ./abis/Comet.json
