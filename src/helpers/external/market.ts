@@ -1,60 +1,24 @@
 import { Address, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import { Comet as CometContract } from '../../../generated/templates/Comet/Comet';
-import {
-  COMET_REWARDS_ADDRESS,
-  SANDBOX_CONTROLLER_ADDRESS,
-} from '../../../generated/addresses';
-import {
-  BaseToken,
-  CollateralToken,
-  DailyMarketAccounting,
-  HourlyMarketAccounting,
-  Market,
-  MarketAccounting,
-  MarketCollateralBalance,
-  MarketConfiguration,
-  MarketConfigurationSnapshot,
-  MarketRewardConfiguration,
-  Token,
-  WeeklyMarketAccounting,
-} from '../../../generated/schema';
-import {
-  bigDecimalSafeDiv,
-  computeTokenValueUsd,
-  formatUnits,
-  getRewardConfigData,
-} from '../../common/paperclip/utils';
-import {
-  COMET_FACTOR_SCALE,
-  SECONDS_PER_DAY,
-  SECONDS_PER_HOUR,
-  SECONDS_PER_WEEK,
-  SECONDS_PER_YEAR,
-  ZERO_ADDRESS,
-  ZERO_BD,
-  ZERO_BI,
-} from '../../common/paperclip/constants';
-import { UNKNOWN } from '../../constants';
+import { Erc20 as Erc20Contract } from '../../../generated/templates/Comet/Erc20';
+import { COMET_REWARDS_ADDRESS, SANDBOX_CONTROLLER_ADDRESS } from '../../../generated/addresses';
+import { BaseToken, CollateralToken, DailyMarketAccounting, HourlyMarketAccounting, Market, MarketAccounting, MarketCollateralBalance, MarketConfiguration, MarketConfigurationSnapshot, MarketRewardConfiguration, Token, WeeklyMarketAccounting } from '../../../generated/schema';
+import { bigDecimalSafeDiv, computeTokenValueUsd, formatUnits, getRewardConfigData } from '../../common/external/utils';
+import { COMET_FACTOR_SCALE, SECONDS_PER_DAY, SECONDS_PER_HOUR, SECONDS_PER_WEEK, SECONDS_PER_YEAR, ZERO_ADDRESS, ZERO_BD, ZERO_BI } from '../../common/external/constants';
+import { UNKNOWN } from '../../common/constants';
 import {
   createMarketCollateralBalanceSnapshot,
   getOrCreateMarketCollateralBalance,
-  updateMarketCollateralBalanceUsd,
+  updateMarketCollateralBalances,
 } from './collateralBalance';
 import {
   getOrCreateProtocol,
   getOrCreateProtocolAccounting,
   updateProtocolAccounting,
 } from './protocol';
-import {
-  createCollateralTokenSnapshot,
-  getOrCreateBaseToken,
-  getOrCreateCollateralToken,
-  getOrCreateToken,
-  getTokenPriceUsd,
-  updateBaseTokenConfig,
-  updateCollateralTokenConfig,
-} from './token';
+import { createCollateralTokenSnapshot, getAndUpdateTokenPriceUsd, getOrCreateBaseToken, getOrCreateCollateralToken, getOrCreateToken, updateBaseTokenConfig, updateCollateralTokenConfig } from './token';
 import { getOrCreateUsage } from './usage';
+
 
 ////
 // Market Configuration
@@ -89,14 +53,8 @@ export function updateMarketConfiguration(
   config.lastConfigurationUpdateBlockNumber = event.block.number;
 
   const nameResult = comet.try_name();
-  const symbolResult = comet.try_symbol();
 
   config.name = nameResult.reverted ? UNKNOWN : nameResult.value;
-  config.symbol = symbolResult.reverted ? UNKNOWN : symbolResult.value;
-  /*config.factory = tryFactory.reverted ? ZERO_ADDRESS : tryFactory.value;
-    config.governor = comet.governor();
-    config.pauseGuardian = comet.pauseGuardian();
-    config.extensionDelegate = comet.extensionDelegate();*/
 
   config.supplyKink = formatUnits(comet.supplyKink(), 18);
   config.supplyPerSecondInterestRateSlopeLow =
@@ -129,6 +87,10 @@ export function updateMarketConfiguration(
   const baseToken = getOrCreateBaseToken(market, token, event);
   updateBaseTokenConfig(baseToken, event);
   baseToken.save();
+
+  const base = Erc20Contract.bind(baseTokenAddress);
+  const symbolResult = base.try_symbol();
+  config.symbol = symbolResult.reverted ? UNKNOWN : symbolResult.value;
 
   config.baseToken = baseToken.id;
 
@@ -260,11 +222,8 @@ export function updateMarketAccounting(
 
   const comet = CometContract.bind(Address.fromBytes(market.id));
   const configuration = getOrCreateMarketConfiguration(market, event);
-  //// const rewardConfigData = getOrCreateMarketRewardConfiguration(market, event);
 
   const totalsBasic = comet.totalsBasic();
-
-  // const rewardConfigData = getRewardConfigData(Address.fromBytes(market.id));
 
   accounting.market = market.id;
   accounting.lastAccountingUpdatedBlockNumber = event.block.number;
@@ -303,7 +262,7 @@ export function updateMarketAccounting(
   const baseToken = BaseToken.load(configuration.baseToken)!; // Guaranteed to exist
   const baseTokenToken = Token.load(baseToken.token)!; // Guaranteed to exist
   const baseTokenDecimals = u8(baseTokenToken.decimals);
-  const baseTokenPriceUsd = getTokenPriceUsd(baseToken, event);
+  const baseTokenPriceUsd = getAndUpdateTokenPriceUsd(baseToken, event);
 
   accounting.totalBaseSupplyUsd = computeTokenValueUsd(
     accounting.totalBaseSupply,
@@ -321,56 +280,6 @@ export function updateMarketAccounting(
     baseTokenPriceUsd
   );
 
-  /// Temporary disabled
-  /*if (Address.fromBytes(rewardConfigData.tokenAddress).equals(ZERO_ADDRESS)) {
-        // No rewards
-        accounting.rewardSupplyApr = ZERO_BD;
-        accounting.rewardBorrowApr = ZERO_BD;
-
-        accounting.rewardTokenUsdPrice = ZERO_BD;
-    } else {
-        const rewardToken = getOrCreateToken(Address.fromBytes(rewardConfigData.tokenAddress), event);
-        const rewardMultiplier = rewardConfigData.multiplier;
-
-        const supplyRewardTokensPerDay = configuration.baseTrackingSupplySpeed
-            .times(BigInt.fromU32(10).pow(u8(rewardToken.decimals)))
-            .times(SECONDS_PER_DAY)
-            .times(rewardMultiplier)
-            .div(REWARD_FACTOR_SCALE)
-            .div(BASE_INDEX_SCALE);
-        const borrowRewardTokensPerDay = configuration.baseTrackingBorrowSpeed
-            .times(BigInt.fromU32(10).pow(u8(rewardToken.decimals)))
-            .times(SECONDS_PER_DAY)
-            .times(rewardMultiplier)
-            .div(REWARD_FACTOR_SCALE)
-            .div(BASE_INDEX_SCALE);
-
-        const rewardTokenPriceUsd = getTokenPriceUsd(rewardToken, event);
-
-        const supplyRewardTokenPerDayUsd = computeTokenValueUsd(
-            supplyRewardTokensPerDay,
-            u8(rewardToken.decimals),
-            rewardTokenPriceUsd
-        );
-        const rewardSupplyYieldPerDay = accounting.totalBaseSupply.gt(configuration.baseMinForRewards)
-            ? bigDecimalSafeDiv(supplyRewardTokenPerDayUsd, accounting.totalBaseSupplyUsd)
-            : ZERO_BD;
-
-        const borrowRewardTokenPerDayUsd = computeTokenValueUsd(
-            borrowRewardTokensPerDay,
-            u8(rewardToken.decimals),
-            rewardTokenPriceUsd
-        );
-        const rewardBorrowYieldPerDay = accounting.totalBaseBorrow.gt(configuration.baseMinForRewards)
-            ? bigDecimalSafeDiv(borrowRewardTokenPerDayUsd, accounting.totalBaseBorrowUsd)
-            : ZERO_BD;
-
-        accounting.rewardSupplyApr = rewardSupplyYieldPerDay.times(DAYS_PER_YEAR.toBigDecimal());
-        accounting.rewardBorrowApr = rewardBorrowYieldPerDay.times(DAYS_PER_YEAR.toBigDecimal());
-
-        accounting.rewardTokenUsdPrice = getTokenPriceUsd(rewardToken, event)
-    }*/
-
   // Collateral USD balances
   const collateralTokenIds = configuration.collateralTokens;
 
@@ -380,7 +289,9 @@ export function updateMarketAccounting(
   for (let i = 0; i < collateralTokenIds.length; i++) {
     const token = CollateralToken.load(collateralTokenIds[i])!; // Guaranteed to exist
     const collateralBalance = getOrCreateMarketCollateralBalance(token, event);
-    updateMarketCollateralBalanceUsd(collateralBalance, event);
+
+    updateMarketCollateralBalances(collateralBalance, event);
+
     collateralBalance.save();
 
     collateralBalances.push(collateralBalance.id);
@@ -444,7 +355,7 @@ function createMarketAccountingSnapshots(
   let weeklyAccounting = WeeklyMarketAccounting.load(weeklyId);
 
   if (!hourlyAccounting || !dailyAccounting || !weeklyAccounting) {
-    const accountingId = accounting.market.concat(hourlyId);
+    const accountingId = hourlyId; // replaced accounting.market.concat(hourlyId);
 
     // Copy existing config
     const copiedAccounting = new MarketAccounting(accountingId);
@@ -526,9 +437,6 @@ export function getOrCreateMarket(
 
     const marketConfig = getOrCreateMarketConfiguration(market, event);
     market.configuration = marketConfig.id;
-
-    //// const marketRewardConfiguration = getOrCreateMarketRewardConfiguration(market, event);
-    //// market.rewardConfiguration = marketRewardConfiguration.id;
 
     const marketAccounting = getOrCreateMarketAccounting(market, event);
     market.accounting = marketAccounting.id;

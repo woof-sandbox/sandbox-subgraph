@@ -1,6 +1,6 @@
 import { ethereum, log } from '@graphprotocol/graph-ts';
-import { CONTRACT_NAMES } from '../../generated/contract-names';
-import { EVENT_NAMES } from '../../generated/event-names';
+import { CONTRACT_NAMES } from '../../../generated/contract-names';
+import { EVENT_NAMES } from '../../../generated/event-names';
 import { LogEventOptions } from './log-event-options';
 
 function getEventName(event: ethereum.Event, eventName: string): string {
@@ -86,7 +86,7 @@ export function logEventManual(
   placeholders = placeholders.slice(0, -2);
 
   log.info(
-    `CAUGHT ${contractInfo} ${eventInfo} (${event.transaction.hash.toHexString()}) | [${placeholders}]`,
+    `${event.block.number}/${event.block.timestamp} CAUGHT ${contractInfo} ${eventInfo} (${event.transaction.hash.toHexString()}) | [${placeholders}]`,
     params
   );
 }

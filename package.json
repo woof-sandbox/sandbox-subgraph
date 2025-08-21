@@ -10,10 +10,14 @@
 
     "generate:sepolia": "NETWORK=sepolia node scripts/generate-contract-names.js & NETWORK=sepolia node scripts/generate-addresses.js & npm run generate",
     "prepublish:sepolia": "rimraf build generated && graph codegen && npm run generate:sepolia && graph build --network=sepolia",
-    "bump:sepolia": "node scripts/bump-version.js sepolia",
+    "bump:sepolia:patch": "node scripts/bump-version.js sepolia patch",
+    "bump:sepolia:minor": "node scripts/bump-version.js sepolia minor",
+    "bump:sepolia:major": "node scripts/bump-version.js sepolia major",
     "deploy:sepolia": "graph deploy --version-label $(jq -r '.sepolia' versions.json) sandbox-sepolia",
     "redeploy:sepolia": "NETWORK=sepolia node scripts/retry-deploy.js",
-    "publish:sepolia": "npm run prepublish:sepolia && npm run bump:sepolia && npm run redeploy:sepolia",
+    "publish:sepolia:patch": "npm run prepublish:sepolia && npm run bump:sepolia:patch && npm run redeploy:sepolia",
+    "publish:sepolia:minor": "npm run prepublish:sepolia && npm run bump:sepolia:minor && npm run redeploy:sepolia",
+    "publish:sepolia:major": "npm run prepublish:sepolia && npm run bump:sepolia:major && npm run redeploy:sepolia",
 
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ sandbox-subgraph",

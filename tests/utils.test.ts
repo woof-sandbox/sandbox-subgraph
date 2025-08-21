@@ -13,12 +13,12 @@ import {
   parseUnits,
   presentValue,
   principalValue,
-} from '../src/common/paperclip/utils';
+} from '../src/common/external/utils';
 import {
   BASE_INDEX_SCALE,
   ZERO_BD,
   ZERO_BI,
-} from '../src/common/paperclip/constants';
+} from '../src/common/external/constants';
 
 describe('utils', () => {
   afterEach(() => {

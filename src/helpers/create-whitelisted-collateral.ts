@@ -6,12 +6,6 @@ export function createWhitelistedCollateral(
   //
   priceFeed: Address,
   decimals: BigInt,
-  maxBorrowCollateralFactor: BigInt,
-  minBorrowCollateralFactor: BigInt,
-  maxLiquidateCollateralFactor: BigInt,
-  minLiquidateCollateralFactor: BigInt,
-  maxLiquidationFactor: BigInt,
-  minLiquidationFactor: BigInt,
   //
   createdAt: BigInt
 ): WhitelistedCollateral {
@@ -23,12 +17,6 @@ export function createWhitelistedCollateral(
     //
     collateral.priceFeed = priceFeed;
     collateral.decimals = decimals;
-    collateral.maxBorrowCollateralFactor = maxBorrowCollateralFactor;
-    collateral.minBorrowCollateralFactor = minBorrowCollateralFactor;
-    collateral.maxLiquidateCollateralFactor = maxLiquidateCollateralFactor;
-    collateral.minLiquidateCollateralFactor = minLiquidateCollateralFactor;
-    collateral.maxLiquidationFactor = maxLiquidationFactor;
-    collateral.minLiquidationFactor = minLiquidationFactor;
     //
     collateral.createdAt = createdAt;
     collateral.save();

@@ -1,6 +1,6 @@
 import { Address, BigInt, log } from '@graphprotocol/graph-ts';
 import { CuratorProposal } from '../../generated/schema';
-import { formCuratorProposalId } from '../utils/form-curator-proposal-id';
+import { formCuratorProposalId } from '../common/utils/form-curator-proposal-id';
 import { ProposalStatus } from '../common/proposal-status';
 import { ProgressId, createOrUpdateProgress, getProgress } from '../progress';
 

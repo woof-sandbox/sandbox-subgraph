@@ -5,11 +5,10 @@ import {
   MarketCollateralBalance,
   Position,
   PositionCollateralBalance,
-  Token,
 } from '../../../generated/schema';
-import { computeTokenValueUsd } from '../../common/paperclip/utils';
-import { ZERO_BI } from '../../common/paperclip/constants';
-import { getOrCreateToken, getTokenPriceUsd } from './token';
+import { computeTokenValueUsd } from '../../common/external/utils';
+import { ZERO_BI } from '../../common/external/constants';
+import { getOrCreateToken, getAndUpdateTokenPriceUsd } from './token';
 
 ////
 // Market Collateral Balance
@@ -29,8 +28,7 @@ export function getOrCreateMarketCollateralBalance(
     collateralBalance.collateralToken = collateralToken.id;
     collateralBalance.market = collateralToken.market;
 
-    updateMarketCollateralBalance(collateralBalance, event);
-    updateMarketCollateralBalanceUsd(collateralBalance, event);
+    updateMarketCollateralBalances(collateralBalance, event);
 
     collateralBalance.save();
   }
@@ -38,7 +36,9 @@ export function getOrCreateMarketCollateralBalance(
   return collateralBalance;
 }
 
-export function updateMarketCollateralBalance(
+// Any function call must be accompanied by updateMarketCollateralBalanceUsd
+// Use updateMarketCollateralBalances
+function updateMarketCollateralBalance(
   collateralBalance: MarketCollateralBalance,
   event: ethereum.Event
 ): void {
@@ -64,6 +64,43 @@ export function updateMarketCollateralBalance(
     : tryGetReserves.value;
 }
 
+// Update just the USD value of balance based on newest price and existing balance
+// Any function call must be accompanied by updateMarketCollateralBalance
+// Use updateMarketCollateralBalances
+function updateMarketCollateralBalanceUsd(
+  collateralBalance: MarketCollateralBalance,
+  event: ethereum.Event
+): void {
+  const collateralToken = CollateralToken.load(
+    collateralBalance.collateralToken
+  )!;
+  const collateralTokenToken = getOrCreateToken(
+    Address.fromBytes(collateralToken.token),
+    event
+  );
+  const price = getAndUpdateTokenPriceUsd(collateralToken, event);
+
+  collateralBalance.lastUpdateBlockNumber = event.block.number;
+  collateralBalance.balanceUsd = computeTokenValueUsd(
+    collateralBalance.balance,
+    u8(collateralTokenToken.decimals),
+    price
+  );
+  collateralBalance.reservesUsd = computeTokenValueUsd(
+    collateralBalance.reserves,
+    u8(collateralTokenToken.decimals),
+    price
+  );
+}
+
+export function updateMarketCollateralBalances(
+  collateralBalance: MarketCollateralBalance,
+  event: ethereum.Event
+): void {
+  updateMarketCollateralBalance(collateralBalance, event);
+  updateMarketCollateralBalanceUsd(collateralBalance, event);
+}
+
 export function createMarketCollateralBalanceSnapshot(
   collateralBalance: MarketCollateralBalance,
   event: ethereum.Event
@@ -85,33 +122,6 @@ export function createMarketCollateralBalanceSnapshot(
   copiedConfig.save();
 
   return copiedConfig;
-}
-
-// Update just the USD value of balance based on newest price and existing balance
-export function updateMarketCollateralBalanceUsd(
-  collateralBalance: MarketCollateralBalance,
-  event: ethereum.Event
-): void {
-  const collateralToken = CollateralToken.load(
-    collateralBalance.collateralToken
-  )!;
-  const collateralTokenToken = getOrCreateToken(
-    Address.fromBytes(collateralToken.token),
-    event
-  );
-  const price = getTokenPriceUsd(collateralToken, event);
-
-  collateralBalance.lastUpdateBlockNumber = event.block.number;
-  collateralBalance.balanceUsd = computeTokenValueUsd(
-    collateralBalance.balance,
-    u8(collateralTokenToken.decimals),
-    price
-  );
-  collateralBalance.reservesUsd = computeTokenValueUsd(
-    collateralBalance.reserves,
-    u8(collateralTokenToken.decimals),
-    price
-  );
 }
 
 ////
@@ -193,7 +203,7 @@ export function updatePositionCollateralBalanceUsd(
     Address.fromBytes(collateralToken.token),
     event
   );
-  const price = getTokenPriceUsd(collateralToken, event);
+  const price = getAndUpdateTokenPriceUsd(collateralToken, event);
 
   collateralBalance.lastUpdateBlockNumber = event.block.number;
   collateralBalance.balanceUsd = computeTokenValueUsd(

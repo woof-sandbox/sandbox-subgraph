@@ -9,8 +9,8 @@ dataSources:
     network: sepolia
     source:
       abi: SandboxController
-      address: "0x62096b5d9b94525d915e53bc8148f65c78bfa159"
-      startBlock: 8777166
+      address: "0xe19826607fdd4122fd324188926551f4a04cde12"
+      startBlock: 8990817
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -30,12 +30,10 @@ dataSources:
             address,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),uint256)
           handler: handleBaseAssetCurveChanged
           receipt: true
-        - event: CollateralAssetWhitelisted(indexed address,indexed
-            address,uint256,uint64,uint64,uint64,uint64,uint64,uint64)
+        - event: CollateralAssetWhitelisted(indexed address,indexed address,uint256)
           handler: handleCollateralAssetWhitelisted
           receipt: true
-        - event: BaseAssetWhitelisted(indexed address,indexed
-            address,uint8,(uint64,uint64,uint64,uint64,uint64,uint64,uint64,uint64),uint256,uint256,uint256)
+        - event: BaseAssetWhitelisted(indexed address,indexed address,uint8)
           handler: handleBaseAssetWhitelisted
           receipt: true
       file: ./src/sandbox-controller.ts
@@ -44,8 +42,8 @@ dataSources:
     network: sepolia
     source:
       abi: MarketFactory
-      address: "0x912d9dda19bbd0e1464f5f27e5502fdd3c180fa2"
-      startBlock: 8777166
+      address: "0xd2ec5581a763b96590c078ca4d46505f38f44d74"
+      startBlock: 8990866
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -60,6 +58,8 @@ dataSources:
           file: ./abis/Comet.json
         - name: Erc20
           file: ./abis/Erc20.json
+        - name: ChainlinkPriceFeed
+          file: ./abis/ChainlinkPriceFeed.json
       eventHandlers:
         - event: CometCreated(indexed address,indexed address,indexed address)
           handler: handleCometCreated
@@ -70,8 +70,8 @@ dataSources:
     network: sepolia
     source:
       abi: ConfigControllerFactory
-      address: "0x613fe18a50b29de06e3fe490e7366786ceae1f90"
-      startBlock: 8777166
+      address: "0x56853b53ecb360bfd0f42be4c20081a606304453"
+      startBlock: 8990840
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -100,6 +100,7 @@ templates:
       entities:
         - Comet
         - Borrower
+        - PriceFeed
       abis:
         - name: Comet
           file: ./abis/Comet.json
@@ -137,9 +138,6 @@ templates:
           receipt: true
         - event: BuyCollateral(indexed address,indexed address,uint256,uint256)
           handler: handleBuyCollateral
-          receipt: true
-        - event: WithdrawReserves(indexed address,uint256)
-          handler: handleWithdrawReserves
           receipt: true
       file: ./src/comet.ts
   - name: ConfigController

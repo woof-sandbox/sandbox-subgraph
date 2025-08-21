@@ -30,12 +30,6 @@ type WhitelistedCollateral @entity(immutable: true) {
   id: Bytes! # address
   priceFeed: Bytes! # address
   decimals: BigInt!
-  maxBorrowCollateralFactor: BigInt!
-  minBorrowCollateralFactor: BigInt!
-  maxLiquidateCollateralFactor: BigInt!
-  minLiquidateCollateralFactor: BigInt!
-  maxLiquidationFactor: BigInt!
-  minLiquidationFactor: BigInt!
 
   createdAt: BigInt!
 }
@@ -61,10 +55,6 @@ type WhitelistedBase @entity(immutable: false) {
   id: Bytes! # address
   priceFeed: Bytes! # address
   decimals: BigInt!
-
-  curve: BaseAssetCurve!
-
-  minBorrow: BigInt!
 
   updatedAt: BigInt!
   createdAt: BigInt!
@@ -121,7 +111,19 @@ type CometDailyPopularity @entity(immutable: false) {
   updatedAt: BigInt!
 }
 
-### PAPERCLIP
+type PriceFeed @entity(immutable: false) {
+    "Address of the price feed contract"
+    id: Bytes!
+
+    "Price feed scale (decimals)"
+    priceScaleDecimals: Int!
+    lastPriceUsd: BigDecimal!
+
+    createdAt: BigInt!
+    updatedAt: BigInt!
+}
+
+### EXTERNAL
 
 ####
 # Core entities

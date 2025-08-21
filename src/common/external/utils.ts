@@ -2,13 +2,10 @@ import {
   Address,
   BigDecimal,
   BigInt,
-  Bytes,
   ethereum,
   log as logger,
 } from '@graphprotocol/graph-ts';
-//// import { CometRewardsV1 as CometRewardsV1Contract } from "../../generated/templates/Comet/CometRewardsV1";
-//// import { CometRewardsV2 as CometRewardsV2Contract } from "../../generated/templates/Comet/CometRewardsV2";
-import { COMET_REWARDS_ADDRESS } from '../../../generated/addresses';
+import { COMET_REWARDS_ADDRESS } from '../../../generated/addresses'; // Removing will break indexing
 import {
   ABSORB_DEBT_EVENT_SIGNATURE,
   BASE_INDEX_SCALE,
