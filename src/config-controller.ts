@@ -6,7 +6,7 @@ import {
   CuratorProposed as CuratorProposedEvent,
   GuardianUpdated as GuardianUpdatedEvent,
 } from '../generated/templates/ConfigController/ConfigController';
-import { logEvent } from './utils/log-event';
+import { logEvent } from './common/utils/log-event';
 import { createBaseConfiguration } from './helpers/create-base-configuration';
 import { createCuratorProposal } from './helpers/create-curator-proposal';
 import { formCurveId } from './helpers/form-curve-id';
@@ -25,27 +25,6 @@ export function handleCometCreated(event: CometCreatedEvent): void {
     event.block.timestamp
   );
 }
-
-// ?: remove
-/*export function handleAddedCollateralTokenConfig(
-  event: AddedCollateralTokenConfigEvent
-): void {
-  logEvent(event);
-
-  const decimals = BigInt.fromI32(event.params.decimals);
-  createCollateralConfiguration(
-    event.params.asset,
-    //
-    event.params.priceFeed,
-    decimals,
-    event.params.borrowCollateralFactor,
-    event.params.liquidateCollateralFactor,
-    event.params.liquidationFactor,
-    event.params.supplyCap,
-    //
-    event.block.timestamp
-  );
-}*/
 
 /// ROLES
 

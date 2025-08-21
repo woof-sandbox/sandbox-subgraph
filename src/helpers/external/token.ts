@@ -5,7 +5,6 @@ import {
   ethereum,
   log,
 } from '@graphprotocol/graph-ts';
-import { ChainlinkPriceFeed as ChainlinkPriceFeedContract } from '../../../generated/templates/Comet/ChainlinkPriceFeed';
 import { Comet as CometContract } from '../../../generated/templates/Comet/Comet';
 import { Erc20 as Erc20Contract } from '../../../generated/templates/Comet/Erc20';
 import {
@@ -20,7 +19,7 @@ import {
   ZERO_BD,
   ZERO_BI,
 } from '../../common/external/constants';
-import { UNKNOWN } from '../../constants';
+import { UNKNOWN } from '../../common/constants';
 import {
   getChainlinkCompUsdPriceFeedAddress,
   getCompTokenAddress,
@@ -88,7 +87,7 @@ export function getOrCreateBaseToken(
     baseToken.save();
     //// replaced zeros with the price
     if (baseToken.lastPriceUsd === ZERO_BD) {
-      getBaseTokenPriceUsd(baseToken, event);
+      getAndUpdateBaseTokenPriceUsd(baseToken, event);
     }
   }
 
@@ -199,8 +198,7 @@ function getPriceFeedAddressForToken(token: Token): Address {
   }
 }
 
-// !: mutates token
-function getTokenPriceWithGenericOracleUsd(
+function getAndUpdateTokenPriceWithGenericOracleUsd(
   token: Token,
   event: ethereum.Event
 ): BigDecimal {
@@ -220,8 +218,7 @@ function getTokenPriceWithGenericOracleUsd(
   return token.lastPriceUsd;
 }
 
-// !: mutates token
-function getBaseTokenPriceUsd(
+function getAndUpdateBaseTokenPriceUsd(
   token: BaseToken,
   event: ethereum.Event
 ): BigDecimal {
@@ -253,7 +250,7 @@ function getBaseTokenPriceUsd(
   return token.lastPriceUsd;
 }
 
-function getCollateralTokenPriceUsd(
+function getAndUpdateCollateralTokenPriceUsd(
   token: CollateralToken,
   event: ethereum.Event
 ): BigDecimal {
@@ -287,17 +284,17 @@ function getCollateralTokenPriceUsd(
   return price;
 }
 
-export function getTokenPriceUsd<T>(
+export function getAndUpdateTokenPriceUsd<T>(
   token: T,
   event: ethereum.Event
 ): BigDecimal {
   if (token instanceof Token) {
-    // ?: rewards only
-    return getTokenPriceWithGenericOracleUsd(token, event);
+    /// Rewards only, not in use
+    return getAndUpdateTokenPriceWithGenericOracleUsd(token, event);
   } else if (token instanceof BaseToken) {
-    return getBaseTokenPriceUsd(token, event);
+    return getAndUpdateBaseTokenPriceUsd(token, event);
   } else if (token instanceof CollateralToken) {
-    return getCollateralTokenPriceUsd(token, event);
+    return getAndUpdateCollateralTokenPriceUsd(token, event);
   } else {
     log.warning('Invalid token type in getTokenPriceUsd: {}', [typeof token]);
     return ZERO_BD;

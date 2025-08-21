@@ -1,6 +1,6 @@
 import { ethereum, log } from '@graphprotocol/graph-ts';
-import { CONTRACT_NAMES } from '../../generated/contract-names';
-import { EVENT_NAMES } from '../../generated/event-names';
+import { CONTRACT_NAMES } from '../../../generated/contract-names';
+import { EVENT_NAMES } from '../../../generated/event-names';
 import { LogEventOptions } from './log-event-options';
 
 function getEventName(event: ethereum.Event, eventName: string): string {

@@ -8,7 +8,7 @@ import {
   test,
 } from 'matchstick-as';
 import { CometDailyPopularity } from '../generated/schema';
-import { ONE_BI, SECONDS_PER_DAY } from '../src/constants';
+import { ONE_BI, SECONDS_PER_DAY } from '../src/common/constants';
 import { createOrUpdateCometDailyPopularity } from '../src/helpers/create-or-update-comet-daily-popularity';
 
 const ADDRESS = Address.fromString(

@@ -5,7 +5,7 @@ import {
   CollateralAssetWhitelisted as CollateralAssetWhitelistedEvent,
 } from '../generated/SandboxController/SandboxController';
 import { BaseAssetWhitelisted as BaseAssetWhitelistedEvent } from '../generated/SandboxController/SandboxController';
-import { logEvent } from './utils/log-event';
+import { logEvent } from './common/utils/log-event';
 import { createCurve } from './helpers/create-curve';
 import { createWhitelistedBase } from './helpers/create-whitelisted-base';
 import { createWhitelistedCollateral } from './helpers/create-whitelisted-collateral';
@@ -77,7 +77,7 @@ export function handleBaseAssetWhitelisted(
   event: BaseAssetWhitelistedEvent
 ): void {
   logEvent(event);
-  const decimals = BigInt.fromI32(event.params.decimals); // !
+  const decimals = BigInt.fromI32(event.params.decimals);
   createWhitelistedBase(
     event.params.token,
     //

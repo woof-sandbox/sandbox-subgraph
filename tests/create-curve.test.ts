@@ -7,7 +7,7 @@ import {
   describe,
   test,
 } from 'matchstick-as';
-import { SECONDS_PER_YEAR } from '../src/constants';
+import { SECONDS_PER_YEAR } from '../src/common/constants';
 import {
   createCurve,
   createCurveSecondsRate,

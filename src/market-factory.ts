@@ -1,6 +1,6 @@
 import { Comet } from '../generated/templates';
 import { CometCreated as CometCreatedEvent } from '../generated/MarketFactory/MarketFactory';
-import { logEvent } from './utils/log-event';
+import { logEvent } from './common/utils/log-event';
 import { createComet } from './helpers/create-comet';
 import {
   getOrCreateMarket,

@@ -1,6 +1,6 @@
 import { ConfigController } from '../generated/templates';
 import { ConfigControllerCreated as ConfigControllerCreatedEvent } from '../generated/ConfigControllerFactory/ConfigControllerFactory';
-import { logEvent } from './utils/log-event';
+import { logEvent } from './common/utils/log-event';
 import { createConfigController } from './helpers/create-config-controller';
 
 export function handleConfigControllerCreated(

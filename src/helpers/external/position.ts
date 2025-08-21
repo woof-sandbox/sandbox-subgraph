@@ -25,7 +25,7 @@ import {
   getOrCreateMarketAccounting,
   getOrCreateMarketConfiguration,
 } from './market';
-import { getOrCreateToken, getTokenPriceUsd } from './token';
+import { getOrCreateToken, getAndUpdateTokenPriceUsd } from './token';
 
 ////
 // Position Accounting
@@ -104,7 +104,7 @@ export function updatePositionAccounting(
     Address.fromBytes(baseToken.token),
     event
   );
-  const baseTokenPriceUsd = getTokenPriceUsd(baseToken, event);
+  const baseTokenPriceUsd = getAndUpdateTokenPriceUsd(baseToken, event);
   accounting.baseBalanceUsd = computeTokenValueUsd(
     accounting.baseBalance,
     u8(baseTokenToken.decimals),
