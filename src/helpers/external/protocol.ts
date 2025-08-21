@@ -1,4 +1,4 @@
-import { Address, BigDecimal, Bytes, ethereum } from '@graphprotocol/graph-ts';
+import { Address, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import {
   CONFIG_CONTROLLER_FACTORY_ADDRESS,
   MARKET_FACTORY_ADDRESS,
@@ -10,7 +10,6 @@ import {
   Protocol,
   ProtocolAccounting,
   WeeklyProtocolAccounting,
-  _ActiveAccount,
 } from '../../../generated/schema';
 import { bigDecimalSafeDiv } from '../../common/external/utils';
 import {
@@ -88,17 +87,6 @@ export function updateProtocolAccounting(
     weightedSumBorrowApr = weightedSumBorrowApr.plus(
       marketAccounting.borrowApr.times(marketAccounting.totalBaseBorrowUsd)
     );
-    //// Changed
-    /*weightedSumRewardSupplyApr = weightedSumRewardSupplyApr.plus(
-      marketAccounting.rewardSupplyApr.times(
-        marketAccounting.totalBaseSupplyUsd
-      )
-    );
-    weightedSumRewardBorrowApr = weightedSumRewardBorrowApr.plus(
-      marketAccounting.rewardBorrowApr.times(
-        marketAccounting.totalBaseBorrowUsd
-      )
-    );*/
     weightedSumNetSupplyApr = weightedSumNetSupplyApr.plus(
       marketAccounting.netSupplyApr.times(marketAccounting.totalBaseSupplyUsd)
     );
@@ -127,15 +115,6 @@ export function updateProtocolAccounting(
     weightedSumBorrowApr,
     accounting.totalBorrowUsd
   );
-  //// Changed
-  /*accounting.avgRewardSupplyApr = bigDecimalSafeDiv(
-    weightedSumRewardSupplyApr,
-    accounting.totalSupplyUsd
-  );
-  accounting.avgRewardBorrowApr = bigDecimalSafeDiv(
-    weightedSumRewardBorrowApr,
-    accounting.totalBorrowUsd
-  );*/
   accounting.avgNetSupplyApr = bigDecimalSafeDiv(
     weightedSumNetSupplyApr,
     accounting.totalSupplyUsd

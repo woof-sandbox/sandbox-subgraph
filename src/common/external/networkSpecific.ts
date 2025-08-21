@@ -14,76 +14,7 @@ namespace SupportedChain {
   export const BASE_SEPOLIA = 'base-sepolia';
 }
 
-const configuratorProxyAddress = new Map<string, Address>()
-  .set(
-    SupportedChain.MAINNET,
-    Address.fromString('0x316f9708bB98af7dA9c68C1C3b5e79039cD336E3')
-  )
-  .set(
-    SupportedChain.POLYGON,
-    Address.fromString('0x83E0F742cAcBE66349E3701B171eE2487a26e738')
-  )
-  .set(
-    SupportedChain.BASE,
-    Address.fromString('0x45939657d1CA34A8FA39A924B71D28Fe8431e581')
-  )
-  .set(
-    SupportedChain.ARBITRUM,
-    Address.fromString('0xb21b06D71c75973babdE35b49fFDAc3F82Ad3775')
-  )
-  .set(
-    SupportedChain.OPTIMISM,
-    Address.fromString('0x84E93EC6170ED630f5ebD89A1AAE72d4F63f2713')
-  )
-  .set(
-    SupportedChain.SCROLL,
-    Address.fromString('0xECAB0bEEa3e5DEa0c35d3E69468EAC20098032D7')
-  )
-  .set(
-    SupportedChain.SEPOLIA,
-    Address.fromString('0xc28aD44975C614EaBe0Ed090207314549e1c6624')
-  )
-  .set(
-    SupportedChain.BASE_SEPOLIA,
-    Address.fromString('0x090a2b1fc84d0b5141d5D5608b12Db19201aE5a6')
-  )
-  .set('fallback', ZERO_ADDRESS);
-
-const cometRewardsAddress = new Map<string, Address>()
-  .set(
-    SupportedChain.MAINNET,
-    Address.fromString('0x1B0e765F6224C21223AeA2af16c1C46E38885a40')
-  )
-  .set(
-    SupportedChain.POLYGON,
-    Address.fromString('0x45939657d1CA34A8FA39A924B71D28Fe8431e581')
-  )
-  .set(
-    SupportedChain.BASE,
-    Address.fromString('0x123964802e6ABabBE1Bc9547D72Ef1B69B00A6b1')
-  )
-  .set(
-    SupportedChain.ARBITRUM,
-    Address.fromString('0x88730d254A2f7e6AC8388c3198aFd694bA9f7fae')
-  )
-  .set(
-    SupportedChain.OPTIMISM,
-    Address.fromString('0x443EA0340cb75a160F31A440722dec7b5bc3C2E9')
-  )
-  .set(
-    SupportedChain.SCROLL,
-    Address.fromString('0x70167D30964cbFDc315ECAe02441Af747bE0c5Ee')
-  )
-  .set(
-    SupportedChain.SEPOLIA,
-    Address.fromString('0x8bF5b658bdF0388E8b482ED51B14aef58f90abfD')
-  )
-  .set(
-    SupportedChain.BASE_SEPOLIA,
-    Address.fromString('0x3394fa1baCC0b47dd0fF28C8573a476a161aF7BC')
-  )
-  .set('fallback', ZERO_ADDRESS);
-
+// Not in use
 const compTokenAddress = new Map<string, Address>()
   .set(
     SupportedChain.MAINNET,
@@ -119,6 +50,7 @@ const compTokenAddress = new Map<string, Address>()
   )
   .set('fallback', ZERO_ADDRESS);
 
+/// Not in use
 const chainlinkEthUsdPriceFeedAddress = new Map<string, Address>()
   .set(
     SupportedChain.MAINNET,
@@ -154,6 +86,7 @@ const chainlinkEthUsdPriceFeedAddress = new Map<string, Address>()
   )
   .set('fallback', ZERO_ADDRESS);
 
+/// Not in use
 const chainlinkCompUsdPriceFeedAddress = new Map<string, Address>()
   .set(
     SupportedChain.MAINNET,
@@ -183,6 +116,7 @@ const chainlinkCompUsdPriceFeedAddress = new Map<string, Address>()
   .set(SupportedChain.BASE_SEPOLIA, ZERO_ADDRESS) // Price feed doesn't exist
   .set('fallback', ZERO_ADDRESS);
 
+/// Not in use
 // Price feed for the markets unit of account to USD. The markets price feeds return prices in this unit of account.
 // If not specified, USD is assumed to already be the unit of account
 // prettier-ignore

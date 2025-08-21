@@ -1,37 +1,15 @@
-import {
-  AbsorbCollateral as AbsorbCollateralEvent,
-  AbsorbDebt as AbsorbDebtEvent,
-  BuyCollateral as BuyCollateralEvent,
-  SupplyCollateral as SupplyCollateralEvent,
-  Supply as SupplyEvent,
-  TransferCollateral as TransferCollateralEvent,
-  Transfer as TransferEvent,
-  WithdrawCollateral as WithdrawCollateralEvent,
-  Withdraw as WithdrawEvent,
-  // WithdrawReserves as WithdrawReservesEvent,
-} from '../generated/templates/Comet/Comet';
+import { AbsorbCollateral as AbsorbCollateralEvent, AbsorbDebt as AbsorbDebtEvent, BuyCollateral as BuyCollateralEvent, SupplyCollateral as SupplyCollateralEvent, Supply as SupplyEvent, TransferCollateral as TransferCollateralEvent, Transfer as TransferEvent, WithdrawCollateral as WithdrawCollateralEvent, Withdraw as WithdrawEvent } from '../generated/templates/Comet/Comet';
 import { Transaction } from '../generated/schema';
-import {
-  bigIntMax,
-  bigIntMin,
-  logsContainWithdrawOrSupplyOrAbsorbDebtEvents,
-  presentValue,
-} from './common/external/utils';
-import { logEvent } from './utils/log-event';
-import {
-  InteractionType,
-  ZERO_ADDRESS,
-  ZERO_BD,
-  ZERO_BI,
-} from './common/external/constants';
+import { bigIntMax, bigIntMin, logsContainWithdrawOrSupplyOrAbsorbDebtEvents, presentValue } from './common/external/utils';
+import { logEvent } from './common/utils/log-event';
+import { InteractionType, ZERO_ADDRESS, ZERO_BD, ZERO_BI } from './common/external/constants';
 import { createOrUpdateCometDailyPopularity } from './helpers/create-or-update-comet-daily-popularity';
 import { createUser } from './helpers/create-user';
 import { getOrCreateAccount } from './helpers/external/account';
 import {
   getOrCreateMarketCollateralBalance,
   getOrCreatePositionCollateralBalance,
-  updateMarketCollateralBalance,
-  updateMarketCollateralBalanceUsd,
+  updateMarketCollateralBalances,
   updatePositionCollateralBalance,
 } from './helpers/external/collateralBalance';
 import {
@@ -44,25 +22,14 @@ import {
   createTransferCollateralInteraction,
   createWithdrawBaseInteraction,
   createWithdrawCollateralInteraction,
-  // createWithdrawReservesInteraction,
 } from './helpers/external/interaction';
-import {
-  getOrCreateMarket,
-  getOrCreateMarketAccounting,
-  updateMarketAccounting,
-} from './helpers/external/market';
-import {
-  createPositionAccountingSnapshot,
-  getOrCreatePosition,
-  getOrCreatePositionAccounting,
-  updatePositionAccounting,
-} from './helpers/external/position';
-import {
-  getOrCreateCollateralToken,
-  getOrCreateToken,
-} from './helpers/external/token';
+import { getOrCreateMarket, getOrCreateMarketAccounting, updateMarketAccounting } from './helpers/external/market';
+import { createPositionAccountingSnapshot, getOrCreatePosition, getOrCreatePositionAccounting, updatePositionAccounting } from './helpers/external/position';
+import { getOrCreateCollateralToken, getOrCreateToken } from './helpers/external/token';
 import { updateUsageMetrics } from './helpers/external/usage';
 import { updateUserPrincipal } from './helpers/update-user-principal';
+import { log } from '@graphprotocol/graph-ts';
+
 
 export function handleSupply(event: SupplyEvent): void {
   logEvent(event);
@@ -98,6 +65,7 @@ export function handleAbsorbDebt(event: AbsorbDebtEvent): void {
 
 export function handleSupplyCollateral(event: SupplyCollateralEvent): void {
   logEvent(event);
+  log.debug('SUPPLY_COLLATERAL [{}/{}] => from: {}, dst: {}, asset: {}, amount: {}', [event.address.toHexString(), event.transaction.hash.toHexString(), event.params.from.toHexString(), event.params.dst.toHexString(), event.params.asset.toHexString(), event.params.amount.toString()]);
   createUser(event.address, event.params.from, event.block.timestamp); // Can be supplied without a position
   createOrUpdateCometDailyPopularity(event.address, event.block.timestamp);
   handleSupplyCollateralExternal(event);
@@ -272,8 +240,8 @@ export function handleSupplyCollateralExternal(
     position,
     event
   );
-  updateMarketCollateralBalance(marketCollateralBalance, event);
-  updateMarketCollateralBalanceUsd(marketCollateralBalance, event);
+
+  updateMarketCollateralBalances(marketCollateralBalance, event)
   updatePositionCollateralBalance(position, positionCollateralBalance, event);
 
   updateMarketAccounting(market, marketAccounting, event);
@@ -335,8 +303,7 @@ export function handleWithdrawCollateralExternal(
     event
   );
 
-  updateMarketCollateralBalance(marketCollateralBalance, event);
-  updateMarketCollateralBalanceUsd(marketCollateralBalance, event);
+  updateMarketCollateralBalances(marketCollateralBalance, event);
   updatePositionCollateralBalance(position, positionCollateralBalance, event);
 
   updateMarketAccounting(market, marketAccounting, event);
@@ -487,8 +454,7 @@ export function handleAbsorbCollateralExternal(
     event
   );
 
-  updateMarketCollateralBalance(marketCollateralBalance, event);
-  updateMarketCollateralBalanceUsd(marketCollateralBalance, event);
+  updateMarketCollateralBalances(marketCollateralBalance, event);
   updatePositionCollateralBalance(position, positionCollateralBalance, event);
 
   updateMarketAccounting(market, marketAccounting, event);
@@ -530,8 +496,7 @@ export function handleBuyCollateralExternal(event: BuyCollateralEvent): void {
     event
   );
 
-  updateMarketCollateralBalance(marketCollateralBalance, event);
-  updateMarketCollateralBalanceUsd(marketCollateralBalance, event);
+  updateMarketCollateralBalances(marketCollateralBalance, event);
 
   createBuyCollateralInteraction(
     market,

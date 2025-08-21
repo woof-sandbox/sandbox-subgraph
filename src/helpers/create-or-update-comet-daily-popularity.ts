@@ -1,6 +1,6 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { CometDailyPopularity } from '../../generated/schema';
-import { ONE_BI, SECONDS_PER_DAY } from '../constants';
+import { ONE_BI, SECONDS_PER_DAY } from '../common/constants';
 
 export function createOrUpdateCometDailyPopularity(
   address: Address,

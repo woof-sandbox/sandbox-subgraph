@@ -7,6 +7,7 @@ const __dirname = path.dirname(__filename);
 
 const filePath = path.resolve(__dirname, '../versions.json');
 const network = process.argv[2];
+const type = process.argv[3];
 
 if (!network) {
   console.error('❌ Please specify network. Example: npm run bump:version sepolia');
@@ -25,7 +26,25 @@ if (!versions[network]) {
   versions[network] = '0.0.1';
 } else {
   let [major, minor, patch] = versions[network].split('.').map(Number);
-  patch += 1;
+
+  switch (type) {
+    case 'patch':
+      patch += 1;
+      break;
+    case 'minor':
+      minor += 1;
+      patch = 0;
+      break;
+    case 'major':
+      major += 1;
+      minor = 0;
+      patch = 0;
+      break;
+    default:
+      console.error(`❌ Release type must be one of: patch, minor, major. Provided: ${type}`);
+      process.exit(1);
+  }
+
   versions[network] = `${major}.${minor}.${patch}`;
 }
 

@@ -2,13 +2,9 @@ import {
   Address,
   BigDecimal,
   BigInt,
-  Bytes,
   ethereum,
-  log as logger,
+  log,
 } from '@graphprotocol/graph-ts';
-//// import { CometRewardsV1 as CometRewardsV1Contract } from "../../generated/templates/Comet/CometRewardsV1";
-//// import { CometRewardsV2 as CometRewardsV2Contract } from "../../generated/templates/Comet/CometRewardsV2";
-import { COMET_REWARDS_ADDRESS } from '../../../generated/addresses';
 import {
   ABSORB_DEBT_EVENT_SIGNATURE,
   BASE_INDEX_SCALE,
@@ -120,7 +116,7 @@ export function getRewardConfigData(marketAddress: Address): RewardConfigData {
     // It is V1 instead
     const tryRewardConfigV1 = cometRewardsV1.try_rewardConfig(marketAddress);
     if (tryRewardConfigV1.reverted) {
-      logger.warning('All reward configs reverted - {}', [
+      log.warning('All reward configs reverted - {}', [
         marketAddress.toHexString(),
       ]);
       return {
@@ -157,7 +153,7 @@ export function logsContainWithdrawOrSupplyOrAbsorbDebtEvents(
 
   if (!receipt) {
     // Should never get here since we require receipts in subgraph.yaml
-    logger.error('No logs for event: {} {}', [
+    log.error('No logs for event: {} {}', [
       event.transaction.hash.toHexString(),
       event.logIndex.toString(),
     ]);

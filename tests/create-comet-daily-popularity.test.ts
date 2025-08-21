@@ -1,6 +1,6 @@
 import { Address, BigInt, Bytes } from '@graphprotocol/graph-ts';
 import { assert, clearStore, test } from 'matchstick-as';
-import { SECONDS_PER_DAY } from '../src/constants';
+import { SECONDS_PER_DAY } from '../src/common/constants';
 import { createInitialCometDailyPopularity } from '../src/helpers/create-comet-daily-popularity';
 
 test('createInitialCometDailyPopularity creates entity correctly', () => {
