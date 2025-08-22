@@ -8,7 +8,7 @@ import {
 } from '../../../generated/schema';
 import { computeTokenValueUsd } from '../../common/external/utils';
 import { ZERO_BI } from '../../common/external/constants';
-import { getOrCreateToken, getAndUpdateTokenPriceUsd } from './token';
+import { getAndUpdateTokenPriceUsd, getOrCreateToken } from './token';
 
 ////
 // Market Collateral Balance

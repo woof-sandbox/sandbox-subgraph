@@ -14,12 +14,12 @@ import {
   Token,
 } from '../../../generated/schema';
 import { formatUnits } from '../../common/external/utils';
+import { UNKNOWN } from '../../common/constants';
 import {
   ZERO_ADDRESS,
   ZERO_BD,
   ZERO_BI,
 } from '../../common/external/constants';
-import { UNKNOWN } from '../../common/constants';
 import {
   getChainlinkCompUsdPriceFeedAddress,
   getCompTokenAddress,
@@ -207,7 +207,8 @@ function getAndUpdateTokenPriceWithGenericOracleUsd(
 
     if (ZERO_ADDRESS != priceFeedAddress) {
       const priceFeed = getAndUpdatePriceFeed(priceFeedAddress, event);
-      if (priceFeed.updatedAt === event.block.timestamp) { // If price was updated
+      if (priceFeed.updatedAt === event.block.timestamp) {
+        // If price was updated
         token.lastPriceBlockNumber = event.block.number;
         token.lastPriceUsd = priceFeed.lastPriceUsd;
         token.save();

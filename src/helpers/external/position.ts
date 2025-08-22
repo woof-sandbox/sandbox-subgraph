@@ -25,7 +25,7 @@ import {
   getOrCreateMarketAccounting,
   getOrCreateMarketConfiguration,
 } from './market';
-import { getOrCreateToken, getAndUpdateTokenPriceUsd } from './token';
+import { getAndUpdateTokenPriceUsd, getOrCreateToken } from './token';
 
 ////
 // Position Accounting

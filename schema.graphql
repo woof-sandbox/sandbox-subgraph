@@ -17,7 +17,7 @@ type Comet @entity(immutable: false) {
 }
 
 type User @entity(immutable: false) {
-  id: Bytes!
+  id: String! # cometAddress:userAddress
   principal: BigInt!
   userAddress: Bytes!
   comet: Comet!
