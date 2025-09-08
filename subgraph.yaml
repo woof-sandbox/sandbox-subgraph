@@ -9,8 +9,8 @@ dataSources:
     network: sepolia
     source:
       abi: SandboxController
-      address: "0x6966656c1c4275e1df930f50b7bd1bf1ebffdaa9"
-      startBlock: 9031117
+      address: "0x05d5a39a37c0a2c66f49747b6b9cc4fef2a4609e"
+      startBlock: 9160325
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -42,8 +42,8 @@ dataSources:
     network: sepolia
     source:
       abi: MarketFactory
-      address: "0xb054ceda0a526245742ec58dbc3f9b31d83fae96"
-      startBlock: 9031153
+      address: "0x15684b2e8e89532b7f98230ab02da5d697c9ef20"
+      startBlock: 9160345
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
@@ -70,8 +70,8 @@ dataSources:
     network: sepolia
     source:
       abi: ConfigControllerFactory
-      address: "0xe2276bc225f6fe4e80124c7603c7d6a727fd9042"
-      startBlock: 9031137
+      address: "0xf2270d1a6e1c4f6ce1f05c89ce326195d6196338"
+      startBlock: 9160340
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.9
