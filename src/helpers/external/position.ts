@@ -95,8 +95,6 @@ export function updatePositionAccounting(
       ? marketAccounting.baseBorrowIndex
       : marketAccounting.baseSupplyIndex
   );
-  accounting.baseTrackingIndex = userBasic.getBaseTrackingIndex();
-  accounting.baseTrackingAccrued = userBasic.getBaseTrackingAccrued();
 
   // Base Token Balance USD
   const baseToken = BaseToken.load(marketConfiguration.baseToken)!;
