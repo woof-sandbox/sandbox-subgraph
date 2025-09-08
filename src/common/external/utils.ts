@@ -5,7 +5,8 @@ import {
   ethereum,
   log as logger,
 } from '@graphprotocol/graph-ts';
-import { COMET_REWARDS_ADDRESS } from '../../../generated/addresses'; // Removing will break indexing
+import { COMET_REWARDS_ADDRESS } from '../../../generated/addresses';
+// Removing will break indexing
 import {
   ABSORB_DEBT_EVENT_SIGNATURE,
   BASE_INDEX_SCALE,

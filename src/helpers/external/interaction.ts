@@ -23,7 +23,7 @@ import { computeTokenValueUsd } from '../../common/external/utils';
 import { getChainlinkEthUsdPriceFeedAddress } from '../../common/external/networkSpecific';
 import { getAndUpdatePriceFeed } from '../get-and-update-price-feed';
 import { getOrCreateMarketConfiguration } from './market';
-import { getOrCreateToken, getAndUpdateTokenPriceUsd } from './token';
+import { getAndUpdateTokenPriceUsd, getOrCreateToken } from './token';
 
 function getOrCreateTransaction(event: ethereum.Event): Transaction {
   const id = event.transaction.hash;
