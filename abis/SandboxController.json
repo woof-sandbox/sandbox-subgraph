@@ -3,6 +3,16 @@
     "inputs": [
       {
         "internalType": "address",
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_dao",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
         "name": "_treasury",
         "type": "address"
       },
@@ -69,11 +79,6 @@
   },
   {
     "inputs": [],
-    "name": "CollateralTokenNotWhitelisted",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "DifferentPriceFeedAlreadyUsedForToken",
     "type": "error"
   },
@@ -136,17 +141,7 @@
         "type": "address"
       }
     ],
-    "name": "NotProposedDao",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "SupplyCapCantBeZero",
-    "type": "error"
-  },
-  {
-    "inputs": [],
-    "name": "SupplyCapTooHigh",
+    "name": "NotOwner",
     "type": "error"
   },
   {
@@ -379,19 +374,6 @@
         "internalType": "address",
         "name": "token",
         "type": "address"
-      }
-    ],
-    "name": "CollateralAssetUpdated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
       },
       {
         "indexed": true,
@@ -515,44 +497,6 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "oldContractor",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "newContractor",
-        "type": "address"
-      }
-    ],
-    "name": "ContractorGranted",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "currentDao",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "proposedDao",
-        "type": "address"
-      }
-    ],
-    "name": "DaoProposed",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
         "name": "oldDao",
         "type": "address"
       },
@@ -577,6 +521,25 @@
       }
     ],
     "name": "FeeEnabledSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "oldOwner",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnerTransferred",
     "type": "event"
   },
   {
@@ -639,19 +602,6 @@
   {
     "inputs": [],
     "name": "MAX_COMMISSIONS",
-    "outputs": [
-      {
-        "internalType": "uint64",
-        "name": "",
-        "type": "uint64"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "MAX_SUPPLY_CAP_PERCENT",
     "outputs": [
       {
         "internalType": "uint64",
@@ -740,13 +690,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "acceptDao",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1013,9 +956,9 @@
       {
         "components": [
           {
-            "internalType": "uint256",
-            "name": "supplyCap",
-            "type": "uint256"
+            "internalType": "address",
+            "name": "collateralToken",
+            "type": "address"
           },
           {
             "internalType": "address",
@@ -1096,19 +1039,6 @@
         "internalType": "struct ISandboxController.SandboxControllerConfiguration",
         "name": "",
         "type": "tuple"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "contractor",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -1239,19 +1169,6 @@
     "inputs": [
       {
         "internalType": "address",
-        "name": "_newContractor",
-        "type": "address"
-      }
-    ],
-    "name": "grantContractorRole",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
         "name": "token",
         "type": "address"
       }
@@ -1349,6 +1266,19 @@
   },
   {
     "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "proposalBoundaries",
     "outputs": [
       {
@@ -1360,32 +1290,6 @@
         "internalType": "uint40",
         "name": "",
         "type": "uint40"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_proposedDao",
-        "type": "address"
-      }
-    ],
-    "name": "proposeDao",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "proposedDao",
-    "outputs": [
-      {
-        "internalType": "address",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -1594,6 +1498,32 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newDao",
+        "type": "address"
+      }
+    ],
+    "name": "transferDao",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwner",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "treasury",
     "outputs": [
@@ -1604,54 +1534,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "token",
-        "type": "address"
-      },
-      {
-        "internalType": "uint64",
-        "name": "minBorrowCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint64",
-        "name": "maxBorrowCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint64",
-        "name": "minLiquidateCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint64",
-        "name": "maxLiquidateCollateralFactor",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint64",
-        "name": "minLiquidationFactor",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint64",
-        "name": "maxLiquidationFactor",
-        "type": "uint64"
-      },
-      {
-        "internalType": "uint256",
-        "name": "supplyCap",
-        "type": "uint256"
-      }
-    ],
-    "name": "updateWhitelistedCollateralAsset",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -1775,11 +1657,6 @@
         "internalType": "uint64",
         "name": "maxLiquidationFactor",
         "type": "uint64"
-      },
-      {
-        "internalType": "uint256",
-        "name": "supplyCap",
-        "type": "uint256"
       }
     ],
     "name": "whitelistCollateralAsset",

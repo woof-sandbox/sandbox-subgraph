@@ -327,7 +327,15 @@ type MarketConfiguration @entity(immutable: false) {
 
   "Store front factor used to compute the discount factor for liquidations"
   storeFrontPriceFactor: BigInt!
+  "Tracking index scale"
+  trackingIndexScale: BigInt!
 
+  "Base tracking supply speed for rewards"
+  baseTrackingSupplySpeed: BigInt!
+  "Base tracking borrow speed for rewards"
+  baseTrackingBorrowSpeed: BigInt!
+  "Minimum base asset in market before rewards will accrue"
+  baseMinForRewards: BigInt!
   "Smallest amount of base that can be borrowed"
   baseBorrowMin: BigInt!
   "Target base reserves for the market, when reserve drop below collateral reserves become for sale to bring base reserves above this"
@@ -408,6 +416,10 @@ type MarketAccounting @entity(immutable: false) {
   baseSupplyIndex: BigInt!
   "Base supply index, this tracks protocol borrow borrow and monotonically increases"
   baseBorrowIndex: BigInt!
+  "Tracking supply index for supply rewards"
+  trackingSupplyIndex: BigInt!
+  "Tracking borrow index for borrow rewards"
+  trackingBorrowIndex: BigInt!
   "Last time the market accrued interest (i.e indices changed)"
   lastAccrualTime: BigInt!
 
@@ -476,6 +488,10 @@ type PositionAccounting @entity(immutable: false) {
   basePrincipal: BigInt!
   "Base balance of the position (from the last time it was updated, use basePrincipal and market indices for most accurate baseBalance)"
   baseBalance: BigInt!
+  "Base tracking index for rewards for the position"
+  baseTrackingIndex: BigInt!
+  "Base tracking that this position has accrued"
+  baseTrackingAccrued: BigInt!
 
   "Base balance in USD (+ for supply, - for borrow)"
   baseBalanceUsd: BigDecimal!

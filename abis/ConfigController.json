@@ -112,11 +112,6 @@
   },
   {
     "inputs": [],
-    "name": "SupplyCapTooHigh",
-    "type": "error"
-  },
-  {
-    "inputs": [],
     "name": "Unauthorized",
     "type": "error"
   },
@@ -339,25 +334,6 @@
       }
     ],
     "name": "ProposalDurationsUpdated",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "comet",
-        "type": "address"
-      },
-      {
-        "indexed": true,
-        "internalType": "address",
-        "name": "rewards",
-        "type": "address"
-      }
-    ],
-    "name": "RewardsSet",
     "type": "event"
   },
   {
@@ -825,24 +801,6 @@
       }
     ],
     "name": "setProposalDurations",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_comet",
-        "type": "address"
-      },
-      {
-        "internalType": "address",
-        "name": "_rewards",
-        "type": "address"
-      }
-    ],
-    "name": "setRewards",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

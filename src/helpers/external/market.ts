@@ -110,7 +110,11 @@ export function updateMarketConfiguration(
     comet.borrowPerSecondInterestRateBase();
 
   config.storeFrontPriceFactor = comet.storeFrontPriceFactor();
+  config.trackingIndexScale = comet.trackingIndexScale();
 
+  config.baseTrackingSupplySpeed = comet.baseTrackingSupplySpeed();
+  config.baseTrackingBorrowSpeed = comet.baseTrackingBorrowSpeed();
+  config.baseMinForRewards = comet.baseMinForRewards();
   config.baseBorrowMin = comet.baseBorrowMin();
   config.targetReserves = comet.targetReserves();
 
@@ -263,6 +267,8 @@ export function updateMarketAccounting(
 
   accounting.baseSupplyIndex = totalsBasic.baseSupplyIndex;
   accounting.baseBorrowIndex = totalsBasic.baseBorrowIndex;
+  accounting.trackingSupplyIndex = totalsBasic.trackingSupplyIndex;
+  accounting.trackingBorrowIndex = totalsBasic.trackingBorrowIndex;
   accounting.lastAccrualTime = totalsBasic.lastAccrualTime;
 
   accounting.totalBasePrincipalSupply = totalsBasic.totalSupplyBase;
