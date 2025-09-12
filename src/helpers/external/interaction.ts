@@ -20,8 +20,10 @@ import {
   WithdrawReservesInteraction,
 } from '../../../generated/schema';
 import { computeTokenValueUsd } from '../../common/external/utils';
+import { ZERO_BI } from '../../common/external/constants';
 import { getChainlinkEthUsdPriceFeedAddress } from '../../common/external/networkSpecific';
 import { getAndUpdatePriceFeed } from '../get-and-update-price-feed';
+import { getPreviousPrincipal } from '../get-previous-principal';
 import { getOrCreateMarketConfiguration } from './market';
 import { getAndUpdateTokenPriceUsd, getOrCreateToken } from './token';
 
@@ -113,6 +115,13 @@ export function createSupplyBaseInteraction(
     tokenPrice
   );
 
+  const previousPrinciple = getPreviousPrincipal(
+    Address.fromBytes(market.id),
+    supplier
+  );
+  interaction.isRepay =
+    previousPrinciple !== null && previousPrinciple < ZERO_BI;
+
   interaction.save();
 
   // Update transaction count
@@ -123,6 +132,7 @@ export function createSupplyBaseInteraction(
 }
 
 export function createWithdrawBaseInteraction(
+  user: Address,
   market: Market,
   position: Position,
   destination: Address,
@@ -153,6 +163,13 @@ export function createWithdrawBaseInteraction(
     u8(token.decimals),
     tokenPrice
   );
+
+  const previousPrinciple = getPreviousPrincipal(
+    Address.fromBytes(market.id),
+    user
+  );
+  interaction.isBorrow =
+    previousPrinciple !== null && previousPrinciple > ZERO_BI;
 
   interaction.save();
 
