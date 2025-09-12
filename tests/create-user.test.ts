@@ -7,8 +7,8 @@ import {
 } from 'matchstick-as/assembly';
 import { User } from '../generated/schema';
 import { createUser } from '../src/helpers/create-user';
+import { fetchUserPrincipal } from '../src/helpers/fetch-user-principal';
 import { formUserId } from '../src/helpers/form-user-id';
-import { getUserPrincipal } from '../src/helpers/get-user-principal';
 
 function mockCometContract(
   cometAddress: Address,
@@ -61,7 +61,7 @@ describe('getUserPrincipal', () => {
 
     mockCometContract(proxyAddress, userAddress, principal, false);
 
-    let result = getUserPrincipal(proxyAddress, userAddress);
+    let result = fetchUserPrincipal(proxyAddress, userAddress);
 
     assert.bigIntEquals(result, principal);
   });
@@ -76,7 +76,7 @@ describe('getUserPrincipal', () => {
 
     mockCometContract(proxyAddress, userAddress, BigInt.zero(), true);
 
-    let result = getUserPrincipal(proxyAddress, userAddress);
+    let result = fetchUserPrincipal(proxyAddress, userAddress);
 
     assert.bigIntEquals(result, BigInt.zero());
   });
@@ -99,7 +99,7 @@ describe('createUser', () => {
     assert.assertNotNull(user);
     assert.bigIntEquals(
       user!.principal,
-      getUserPrincipal(proxyAddress, userAddress)
+      fetchUserPrincipal(proxyAddress, userAddress)
     );
     assert.bytesEquals(user!.userAddress, userAddress);
     assert.bytesEquals(user!.cometAddress, proxyAddress);

@@ -989,8 +989,8 @@ type WithdrawBaseInteraction @entity(immutable: true) {
   "Amount being withdrawn in USD"
   amountUsd: BigDecimal!
 
-  "Borrow or just withdraw"
-  isBorrow: Boolean!
+  "Withdraw or just borrow"
+  isWithdraw: Boolean!
 }
 
 type TransferBaseInteraction @entity(immutable: true) {
