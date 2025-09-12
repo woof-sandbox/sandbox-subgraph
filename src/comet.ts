@@ -60,37 +60,57 @@ import {
   getOrCreateToken,
 } from './helpers/external/token';
 import { updateUsageMetrics } from './helpers/external/usage';
-import { updateUserPrincipal } from './helpers/update-user-principal';
+import { updateUser } from './helpers/update-user';
 
 export function handleSupply(event: SupplyEvent): void {
   logEvent(event);
-  createUser(event.address, event.params.dst, event.block.timestamp);
-  updateUserPrincipal(event.address, event.params.dst, event.block.timestamp);
+  const created = createUser(
+    event.address,
+    event.params.dst,
+    event.block.timestamp
+  );
+  if (created === null) {
+    updateUser(event.address, event.params.dst, event.block.timestamp);
+  }
   handleSupplyExternal(event);
 }
 
 export function handleWithdraw(event: WithdrawEvent): void {
   logEvent(event);
-  createUser(event.address, event.params.to, event.block.timestamp);
-  updateUserPrincipal(event.address, event.params.to, event.block.timestamp);
+  const created = createUser(
+    event.address,
+    event.params.to,
+    event.block.timestamp
+  );
+  if (created === null) {
+    updateUser(event.address, event.params.to, event.block.timestamp);
+  }
   handleWithdrawExternal(event);
 }
 
 export function handleTransfer(event: TransferEvent): void {
   logEvent(event);
-  createUser(event.address, event.params.to, event.block.timestamp);
-  updateUserPrincipal(event.address, event.params.from, event.block.timestamp);
+  const created = createUser(
+    event.address,
+    event.params.to,
+    event.block.timestamp
+  );
+  if (created === null) {
+    updateUser(event.address, event.params.to, event.block.timestamp);
+  }
   handleTransferExternal(event);
 }
 
 export function handleAbsorbDebt(event: AbsorbDebtEvent): void {
   logEvent(event);
-  createUser(event.address, event.params.borrower, event.block.timestamp);
-  updateUserPrincipal(
+  const created = createUser(
     event.address,
     event.params.borrower,
     event.block.timestamp
   );
+  if (created === null) {
+    updateUser(event.address, event.params.borrower, event.block.timestamp);
+  }
   handleAbsorbDebtExternal(event);
 }
 
@@ -203,6 +223,7 @@ export function handleWithdrawExternal(event: WithdrawEvent): void {
   updateMarketAccounting(market, marketAccounting, event);
 
   const interaction = createWithdrawBaseInteraction(
+    ownerAddress,
     market,
     position,
     destination,

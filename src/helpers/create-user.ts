@@ -3,11 +3,17 @@ import { User } from '../../generated/schema';
 import { formUserId } from './form-user-id';
 import { getUserPrincipal } from './get-user-principal';
 
+/**
+ * @param cometAddress
+ * @param userAddress
+ * @param createdAt
+ * @returns null if already exists
+ */
 export function createUser(
   cometAddress: Address,
   userAddress: Address,
   createdAt: BigInt
-): User {
+): User | null {
   const id = formUserId(cometAddress, userAddress);
 
   let user = User.load(id);
@@ -20,7 +26,9 @@ export function createUser(
     user.createdAt = createdAt;
     user.updatedAt = createdAt;
     user.save();
+
+    return user;
   }
 
-  return user;
+  return null;
 }

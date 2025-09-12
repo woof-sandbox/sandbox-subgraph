@@ -1,7 +1,7 @@
 import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import { assert, createMockedFunction, describe, test } from 'matchstick-as';
 import { User } from '../generated/schema';
-import { updateUserPrincipal } from '../src/helpers/update-user-principal';
+import { updateUser } from '../src/helpers/update-user';
 
 function mockCometContract(
   cometAddress: Address,
@@ -47,7 +47,7 @@ describe('updateUserPrincipal', () => {
 
     mockCometContract(proxyAddress, userAddress, updatedPrincipal);
 
-    updateUserPrincipal(proxyAddress, userAddress, updatedPrincipal);
+    updateUser(proxyAddress, userAddress, updatedPrincipal);
 
     let updatedUser = User.load(userId);
 

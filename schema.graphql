@@ -26,6 +26,16 @@ type User @entity(immutable: false) {
   createdAt: BigInt!
 }
 
+type PreviousUser @entity(immutable: false) {
+    id: String! # cometAddress:userAddress
+    principal: BigInt!
+    userAddress: Bytes!
+    comet: Comet!
+
+    updatedAt: BigInt!
+    createdAt: BigInt!
+}
+
 type WhitelistedCollateral @entity(immutable: true) {
   id: Bytes! # address
   priceFeed: Bytes! # address
@@ -954,6 +964,9 @@ type SupplyBaseInteraction @entity(immutable: true) {
   amount: BigInt!
   "Amount being supplied in USD"
   amountUsd: BigDecimal!
+
+  "Repay or just supply"
+  isRepay: Boolean!
 }
 
 type WithdrawBaseInteraction @entity(immutable: true) {
@@ -975,6 +988,9 @@ type WithdrawBaseInteraction @entity(immutable: true) {
   amount: BigInt!
   "Amount being withdrawn in USD"
   amountUsd: BigDecimal!
+
+  "Borrow or just withdraw"
+  isBorrow: Boolean!
 }
 
 type TransferBaseInteraction @entity(immutable: true) {
