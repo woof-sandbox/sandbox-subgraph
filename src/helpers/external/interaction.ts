@@ -1,4 +1,4 @@
-import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
+import { Address, BigInt, Bytes, ethereum, log } from '@graphprotocol/graph-ts';
 import {
   AbsorbCollateralInteraction,
   AbsorbDebtInteraction,
@@ -168,7 +168,7 @@ export function createWithdrawBaseInteraction(
     Address.fromBytes(market.id),
     user
   );
-  interaction.isBorrow =
+  interaction.isWithdraw =
     previousPrinciple !== null && previousPrinciple > ZERO_BI;
 
   interaction.save();

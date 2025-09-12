@@ -1,7 +1,7 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { Comet } from '../../generated/templates/Comet/Comet';
 
-export function getUserPrincipal(
+export function fetchUserPrincipal(
   cometAddress: Address,
   userAddress: Address
 ): BigInt {

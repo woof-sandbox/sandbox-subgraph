@@ -1,7 +1,7 @@
 import { Address, BigInt } from '@graphprotocol/graph-ts';
 import { User } from '../../generated/schema';
+import { fetchUserPrincipal } from './fetch-user-principal';
 import { formUserId } from './form-user-id';
-import { getUserPrincipal } from './get-user-principal';
 
 /**
  * @param cometAddress
@@ -19,7 +19,7 @@ export function createUser(
   let user = User.load(id);
   if (!user) {
     user = new User(id);
-    user.principal = getUserPrincipal(cometAddress, userAddress);
+    user.principal = fetchUserPrincipal(cometAddress, userAddress);
     user.userAddress = userAddress;
     user.comet = cometAddress;
     //
