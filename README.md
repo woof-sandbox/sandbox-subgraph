@@ -989,3 +989,25 @@ query GetMarketHistory($marketId: Bytes!, $startTime: BigInt!) {
 ## Important Note on Collateral Balance Updates
 
 > **Note:** Any invocation of `updateMarketCollateralBalance` must always be accompanied by a call to `updateMarketCollateralBalanceUsd`, and vice versa. This ensures both the raw and USD-denominated collateral balances remain consistent. Failure to do so may result in data desynchronization within the subgraph index.
+
+# Demo Deploying
+
+### Requires tunnel:
+```shell
+ssh -i /ABS/PATH/TO/key \  -o IdentitiesOnly=yes \
+  -o ExitOnForwardFailure=yes \
+  -L 127.0.0.1:18000:127.0.0.1:8000 \
+  -L 127.0.0.1:18020:127.0.0.1:8020 \
+  -L 127.0.0.1:18030:127.0.0.1:8030 \
+  -L 127.0.0.1:15001:127.0.0.1:5001 \
+  -N -T ubuntu@3.120.107.227
+```
+### Subgraph should be created:
+```shell
+graph create --node http://127.0.0.1:18020/ sandbox-demo
+```
+
+### Check sync progress:
+```shell
+curl -s http://127.0.0.1:18030/graphql   -H 'content-type: application/json'   --data-binary '{"query":"{ indexingStatusesForSubgraphName(subgraphName: \"sandbox-demo\") { subgraph synced health fatalError { message } chains { network chainHeadBlock { number } latestBlock { number } } } }"}' | jq
+```
