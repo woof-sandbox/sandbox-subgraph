@@ -994,7 +994,8 @@ query GetMarketHistory($marketId: Bytes!, $startTime: BigInt!) {
 
 ### Requires tunnel:
 ```shell
-ssh -i /ABS/PATH/TO/key \  -o IdentitiesOnly=yes \
+ssh -i /path/to/ssh \
+  -o IdentitiesOnly=yes \
   -o ExitOnForwardFailure=yes \
   -L 127.0.0.1:18000:127.0.0.1:8000 \
   -L 127.0.0.1:18020:127.0.0.1:8020 \
