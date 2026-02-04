@@ -7,11 +7,13 @@
     "codegen": "graph codegen",
     "build": "graph build",
     "generate": "node scripts/generate-event-names.js",
-    "generate:sepolia": "NETWORK=sepolia node scripts/generate-contract-names.js & NETWORK=sepolia node scripts/generate-addresses.js & npm run generate",
-    "prepublish:sepolia": "rimraf build generated && graph codegen && npm run generate:sepolia && graph build --network=sepolia",
+
     "bump:sepolia:patch": "node scripts/bump-version.js sepolia patch",
     "bump:sepolia:minor": "node scripts/bump-version.js sepolia minor",
     "bump:sepolia:major": "node scripts/bump-version.js sepolia major",
+
+    "generate:sepolia": "NETWORK=sepolia node scripts/generate-contract-names.js && NETWORK=sepolia node scripts/generate-addresses.js && npm run generate",
+    "prepublish:sepolia": "rimraf build generated && graph codegen && npm run generate:sepolia && graph build --network sepolia",
     "deploy:sepolia": "graph deploy --version-label $(jq -r '.sepolia' versions.json) sandbox-sepolia",
     "redeploy:sepolia": "NETWORK=sepolia node scripts/retry-deploy.js",
     "publish:sepolia:patch": "npm run prepublish:sepolia && npm run bump:sepolia:patch && npm run redeploy:sepolia",
@@ -20,10 +22,13 @@
 
     "create:demo": "graph create --node http://localhost:18020/ sandbox-demo",
     "remove:demo": "graph remove --node http://localhost:18020/ sandbox-demo",
-    "deploy:demo": "graph deploy --node http://localhost:18020/ --ipfs https://api.thegraph.com/ipfs/ --version-label $(jq -r '.demo' versions.json) sandbox-demo",
-    "publish:demo:patch": "npm run prepublish:sepolia && npm run bump:sepolia:patch && npm run deploy:demo",
-    "publish:demo:minor": "npm run prepublish:sepolia && npm run bump:sepolia:minor && npm run deploy:demo",
-    "publish:demo:major": "npm run prepublish:sepolia && npm run bump:sepolia:major && npm run deploy:demo",
+
+    "generate:demo": "NETWORK=sepolia NETWORKS_FILE=networks.demo.json node scripts/generate-contract-names.js && NETWORK=sepolia NETWORKS_FILE=networks.demo.json node scripts/generate-addresses.js && npm run generate",
+    "prepublish:demo": "rimraf build generated && graph codegen && npm run generate:demo && graph build --network sepolia --network-file networks.demo.json",
+    "deploy:demo": "graph deploy --node http://localhost:18020/ --ipfs https://api.thegraph.com/ipfs/ --version-label $(jq -r '.sepolia' versions.json) --network sepolia --network-file networks.demo.json sandbox-demo",
+    "publish:demo:patch": "npm run prepublish:demo && npm run bump:sepolia:patch && npm run deploy:demo",
+    "publish:demo:minor": "npm run prepublish:demo && npm run bump:sepolia:minor && npm run deploy:demo",
+    "publish:demo:major": "npm run prepublish:demo && npm run bump:sepolia:major && npm run deploy:demo",
 
     "format": "prettier --write \"src/**/*.ts\" \"tests/**/*.ts\"",
     "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ sandbox-subgraph",

@@ -1,0 +1,20 @@
+{
+  "sepolia": {
+    "SandboxController": {
+      "address": "0x8c9C64Fc4C471Cf501D22aD2cca6ae375346452b",
+      "startBlock": 10182555
+    },
+    "MarketFactory": {
+      "address": "0x9e980d8f7FABaBfDfdf3454727C1Ae1B395183Ca",
+      "startBlock": 10182555
+    },
+    "ConfigControllerFactory": {
+      "address": "0x6a4DF5990804A18C8d7Cd14d9664Fe9aAC3FD945",
+      "startBlock": 10182555
+    },
+    "CometRewards": {
+      "address": "0x0000000000000000000000000000000000000000",
+      "startBlock": 10182555
+    }
+  }
+}
