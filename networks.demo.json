@@ -1,20 +1,20 @@
 {
   "sepolia": {
     "SandboxController": {
-      "address": "0x8c9C64Fc4C471Cf501D22aD2cca6ae375346452b",
-      "startBlock": 10182555
+      "address": "0x3770370dc501d58870bf211330191495c6fd0127",
+      "startBlock": 10246757
     },
     "MarketFactory": {
-      "address": "0x9e980d8f7FABaBfDfdf3454727C1Ae1B395183Ca",
-      "startBlock": 10182555
+      "address": "0x48bbb4baf9cee86575b20100513e6e504b208fc3",
+      "startBlock": 10246757
     },
     "ConfigControllerFactory": {
-      "address": "0x6a4DF5990804A18C8d7Cd14d9664Fe9aAC3FD945",
-      "startBlock": 10182555
+      "address": "0x3636a6d548c5570f4fede2250d62a2f9f462f0c8",
+      "startBlock": 10246757
     },
     "CometRewards": {
       "address": "0x0000000000000000000000000000000000000000",
-      "startBlock": 10182555
+      "startBlock": 10246757
     }
   }
 }
